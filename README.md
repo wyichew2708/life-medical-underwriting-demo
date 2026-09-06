@@ -154,3 +154,24 @@ The Python runner binds only to loopback, checks Host / Origin, requires JSON AP
 - `requirements.txt`: document renderer dependency
 - `.openai/hosting.json`: private hosted demo identity
 
+
+## Underwriter controls and research update
+
+The enhanced studio adds:
+
+- **Rules & guardrails:** create typed custom rules, edit draft revisions, activate/deactivate, inspect a six-case routing comparison, and export/import rules plus instructions. A rule has one condition and a product scope; multiple rules combine conservatively. Evidence requests take priority over referrals. No custom action can approve or decline automatically.
+- **Underwriter instructions:** enter a case focus or use the review template. Non-empty instructions require the reasoning path. Mock mode captures them without pretending to execute arbitrary natural language; the local LLM receives them below mandatory controls.
+- **Optional attributes:** annual income, existing cover, policy term, systolic/diastolic blood pressure, HbA1c, eGFR, LDL, years since diagnosis, hospitalisations, and report age. They are declared inputs, not verified observations. Unknowns remain null. They reach the local adapter and custom rules; no new predictive model has been trained for them.
+- **Decision assurance:** separate ML confidence, calibration evidence, document coverage, warnings and output-check status. No aggregate accuracy score is invented. Each STP gate, custom rule and policy revision is inspectable.
+- **Evidence review:** valid page citations and short source excerpts are required from local Vision extraction. Reviewers can open uploads and mark findings as checked. These marks do not certify correctness or relax rules.
+- **Research & design:** open the in-app primary-source research report, or `dist/research.html` directly. It distinguishes deployed capability, pilots and unvalidated claims, and proposes a production evaluation programme.
+
+Rules, instructions and findings stay in session memory; export them for reuse. Rule activation is not an authenticated maker-checker approval workflow. A production implementation still needs governed rule releases, an immutable audit store, real holdout evaluation, access control and clinical/actuarial validation.
+
+The policy API payload is `policy: {rules: [...], instructions: "...", revision: 1}`. Both frontend and runner enforce the same typed field catalogue in `dist/attributes.json` (with its generated JS representation). Rule fields exclude name and sex; the expanded demographic inputs are not proof of individual risk. A rule example is:
+
+```json
+{"id":"USR-review","title":"Example age referral","revision":1,"field":"age","operator":"gte","value":60,"scope":"Both","action":"refer","enabled":false}
+```
+
+This threshold is an example for testing the editor, not an underwriting recommendation. Supported actions: `refer`, `request_evidence`, `note`. Numeric operators: `gt`, `gte`, `lt`, `lte`, `eq`, `ne`. Boolean/enum fields use `eq` or `ne`. Missing data needed by an active blocking rule forces an evidence request.

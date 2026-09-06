@@ -1,11 +1,11 @@
 {
   "name": "life-medical-underwriting-demo",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "private": true,
   "type": "module",
   "scripts": {
     "start": "python3 server.py",
-    "test": "node --test tests/engine.test.js",
+    "test": "node --test tests/engine.test.js tests/governance.test.js",
     "test:server": "python3 -m unittest discover -s tests -p 'test_*.py'"
   }
 }
