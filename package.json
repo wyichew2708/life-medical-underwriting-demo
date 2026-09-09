@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "start": "python3 server.py",
-    "test": "node --test tests/engine.test.js tests/governance.test.js",
+    "test": "node --test tests/engine.test.js tests/governance.test.js tests/evidence.test.js",
     "test:server": "python3 -m unittest discover -s tests -p 'test_*.py'"
   }
 }

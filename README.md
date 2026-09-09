@@ -175,3 +175,18 @@ The policy API payload is `policy: {rules: [...], instructions: "...", revision:
 ```
 
 This threshold is an example for testing the editor, not an underwriting recommendation. Supported actions: `refer`, `request_evidence`, `note`. Numeric operators: `gt`, `gte`, `lt`, `lte`, `eq`, `ne`. Boolean/enum fields use `eq` or `ne`. Missing data needed by an active blocking rule forces an evidence request.
+
+
+## v0.2 — structured evidence and decision brief
+
+The first implementation slice adds a source-linked decision brief, a chronological measurement table, and deterministic observation checks. The evidence scenario selector demonstrates consistent results, same-date conflicts, missing dates, missing units and earlier results differing from a current declaration. Synthetic records remain explicitly fictional and are available for inspection even when mock STP skips Vision processing.
+
+The initial supported measurement fields are HbA1c, eGFR, LDL and systolic/diastolic blood pressure. Each observation contains an ID, field, raw value/unit, observation date (or null), and document/page/quote source. Local extraction attaches the document hash; normalized values are recomputed, never trusted from the LLM. Only exact recognized units and plain numeric values are normalized. Inequalities, absent units and alternate units remain unresolved; no medical interpretation or unit conversion is inferred.
+
+The local Vision extraction contract now requests an `observations` array in addition to findings. Missing observations conservatively mark evidence incomplete in this first slice; this is a demo control, not a universal requirement for every insurance product. A future product policy pack will determine which measurements are actually required. Source-ID/page checks validate attribution structure, not quote accuracy or entailment.
+
+The brief distinguishes current declarations from dated document values. Any difference requests source/timing review; it is not automatically an adverse risk finding. Differing results on the same date are explicitly flagged. These issues prevent mock STP and force further evidence in the local complex-path verifier. The existing local ML fast path still relies on adapter-certified evidence and is not independently validated by this slice.
+
+Use **Alex Tan → Conflicting same-date results → Run assessment** to demonstrate a high-confidence ML result being blocked by evidence. Use **Consistent measurements** to restore the normal mock journey. Correct inputs and rerun to invalidate prior results; source-check marks cannot clear conflicts. The assessment JSON export includes structured observations and issues. For local PDFs, the source button requests the cited page using the viewer's page fragment; image viewers may ignore that fragment.
+
+Validation: 19 Node tests and 27 Python tests pass, including a generated PDF extraction test with a stubbed model. No live model accuracy or browser visual testing is claimed. The evaluation harness and durable case workflow remain subsequent slices in `docs/v0.2-enhancement-plan.md`.

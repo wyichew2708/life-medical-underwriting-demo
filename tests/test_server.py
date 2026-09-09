@@ -3,7 +3,7 @@ from unittest.mock import patch
 import server
 
 P={'name':'Test Profile','age':35,'cover':500000,'bmi':23,'sex':'Not specified','occupation':'Engineer','product':'Life','smoker':False,'condition':'none'}
-E={'complete':True,'findings':[{'id':'DOC-1','text':'Test finding'}],'warnings':[]}
+E={'observations':[{'id':'OBS-1','field':'hba1c','raw_value':'5.2','raw_unit':'%','observed_at':'2026-08-01','source':{'document_id':'DOC-1','page':1,'quote':'HbA1c 5.2% on 2026-08-01'}}],'complete':True,'findings':[{'id':'DOC-1','text':'Test finding'}],'warnings':[]}
 C={'sources':[]}
 R={'recommendation':'refer','explanation':'Human review needed.','reasons':['Evidence requires review.'],'citations':['DOC-1'],'missing_information':[]}
 class SafetyTests(unittest.TestCase):
