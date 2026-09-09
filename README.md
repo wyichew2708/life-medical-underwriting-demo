@@ -190,3 +190,14 @@ The brief distinguishes current declarations from dated document values. Any dif
 Use **Alex Tan → Conflicting same-date results → Run assessment** to demonstrate a high-confidence ML result being blocked by evidence. Use **Consistent measurements** to restore the normal mock journey. Correct inputs and rerun to invalidate prior results; source-check marks cannot clear conflicts. The assessment JSON export includes structured observations and issues. For local PDFs, the source button requests the cited page using the viewer's page fragment; image viewers may ignore that fragment.
 
 Validation: 19 Node tests and 27 Python tests pass, including a generated PDF extraction test with a stubbed model. No live model accuracy or browser visual testing is claimed. The evaluation harness and durable case workflow remain subsequent slices in `docs/v0.2-enhancement-plan.md`.
+
+
+## v0.2 — underwriter review workspace
+
+Completed assessments now open with a consolidated decision summary, unresolved blocking count and next action. The review area offers Issues first, Measurements & findings, and Reasons & policy sections. Issue buttons select the corresponding observation in a side-by-side source viewer; the decision controls stay alongside on wide screens and stack on narrower screens.
+
+Mock mode highlights a fictional source excerpt, clearly labelled synthetic. Local mode displays the uploaded PDF/image and its extracted quote, with an Open original fallback. PDF page navigation depends on the browser viewer; the application does not yet have passage coordinates for real-document highlighting. Recommendation citations remain recommendation-level; the UI does not fabricate per-reason policy support.
+
+Reviewers can mark sources checked and add per-source notes. These actions do not resolve blocking issues, alter model scores or relax decision gates. Decision drafts survive evidence/tab changes. Notes and source checks are included in the assessment JSON, remain session-only and are cleared by reassessment. Case edits invalidate the old workspace. The existing human decision requires a reason; no message or policy is issued. Technical confidence, gate traces and execution outputs are expandable.
+
+Validation for this UI slice: JavaScript syntax, module references and four focused review-model tests (issue ordering, fail-closed visibility, document lookup and fast-path empty evidence). No browser visual or live-model evaluation was performed.
