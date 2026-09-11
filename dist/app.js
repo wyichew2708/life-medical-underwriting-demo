@@ -85,9 +85,10 @@ function studio(){
  const {items,issues}=reviewItems(run),r=run.result;
  const selected=items.find(x=>x.key===selectedEvidence)||items.find(x=>issues.some(i=>i.targets.includes(x.key)))||items[0];
  const blocking=issues.filter(i=>i.blocking).length;
+ const outcome=outcomeStyle(r);
  const checked=items.filter(x=>run.sourceChecks?.includes(x.key)).length;
- return `<button type="button" class="secondary" id="back-to-scenarios" style="margin-bottom:16px">← Back to scenarios</button><div class="review-header"><div><span class="eyebrow">CASE REVIEW · ${mode==='mock'?'SIMULATION':'LOCAL MODEL OUTPUT'}</span><h1>${esc(profile.name)}</h1><p>${esc(profile.product)} · ${profile.age} years · SGD ${Number(profile.cover).toLocaleString()} cover · Policy revision ${run.policy.revision}</p></div>${badge(r.human?'Human decision recorded':r.status,blocking?'amber':'blue')}</div>
- <section class="review-summary panel" aria-label="Decision summary"><div><span class="eyebrow">${r.human?'RECORDED DECISION':'PROPOSED OUTCOME'}</span><h2>${esc(r.human?.outcome||r.headline)}</h2><p>${esc(r.human?.reason||r.explanation)}</p></div><div class="summary-metrics"><strong>${blocking}</strong><span>Unresolved blocking items</span><strong>${checked} / ${items.length}</strong><span>Sources checked</span></div><div><strong>Next action</strong><p>${esc(r.next)}</p><a href="#review-actions">Go to decision controls</a></div></section>
+ return `<button type="button" class="secondary" id="back-to-scenarios" style="margin-bottom:16px">← Back to scenarios</button><div class="review-header"><div><span class="eyebrow">CASE REVIEW · ${mode==='mock'?'SIMULATION':'LOCAL MODEL OUTPUT'}</span><h1>${esc(profile.name)}</h1><p>${esc(profile.product)} · ${profile.age} years · SGD ${Number(profile.cover).toLocaleString()} cover · Policy revision ${run.policy.revision}</p></div><span class="outcome-badge outcome-${outcome.tone}">${esc(outcome.label)}</span></div>
+ <section class="review-summary panel outcome-${outcome.tone}" aria-label="Decision summary"><div><span class="eyebrow">${r.human?'RECORDED DECISION':'PROPOSED OUTCOME'}</span><h2>${esc(r.human?.outcome||r.headline)}</h2><p>${esc(r.human?.reason||r.explanation)}</p></div><div class="summary-metrics ${blocking?'has-blockers':''}"><strong>${blocking}</strong><span>Unresolved blocking items</span><strong>${checked} / ${items.length}</strong><span>Sources checked</span></div><div><strong>Next action</strong><p>${esc(r.next)}</p><a href="#review-actions">Go to decision controls</a></div></section>
  <details class="case-inputs"><summary>Case details, documents and reassessment</summary>${legacyStudio()}</details>
  <div class="review-layout"><section class="panel review-workspace" aria-label="Evidence review"><div class="review-nav" role="group" aria-label="Review sections">${[['issues','Issues first'],['timeline','Measurements & findings'],['basis','Reasons & policy']].map(([key,label])=>`<button type="button" data-review-tab="${key}" aria-pressed="${reviewTab===key}">${label}${key==='issues'?' ('+issues.length+')':''}</button>`).join('')}</div>
  <div class="review-split"><div class="review-findings" id="review-list" tabindex="-1">
@@ -126,3 +127,9 @@ function bindReviewWorkspace(){
 }
 
 function executionReview(){return '<section class="setup-panel"><h2>Assessment steps</h2>'+stages.map(([id,title])=>{const step=run.steps[id];return '<details class="review-issue"><summary>'+esc(title)+' · '+esc(step?.status||'Not run')+'</summary><p>'+esc(step?.summary||'No output')+'</p>'+(step?.data?'<pre>'+esc(JSON.stringify(step.data,null,2))+'</pre>':'')+'</details>';}).join('')+'</section>';}
+
+function outcomeStyle(result){
+ const label=result.human?.outcome||result.status;
+ const tones={'Standard acceptance':'accepted','Approve standard terms':'accepted','Awaiting evidence':'evidence','Request further evidence':'evidence','Manual review':'review','Propose revised terms':'terms','Postpone':'postponed','Decline':'declined','Failed':'failed','Cancelled':'cancelled'};
+ return {label:label||'Not assessed',tone:tones[label]||'cancelled'};
+}

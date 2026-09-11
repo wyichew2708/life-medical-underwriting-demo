@@ -14,3 +14,16 @@ fieldset{border:0;padding:0;margin:0;min-width:0}.hybrid-grid{display:grid;grid-
 @media(max-width:1300px){.review-layout{grid-template-columns:1fr}.decision-controls{position:static}.review-summary{grid-template-columns:1fr 1fr}.review-summary>div:first-child{grid-column:1/-1}}
 @media(max-width:760px){.review-split,.review-summary{grid-template-columns:1fr}.review-document{position:static;border-left:0;border-top:1px solid var(--line)}.review-header{align-items:flex-start;flex-direction:column}.review-findings,.review-document{padding:16px}.source-preview{height:420px}}
 .case-inputs .assessment-column{display:none}.case-inputs .hybrid-grid{grid-template-columns:1fr}.profile-panel label,.profile-panel input,.profile-panel select,.profile-panel textarea{font-size:.875rem}.profile-panel p{font-size:1rem}.profile-panel .micro{font-size:.875rem}.technical-review .setup-panel>h2{margin-bottom:18px}.review-summary,.review-split{overflow-wrap:anywhere}
+
+/* Outcome colours supplement explicit status text; blockers remain distinct. */
+.outcome-accepted{--outcome-ink:#166534;--outcome-bg:#f0fdf4;--outcome-edge:#15803d}
+.outcome-evidence{--outcome-ink:#854d0e;--outcome-bg:#fffbeb;--outcome-edge:#b45309}
+.outcome-review{--outcome-ink:#1e40af;--outcome-bg:#eff6ff;--outcome-edge:#2563eb}
+.outcome-terms{--outcome-ink:#6b21a8;--outcome-bg:#faf5ff;--outcome-edge:#9333ea}
+.outcome-postponed{--outcome-ink:#374151;--outcome-bg:#f3f4f6;--outcome-edge:#6b7280}
+.outcome-declined,.outcome-failed{--outcome-ink:#991b1b;--outcome-bg:#fef2f2;--outcome-edge:#dc2626}
+.outcome-cancelled{--outcome-ink:#475569;--outcome-bg:#f8fafc;--outcome-edge:#64748b}
+.review-summary[class*=outcome-]{border-top-color:var(--outcome-edge);background:var(--outcome-bg)}
+.review-summary[class*=outcome-] h2{color:var(--outcome-ink)}
+.outcome-badge{display:inline-block;padding:9px 14px;border:1px solid var(--outcome-edge);border-radius:8px;background:var(--outcome-bg);color:var(--outcome-ink);font-size:.875rem;font-weight:700;line-height:1.5}
+.summary-metrics.has-blockers{border-left:4px solid #b45309;padding:12px;background:#fffbeb;color:#854d0e;border-radius:6px}
