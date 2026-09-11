@@ -1,7 +1,8 @@
+const measurementLabels={hba1c:'Average blood sugar (HbA1c)',egfr:'Kidney function (eGFR)',ldl:'LDL cholesterol',systolic:'Systolic blood pressure',diastolic:'Diastolic blood pressure'};
 export function reviewItems(run){
  const evidence=run.steps.evidence?.data||run.syntheticEvidence;
  const observations=evidence?.observation_review?.timeline||[];
- const items=observations.map(o=>({key:o.id,label:o.field,date:o.observed_at,value:o.raw_value+' '+(o.raw_unit||'(unit unknown)'),source:o.source,kind:'measurement'}));
+ const items=observations.map(o=>({key:o.id,label:measurementLabels[o.field]||o.field,date:o.observed_at,value:o.raw_value+' '+(o.raw_unit||'(unit unknown)'),source:o.source,kind:'measurement'}));
  (evidence?.findings||[]).forEach((f,i)=>items.push({key:'FINDING-'+i,label:f.text,date:null,value:f.source,source:{document_id:f.id,page:f.page,quote:f.quote},kind:'finding',findingIndex:i}));
  const issues=(evidence?.observation_review?.issues||[]).map((x,i)=>({key:'ISSUE-'+i,text:x.text,targets:x.ids||[],blocking:true}));
  (evidence?.warnings||[]).forEach((text,i)=>issues.push({key:'WARNING-'+i,text,targets:[],blocking:false}));
