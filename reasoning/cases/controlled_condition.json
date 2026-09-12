@@ -1,0 +1,20 @@
+{
+  "label": "Controlled type 2 diabetes on a medical product (mirrors the demo's Mei Chen)",
+  "instructions": "Focus on diabetic control and renal function. Say clearly what evidence is still outstanding.",
+  "profile": {"name": "Mei Chen", "age": 46, "sex": "Female", "occupation": "Accountant",
+    "product": "Medical", "cover": 500000, "bmi": 28.3, "smoker": false, "condition": "controlled",
+    "annualIncome": 110000, "existingCover": 200000, "termYears": 15, "systolic": 135,
+    "diastolic": 85, "hba1c": 6.8, "egfr": 80, "ldl": 3.1, "diagnosisYears": 5,
+    "hospitalisations": 0, "reportAgeDays": 60},
+  "ml": {"available": true, "model": "mock-underwriting-ml-2026-09", "standard": true,
+    "confidence": 0.833, "calibrated": true, "ood": false, "evidence_complete": false,
+    "verified_document_hashes": []},
+  "evidence": {"complete": true, "warnings": [],
+    "findings": [
+      {"id": "DOC-1", "source": "Synthetic clinic letter", "page": 1,
+       "quote": "Type 2 diabetes mellitus, diagnosed 2021, on metformin.",
+       "text": "Type 2 diabetes diagnosed five years ago, treated with metformin, described as stable."},
+      {"id": "DOC-2", "source": "Synthetic blood profile", "page": 1,
+       "quote": "HbA1c 6.8% (51 mmol/mol); eGFR 80 mL/min/1.73m2; LDL 3.1 mmol/L",
+       "text": "HbA1c 6.8 percent, eGFR 80, LDL 3.1 mmol/L. Single report; no earlier results supplied."}]}
+}

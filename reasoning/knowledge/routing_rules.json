@@ -1,0 +1,361 @@
+{
+  "revision": 1,
+  "status": "illustrative",
+  "note": "The executable half of the knowledge base. Prose cards give an underwriter context; these typed rules are what actually routes a case, so they can be reviewed, diffed and tested one by one. Every rule cites the card it came from. Thresholds are demonstration settings, not underwriting policy. No rule can accept or decline: the only actions are refer, request_evidence and note.",
+  "comparison_semantics": "Mirrors demo/governance.py: a blocking rule whose field is missing or out of catalogue range produces an evidence request rather than being skipped.",
+  "rules": [
+    {
+      "id": "RTE-AGE-75",
+      "title": "Age above 75",
+      "field": "age",
+      "operator": "gt",
+      "value": 75,
+      "scope": "Both",
+      "action": "refer",
+      "cites": [
+        "UW-FRAME-04"
+      ],
+      "enabled": true,
+      "mandatory": true,
+      "tunable": {
+        "min": 60,
+        "max": 80
+      }
+    },
+    {
+      "id": "RTE-LIFE-COVER-1M",
+      "title": "Life cover above SGD 1m",
+      "field": "cover",
+      "operator": "gt",
+      "value": 1000000,
+      "scope": "Life",
+      "action": "refer",
+      "cites": [
+        "UW-FRAME-04",
+        "UW-FIN-01"
+      ],
+      "enabled": true,
+      "tunable": {
+        "min": 500000,
+        "max": 2000000
+      }
+    },
+    {
+      "id": "RTE-COVER-2M",
+      "title": "Cover at or above SGD 2m needs financial verification",
+      "field": "cover",
+      "operator": "gte",
+      "value": 2000000,
+      "scope": "Both",
+      "action": "refer",
+      "cites": [
+        "UW-FIN-03"
+      ],
+      "enabled": true,
+      "mandatory": true,
+      "tunable": {
+        "min": 1000000,
+        "max": 5000000
+      }
+    },
+    {
+      "id": "RTE-SMOKER",
+      "title": "Tobacco or nicotine use",
+      "field": "smoker",
+      "operator": "eq",
+      "value": true,
+      "scope": "Both",
+      "action": "refer",
+      "cites": [
+        "UW-SMOKE-01",
+        "UW-FRAME-04"
+      ],
+      "enabled": true,
+      "mandatory": true
+    },
+    {
+      "id": "RTE-CONDITION",
+      "title": "Any declared medical condition",
+      "field": "condition",
+      "operator": "ne",
+      "value": "none",
+      "scope": "Both",
+      "action": "refer",
+      "cites": [
+        "UW-FRAME-04"
+      ],
+      "enabled": true,
+      "mandatory": true
+    },
+    {
+      "id": "RTE-CONDITION-COMPLEX",
+      "title": "Complex declaration needs clinical records",
+      "field": "condition",
+      "operator": "eq",
+      "value": "complex",
+      "scope": "Both",
+      "action": "request_evidence",
+      "cites": [
+        "UW-FRAME-03",
+        "UW-EVID-01"
+      ],
+      "enabled": true,
+      "mandatory": true
+    },
+    {
+      "id": "RTE-BMI-40",
+      "title": "BMI 40 or above",
+      "field": "bmi",
+      "operator": "gte",
+      "value": 40,
+      "scope": "Both",
+      "action": "refer",
+      "cites": [
+        "UW-BUILD-01",
+        "REF-BMI-WHO"
+      ],
+      "enabled": true,
+      "tunable": {
+        "min": 32,
+        "max": 45
+      }
+    },
+    {
+      "id": "RTE-BMI-LOW",
+      "title": "BMI below 18.5",
+      "field": "bmi",
+      "operator": "lt",
+      "value": 18.5,
+      "scope": "Both",
+      "action": "refer",
+      "cites": [
+        "UW-BUILD-01",
+        "REF-BMI-WHO"
+      ],
+      "enabled": true,
+      "tunable": {
+        "min": 16,
+        "max": 19
+      }
+    },
+    {
+      "id": "RTE-BP-SYS-160",
+      "title": "Systolic 160 or above",
+      "field": "systolic",
+      "operator": "gte",
+      "value": 160,
+      "scope": "Both",
+      "action": "refer",
+      "cites": [
+        "UW-BP-01",
+        "REF-BP-ACC-AHA"
+      ],
+      "enabled": true,
+      "tunable": {
+        "min": 140,
+        "max": 180
+      }
+    },
+    {
+      "id": "RTE-BP-DIA-100",
+      "title": "Diastolic 100 or above",
+      "field": "diastolic",
+      "operator": "gte",
+      "value": 100,
+      "scope": "Both",
+      "action": "refer",
+      "cites": [
+        "UW-BP-01",
+        "REF-BP-ACC-AHA"
+      ],
+      "enabled": true,
+      "tunable": {
+        "min": 90,
+        "max": 110
+      }
+    },
+    {
+      "id": "RTE-HBA1C-85",
+      "title": "HbA1c above 8.5%",
+      "field": "hba1c",
+      "operator": "gt",
+      "value": 8.5,
+      "scope": "Both",
+      "action": "refer",
+      "cites": [
+        "UW-DM-01",
+        "REF-HBA1C-ADA"
+      ],
+      "enabled": true,
+      "tunable": {
+        "min": 7.0,
+        "max": 10.0
+      }
+    },
+    {
+      "id": "RTE-HBA1C-65",
+      "title": "HbA1c at or above 6.5% needs control history",
+      "field": "hba1c",
+      "operator": "gte",
+      "value": 6.5,
+      "scope": "Both",
+      "action": "request_evidence",
+      "cites": [
+        "UW-DM-01",
+        "REF-HBA1C-ADA"
+      ],
+      "enabled": true,
+      "tunable": {
+        "min": 5.7,
+        "max": 7.5
+      }
+    },
+    {
+      "id": "RTE-EGFR-45",
+      "title": "eGFR below 45",
+      "field": "egfr",
+      "operator": "lt",
+      "value": 45,
+      "scope": "Both",
+      "action": "refer",
+      "cites": [
+        "UW-RENAL-01",
+        "REF-EGFR-KDIGO"
+      ],
+      "enabled": true,
+      "tunable": {
+        "min": 30,
+        "max": 55
+      }
+    },
+    {
+      "id": "RTE-EGFR-60",
+      "title": "eGFR 45 to 59 needs a repeat result",
+      "field": "egfr",
+      "operator": "lt",
+      "value": 60,
+      "scope": "Both",
+      "action": "request_evidence",
+      "cites": [
+        "UW-RENAL-01",
+        "REF-EGFR-KDIGO"
+      ],
+      "enabled": true,
+      "tunable": {
+        "min": 45,
+        "max": 75
+      }
+    },
+    {
+      "id": "RTE-LDL-49",
+      "title": "LDL at or above 4.9 mmol/L",
+      "field": "ldl",
+      "operator": "gte",
+      "value": 4.9,
+      "scope": "Both",
+      "action": "refer",
+      "cites": [
+        "UW-LIPID-01",
+        "REF-LIPID-ATP"
+      ],
+      "enabled": true,
+      "tunable": {
+        "min": 4.1,
+        "max": 6.0
+      }
+    },
+    {
+      "id": "RTE-HOSPITAL-2",
+      "title": "Two or more hospitalisations in the past year",
+      "field": "hospitalisations",
+      "operator": "gte",
+      "value": 2,
+      "scope": "Both",
+      "action": "refer",
+      "cites": [
+        "UW-FRAME-04"
+      ],
+      "enabled": true,
+      "tunable": {
+        "min": 1,
+        "max": 4
+      }
+    },
+    {
+      "id": "RTE-REPORT-STALE",
+      "title": "Evidence older than 365 days",
+      "field": "reportAgeDays",
+      "operator": "gt",
+      "value": 365,
+      "scope": "Both",
+      "action": "request_evidence",
+      "cites": [
+        "UW-EVID-02"
+      ],
+      "enabled": true,
+      "tunable": {
+        "min": 180,
+        "max": 730
+      }
+    },
+    {
+      "id": "RTE-MEDICAL-PRODUCT",
+      "title": "Medical product with a declared condition",
+      "field": "condition",
+      "operator": "ne",
+      "value": "none",
+      "scope": "Medical",
+      "action": "note",
+      "cites": [
+        "UW-PROD-01"
+      ],
+      "enabled": true
+    }
+  ],
+  "evidence_grid": {
+    "cites": [
+      "UW-EVID-01"
+    ],
+    "note": "Selected on attained age and total exposure (requested cover plus declared existing cover). Requirements are listed cumulatively.",
+    "bands": [
+      {
+        "max_age": 44,
+        "max_exposure": 500000,
+        "requirements": [
+          "Declaration only"
+        ]
+      },
+      {
+        "max_age": 55,
+        "max_exposure": 1000000,
+        "requirements": [
+          "Paramedical examination",
+          "Blood profile: HbA1c, lipids, liver and renal function"
+        ]
+      },
+      {
+        "max_age": 60,
+        "max_exposure": 2500000,
+        "requirements": [
+          "Full medical examination",
+          "Blood profile",
+          "Urinalysis",
+          "Resting ECG"
+        ]
+      },
+      {
+        "max_age": 200,
+        "max_exposure": 100000000,
+        "requirements": [
+          "Full medical examination",
+          "Blood profile",
+          "Urinalysis",
+          "Resting ECG",
+          "Exercise ECG",
+          "Financial questionnaire"
+        ]
+      }
+    ]
+  },
+  "tuning_note": "A rule with a `tunable` block may have its threshold moved inside those bounds by a reviewed tuning proposal. A rule marked `mandatory` can never be disabled and its action can never be weakened. Rules without `tunable` are fixed in this file."
+}

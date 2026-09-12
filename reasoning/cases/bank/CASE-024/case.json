@@ -1,0 +1,147 @@
+{
+  "case_id": "CASE-024",
+  "profile": {
+    "name": "Iqbal Salleh",
+    "age": 56,
+    "sex": "Male",
+    "occupation": "Business owner",
+    "product": "Life",
+    "cover": 842000,
+    "bmi": 28.0,
+    "smoker": false,
+    "condition": "complex",
+    "annualIncome": 150000,
+    "existingCover": 0,
+    "termYears": 20,
+    "systolic": 141,
+    "diastolic": 95,
+    "hba1c": 7.8,
+    "egfr": 77,
+    "ldl": 4.4,
+    "diagnosisYears": 5,
+    "hospitalisations": 2,
+    "reportAgeDays": 269,
+    "evidence_source": "synthetic: written by the sample generator, not extracted from the PDF"
+  },
+  "human": {
+    "outcome": "postpone",
+    "decided_by": "sample generator (fictional underwriter)",
+    "decided_at": "2026-08-01",
+    "cohort": "life-postpone",
+    "notes": "Synthetic outcome generated from the case archetype.",
+    "rationale": "postpone: complex declared condition, HbA1c 7.8."
+  },
+  "instructions": "",
+  "documents": [
+    {
+      "file": "CASE-024-report.pdf"
+    }
+  ],
+  "evidence": {
+    "complete": true,
+    "findings": [
+      {
+        "id": "DOC-1",
+        "source": "Synthetic medical report",
+        "page": 1,
+        "quote": "Declared condition status: complex",
+        "text": "Declared condition status recorded as complex, diagnosed 5 years ago. Tobacco use: no.",
+        "verified": true
+      },
+      {
+        "id": "DOC-1",
+        "source": "Synthetic medical report",
+        "page": 1,
+        "quote": "HbA1c: 7.8%",
+        "text": "Report records HbA1c, eGFR, LDL, blood pressure. BMI 28.0.",
+        "verified": true
+      }
+    ],
+    "warnings": [],
+    "values": [
+      {
+        "field": "condition",
+        "value": "complex",
+        "quote": "Declared condition status: complex",
+        "id": "DOC-1",
+        "page": 1,
+        "verified": true
+      },
+      {
+        "field": "smoker",
+        "value": false,
+        "quote": "Tobacco or nicotine use: no",
+        "id": "DOC-1",
+        "page": 1,
+        "verified": true
+      },
+      {
+        "field": "bmi",
+        "value": 28.0,
+        "quote": "Body mass index: 28.0",
+        "id": "DOC-1",
+        "page": 1,
+        "verified": true
+      },
+      {
+        "field": "hospitalisations",
+        "value": 2,
+        "quote": "Hospital admissions in the past 12 months: 2",
+        "id": "DOC-1",
+        "page": 1,
+        "verified": true
+      },
+      {
+        "field": "systolic",
+        "value": 141,
+        "quote": "Blood pressure: 141/95 mmHg",
+        "id": "DOC-1",
+        "page": 1,
+        "verified": true
+      },
+      {
+        "field": "diastolic",
+        "value": 95,
+        "quote": "Blood pressure: 141/95 mmHg",
+        "id": "DOC-1",
+        "page": 1,
+        "verified": true
+      },
+      {
+        "field": "hba1c",
+        "value": 7.8,
+        "quote": "HbA1c: 7.8%",
+        "id": "DOC-1",
+        "page": 1,
+        "verified": true
+      },
+      {
+        "field": "egfr",
+        "value": 77,
+        "quote": "eGFR: 77 mL/min/1.73m2",
+        "id": "DOC-1",
+        "page": 1,
+        "verified": true
+      },
+      {
+        "field": "ldl",
+        "value": 4.4,
+        "quote": "LDL cholesterol: 4.4 mmol/L",
+        "id": "DOC-1",
+        "page": 1,
+        "verified": true
+      }
+    ]
+  },
+  "evidence_source": "synthetic: written by the sample generator, not extracted from the PDF",
+  "ml": {
+    "model": "mock-underwriting-ml-2026-09",
+    "standard": false,
+    "confidence": 0.9394,
+    "calibrated": true,
+    "ood": true,
+    "available": true,
+    "evidence_complete": true,
+    "source": "ml_training model; evidence_complete asserted by the sample generator"
+  }
+}

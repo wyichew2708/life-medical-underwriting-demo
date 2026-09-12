@@ -1,0 +1,356 @@
+{
+  "fields": {
+    "product_id": "protectmax-term-2026",
+    "name": "ProtectMax Term Life 2026",
+    "product_type": "Life",
+    "currency": "SGD",
+    "issue_age_min": 18,
+    "issue_age_max": 65,
+    "min_cover": 50000,
+    "max_cover": 3000000,
+    "term_years_min": 5,
+    "term_years_max": 40,
+    "max_cover_without_medical": 750000,
+    "referral_cover": 2500000,
+    "smoker_definition_months": 12,
+    "max_bmi": 38,
+    "required_evidence": [
+      "Completed health declaration for all applications",
+      "Paramedical examination and blood profile above the non-medical limit",
+      "Attending physician statement where a condition is declared",
+      "Financial questionnaire above SGD 2,500,000"
+    ],
+    "exclusions": [
+      "Suicide within 12 months of issue or reinstatement",
+      "Death arising from war or active participation in civil commotion",
+      "Death while engaged in professional motorsport or competitive diving",
+      "Death arising from a pre-existing condition not disclosed at application"
+    ],
+    "benefits": [
+      "Level term death benefit",
+      "Terminal illness advance of the death benefit",
+      "Optional critical illness rider, underwritten separately"
+    ]
+  },
+  "status": "active",
+  "created_at": "2026-09-12T02:03:10+00:00",
+  "source": {
+    "file": "specs/term-life-2026.md",
+    "sha256": "75bd8a631832d1d20ffff58f68c9ed7469d509527506102cbd7df4750891828d",
+    "kind": "text",
+    "pages": null,
+    "read_at": "2026-09-12T02:03:10+00:00"
+  },
+  "extraction_report": {
+    "product_id": {
+      "method": "deterministic",
+      "quote": "Product ID: protectmax-term-2026",
+      "line": 5
+    },
+    "name": {
+      "method": "deterministic",
+      "quote": "Product Name: ProtectMax Term Life 2026",
+      "line": 6
+    },
+    "product_type": {
+      "method": "deterministic",
+      "quote": "Product Type: Life",
+      "line": 7
+    },
+    "currency": {
+      "method": "deterministic",
+      "quote": "Currency: SGD",
+      "line": 8
+    },
+    "issue_age_min": {
+      "method": "deterministic",
+      "quote": "Minimum issue age: 18 years",
+      "line": 12
+    },
+    "issue_age_max": {
+      "method": "deterministic",
+      "quote": "Maximum entry age: 65 years",
+      "line": 13
+    },
+    "min_cover": {
+      "method": "deterministic",
+      "quote": "Minimum sum assured: SGD 50,000",
+      "line": 14
+    },
+    "max_cover": {
+      "method": "deterministic",
+      "quote": "Maximum sum assured: SGD 3,000,000",
+      "line": 15
+    },
+    "term_years_min": {
+      "method": "deterministic",
+      "quote": "Minimum policy term: 5 years",
+      "line": 16
+    },
+    "term_years_max": {
+      "method": "deterministic",
+      "quote": "Maximum policy term: 40 years",
+      "line": 17
+    },
+    "max_cover_without_medical": {
+      "method": "deterministic",
+      "quote": "Non-medical limit: SGD 750,000",
+      "line": 21
+    },
+    "referral_cover": {
+      "method": "deterministic",
+      "quote": "Automatic referral limit: SGD 2,500,000",
+      "line": 22
+    },
+    "smoker_definition_months": {
+      "method": "deterministic",
+      "quote": "Smoker definition: 12 months tobacco or nicotine free",
+      "line": 23
+    },
+    "max_bmi": {
+      "method": "deterministic",
+      "quote": "Maximum BMI: 38",
+      "line": 24
+    },
+    "required_evidence": {
+      "method": "deterministic",
+      "quote": "Required evidence",
+      "line": 26
+    },
+    "exclusions": {
+      "method": "deterministic",
+      "quote": "Exclusions",
+      "line": 33
+    },
+    "benefits": {
+      "method": "deterministic",
+      "quote": "Benefits",
+      "line": 40
+    }
+  },
+  "unsupported_directives": [],
+  "activation": {
+    "activated_by": "Jimmy Chew",
+    "reason": "Checked every limit against the spec sheet; moratorium gap accepted (term product)",
+    "activated_at": "2026-09-12T02:04:04+00:00"
+  },
+  "generated_rules": [
+    {
+      "id": "PRD-PROTECTMAX-TERM-2026-1",
+      "title": "Below the product minimum issue age (18)",
+      "field": "age",
+      "operator": "lt",
+      "value": 18,
+      "scope": "Life",
+      "action": "refer",
+      "cites": [
+        "PRD-PROTECTMAX-TERM-2026-CARD-1"
+      ],
+      "enabled": true,
+      "origin": "product spec",
+      "product_id": "protectmax-term-2026"
+    },
+    {
+      "id": "PRD-PROTECTMAX-TERM-2026-2",
+      "title": "Above the product maximum issue age (65)",
+      "field": "age",
+      "operator": "gt",
+      "value": 65,
+      "scope": "Life",
+      "action": "refer",
+      "cites": [
+        "PRD-PROTECTMAX-TERM-2026-CARD-1"
+      ],
+      "enabled": true,
+      "origin": "product spec",
+      "product_id": "protectmax-term-2026"
+    },
+    {
+      "id": "PRD-PROTECTMAX-TERM-2026-3",
+      "title": "Below the product minimum sum assured",
+      "field": "cover",
+      "operator": "lt",
+      "value": 50000,
+      "scope": "Life",
+      "action": "refer",
+      "cites": [
+        "PRD-PROTECTMAX-TERM-2026-CARD-1"
+      ],
+      "enabled": true,
+      "origin": "product spec",
+      "product_id": "protectmax-term-2026"
+    },
+    {
+      "id": "PRD-PROTECTMAX-TERM-2026-4",
+      "title": "Above the product maximum sum assured",
+      "field": "cover",
+      "operator": "gt",
+      "value": 3000000,
+      "scope": "Life",
+      "action": "refer",
+      "cites": [
+        "PRD-PROTECTMAX-TERM-2026-CARD-1"
+      ],
+      "enabled": true,
+      "origin": "product spec",
+      "product_id": "protectmax-term-2026"
+    },
+    {
+      "id": "PRD-PROTECTMAX-TERM-2026-5",
+      "title": "Above the product non-medical limit; medical evidence required",
+      "field": "cover",
+      "operator": "gt",
+      "value": 750000,
+      "scope": "Life",
+      "action": "request_evidence",
+      "cites": [
+        "PRD-PROTECTMAX-TERM-2026-CARD-1",
+        "UW-EVID-01"
+      ],
+      "enabled": true,
+      "origin": "product spec",
+      "product_id": "protectmax-term-2026"
+    },
+    {
+      "id": "PRD-PROTECTMAX-TERM-2026-6",
+      "title": "At or above the product referral limit",
+      "field": "cover",
+      "operator": "gte",
+      "value": 2500000,
+      "scope": "Life",
+      "action": "refer",
+      "cites": [
+        "PRD-PROTECTMAX-TERM-2026-CARD-1",
+        "UW-FIN-03"
+      ],
+      "enabled": true,
+      "origin": "product spec",
+      "product_id": "protectmax-term-2026"
+    },
+    {
+      "id": "PRD-PROTECTMAX-TERM-2026-7",
+      "title": "Below the product minimum term",
+      "field": "termYears",
+      "operator": "lt",
+      "value": 5,
+      "scope": "Life",
+      "action": "refer",
+      "cites": [
+        "PRD-PROTECTMAX-TERM-2026-CARD-1"
+      ],
+      "enabled": true,
+      "origin": "product spec",
+      "product_id": "protectmax-term-2026"
+    },
+    {
+      "id": "PRD-PROTECTMAX-TERM-2026-8",
+      "title": "Above the product maximum term",
+      "field": "termYears",
+      "operator": "gt",
+      "value": 40,
+      "scope": "Life",
+      "action": "refer",
+      "cites": [
+        "PRD-PROTECTMAX-TERM-2026-CARD-1"
+      ],
+      "enabled": true,
+      "origin": "product spec",
+      "product_id": "protectmax-term-2026"
+    },
+    {
+      "id": "PRD-PROTECTMAX-TERM-2026-9",
+      "title": "Above the product build limit",
+      "field": "bmi",
+      "operator": "gt",
+      "value": 38,
+      "scope": "Life",
+      "action": "refer",
+      "cites": [
+        "PRD-PROTECTMAX-TERM-2026-CARD-1",
+        "UW-BUILD-01"
+      ],
+      "enabled": true,
+      "origin": "product spec",
+      "product_id": "protectmax-term-2026"
+    }
+  ],
+  "generated_cards": [
+    {
+      "id": "PRD-PROTECTMAX-TERM-2026-CARD-1",
+      "type": "internal",
+      "title": "Product limits: ProtectMax Term Life 2026",
+      "topics": [
+        "product",
+        "limits"
+      ],
+      "products": [
+        "Life"
+      ],
+      "applies_when": {
+        "always": true
+      },
+      "keywords": [
+        "product",
+        "limit",
+        "sum assured",
+        "issue age"
+      ],
+      "excerpt": "Limits declared by the product specification for ProtectMax Term Life 2026 (SGD): minimum issue age 18; maximum issue age 65; minimum sum assured 50,000; maximum sum assured 3,000,000; non-medical limit 750,000; referral limit 2,500,000; minimum term 5 years; maximum term 40 years; smoker definition window 12 months. These are the product's own terms as extracted from its specification sheet, not underwriting judgement, and each was checked against the source quote recorded in the extraction report.",
+      "status": "product specification",
+      "collection": "Product specification",
+      "product_id": "protectmax-term-2026"
+    },
+    {
+      "id": "PRD-PROTECTMAX-TERM-2026-CARD-2",
+      "type": "internal",
+      "title": "Product exclusions: ProtectMax Term Life 2026",
+      "topics": [
+        "product",
+        "exclusions"
+      ],
+      "products": [
+        "Life"
+      ],
+      "applies_when": {
+        "always": true
+      },
+      "keywords": [
+        "exclusion",
+        "not covered",
+        "waiting period"
+      ],
+      "excerpt": "The product specification excludes: Suicide within 12 months of issue or reinstatement; Death arising from war or active participation in civil commotion; Death while engaged in professional motorsport or competitive diving; Death arising from a pre-existing condition not disclosed at application. An exclusion is policy wording. Report which exclusion may bear on a case and refer the drafting to an underwriter; do not restate it as a decision.",
+      "status": "product specification",
+      "collection": "Product specification",
+      "product_id": "protectmax-term-2026"
+    },
+    {
+      "id": "PRD-PROTECTMAX-TERM-2026-CARD-3",
+      "type": "internal",
+      "title": "Product evidence and pre-existing terms: ProtectMax Term Life 2026",
+      "topics": [
+        "product",
+        "evidence"
+      ],
+      "products": [
+        "Life"
+      ],
+      "applies_when": {
+        "always": true
+      },
+      "keywords": [
+        "pre-existing",
+        "evidence",
+        "moratorium"
+      ],
+      "excerpt": "Evidence the product requires: Completed health declaration for all applications; Paramedical examination and blood profile above the non-medical limit; Attending physician statement where a condition is declared; Financial questionnaire above SGD 2,500,000.",
+      "status": "product specification",
+      "collection": "Product specification",
+      "product_id": "protectmax-term-2026"
+    }
+  ],
+  "gaps": [
+    "moratorium_months"
+  ],
+  "warning": "Generated from a specification sheet by automated extraction. Every rule and card must be checked against the source document before activation."
+}

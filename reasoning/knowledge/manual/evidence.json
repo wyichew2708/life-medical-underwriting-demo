@@ -1,0 +1,39 @@
+{
+  "collection": "Evidence requirements",
+  "status": "illustrative",
+  "note": "The age and sum-assured grid below is a demonstration setting. Every insurer sets its own non-medical limits with its reinsurer, by product, channel and market.",
+  "cards": [
+    {
+      "id": "UW-EVID-01",
+      "type": "internal",
+      "title": "Non-medical limits: what evidence a case needs",
+      "topics": ["evidence", "requirements"],
+      "products": ["Life", "Medical"],
+      "keywords": ["medical examination", "paramedical", "blood profile", "ecg", "treadmill", "attending physician"],
+      "applies_when": {"always": true},
+      "excerpt": "Routine evidence is ordered on age and total sum assured together, with declared impairments adding requirements on top. Illustrative demonstration grid, by attained age and total exposure: to SGD 500,000 below age 45, the declaration alone; to SGD 1,000,000, or any amount from age 45, a paramedical examination with a blood profile including HbA1c, lipids, liver and renal function; above SGD 1,000,000, or any amount from age 56, a full medical examination, blood profile, urinalysis and a resting ECG; above SGD 2,500,000, or any amount from age 61, add an exercise ECG and a financial questionnaire. An attending physician statement is requested where a condition is declared or an abnormality is found, and it is the evidence that resolves most complex cases. Requirements are cumulative with the impairment-specific evidence named in the relevant rule.",
+      "guidance": {"grid": [{"band": "< age 45 and <= 500,000", "requirements": ["declaration"]}, {"band": "<= 1,000,000 or age 45-55", "requirements": ["paramedical examination", "blood profile with HbA1c, lipids, liver and renal function"]}, {"band": "> 1,000,000 or age 56-60", "requirements": ["full medical examination", "blood profile", "urinalysis", "resting ECG"]}, {"band": "> 2,500,000 or age 61+", "requirements": ["exercise ECG", "financial questionnaire"]}], "always": "attending physician statement where a condition is declared or an abnormality is found"}
+    },
+    {
+      "id": "UW-EVID-02",
+      "type": "internal",
+      "title": "Report age, units and consistency",
+      "topics": ["evidence", "quality"],
+      "products": ["Life", "Medical"],
+      "keywords": ["report date", "stale", "units", "mmol", "mg/dl", "discrepan", "illegible"],
+      "applies_when": {"any": [{"field": "reportAgeDays", "operator": "gte", "value": 180}]},
+      "excerpt": "Evidence has a shelf life. Demonstration stance: routine laboratory and examination results older than 180 days are re-ordered for cases above the non-medical limit, and results older than 365 days are not relied on at all. Units must be read from the report rather than assumed: HbA1c is reported both as a percentage and in mmol/mol, and lipids and glucose appear in both mmol/L and mg/dL, so a value without its unit is unusable. Where a value is illegible, contradicted by another document, or dated inconsistently with the application, say so explicitly and request clarification. An unreadable value is not a normal value.",
+      "guidance": {"demo_stance": {"re_order_after_days": 180, "do_not_rely_after_days": 365}, "unit_traps": ["HbA1c % vs mmol/mol", "lipids and glucose mmol/L vs mg/dL"]}
+    },
+    {
+      "id": "UW-EVID-03",
+      "type": "internal",
+      "title": "Missing evidence is not favourable evidence",
+      "topics": ["evidence", "guardrail"],
+      "products": ["Life", "Medical"],
+      "applies_when": {"always": true},
+      "excerpt": "Where a required field or document is absent, the case produces an evidence request naming exactly what is needed and why, and it does not proceed on an assumption. An absent finding in a document does not establish that the condition is absent; it establishes that this document does not mention it. A test that was ordered but whose result is not present is an outstanding requirement, not a normal result. Where an active rule needs data that is missing, the blocking outcome is an evidence request rather than a referral, because the underwriter cannot resolve what has not been supplied.",
+      "guidance": {"priority": "evidence request outranks referral where required data is missing"}
+    }
+  ]
+}

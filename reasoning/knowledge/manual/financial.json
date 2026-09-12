@@ -1,0 +1,51 @@
+{
+  "collection": "Financial underwriting",
+  "status": "illustrative",
+  "note": "Illustrative multiples and limits for the demonstration. Real limits are set by each insurer with its reinsurer and vary by market, product and distribution channel.",
+  "cards": [
+    {
+      "id": "UW-FIN-01",
+      "type": "internal",
+      "title": "Income multiples and total exposure",
+      "topics": ["financial"],
+      "products": ["Life"],
+      "keywords": ["income", "salary", "multiple", "aggregate", "in-force", "existing cover"],
+      "applies_when": {"any": [{"field": "cover", "operator": "gte", "value": 1000000}, {"field": "annualIncome", "operator": "lt", "value": 60000}]},
+      "excerpt": "Financial underwriting asks whether the sum assured is justified by a demonstrable loss, and it is assessed on total exposure: the cover applied for, plus in-force cover with this insurer, plus cover in force or pending elsewhere. Income-replacement cover is conventionally justified as a multiple of gross annual income that falls with age, because fewer earning years remain. Illustrative demonstration multiples: up to 30 times income below age 30, 20 times for 31-40, 15 times for 41-50, 10 times for 51-60, and 5 times above 60. Cover materially above the justified multiple is not automatically refused; it is referred for the purpose to be evidenced. Where declared income is missing, the multiple cannot be computed and the correct action is an evidence request rather than an assumption.",
+      "guidance": {"demo_multiples": {"<=30": 30, "31-40": 20, "41-50": 15, "51-60": 10, ">60": 5}, "exposure": "requested cover + in-force + pending elsewhere"}
+    },
+    {
+      "id": "UW-FIN-02",
+      "type": "internal",
+      "title": "Purpose of cover and the evidence it implies",
+      "topics": ["financial"],
+      "products": ["Life"],
+      "keywords": ["mortgage", "loan", "key person", "business", "buy-sell", "estate", "succession"],
+      "applies_when": {"any": [{"field": "cover", "operator": "gte", "value": 1000000}]},
+      "excerpt": "Each purpose implies its own evidence. Family protection is justified against income replacement and dependants' needs. Mortgage or loan protection is justified against the outstanding balance and term, and the cover term should not exceed the loan term. Key-person cover is justified against the person's contribution to profit, commonly a multiple of remuneration or a share of gross profit, with accounts to support it. Buy-sell or share-protection cover is justified against a valuation of the shareholding and a written agreement. Estate-liquidity cover is justified against an estimate of the liability. A stated purpose that does not fit the applicant's circumstances, or cover far exceeding the liability it names, is an anti-selection signal and refers.",
+      "guidance": {"purpose_evidence": {"mortgage": "outstanding balance and remaining term", "key_person": "remuneration or profit contribution with accounts", "share_protection": "shareholding valuation and agreement", "estate": "estimated liability"}}
+    },
+    {
+      "id": "UW-FIN-03",
+      "type": "internal",
+      "title": "Large cases, retention and reinsurance referral",
+      "topics": ["financial", "referral"],
+      "products": ["Life", "Medical"],
+      "keywords": ["jumbo", "retention", "reinsurance", "facultative", "aggregate limit"],
+      "applies_when": {"any": [{"field": "cover", "operator": "gte", "value": 2000000}]},
+      "excerpt": "Above the insurer's retention, a case is shared with a reinsurer under an automatic treaty or referred facultatively, and the treaty's jumbo limit applies to the total of all cover in force and pending on that life across the market, not to this application alone. Large cases attract their own requirements: a financial questionnaire, independently verified income or accounts, confirmation of cover elsewhere, and senior underwriter authority. Demonstration stance: cover at or above SGD 2,000,000 refers for financial verification and reinsurance consideration, and no automated path applies.",
+      "guidance": {"demo_threshold": 2000000, "demo_stance": "refer for financial verification and reinsurance consideration"}
+    },
+    {
+      "id": "UW-FIN-04",
+      "type": "internal",
+      "title": "Cover disproportionate to income",
+      "topics": ["financial", "anti_selection"],
+      "products": ["Life"],
+      "keywords": ["disproportionate", "affordability", "premium relative to income"],
+      "applies_when": {"any": [{"field": "cover", "operator": "gte", "value": 500000}]},
+      "excerpt": "Read requested cover against income, existing cover and the applicant's stage of life together. Cover that is a large multiple of income, an applicant with no dependants and no liability seeking substantial death benefit, or premiums that appear unaffordable against declared income, are all reasons to ask for the rationale before terms are considered. Affordability matters for persistency as well as for anti-selection: a policy that lapses in year two has cost the insurer its acquisition expense and has left the applicant with nothing.",
+      "guidance": {"demo_stance": "request the rationale where cover materially exceeds the income multiple or affordability looks doubtful"}
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "label": "Complex declaration with missing laboratory evidence (mirrors the demo's Priya Shah)",
+  "profile": {"name": "Priya Shah", "age": 38, "sex": "Female", "occupation": "Designer",
+    "product": "Medical", "cover": 500000, "bmi": 25.2, "smoker": false, "condition": "complex",
+    "annualIncome": 85000, "existingCover": 150000, "termYears": 20, "systolic": null,
+    "diastolic": null, "hba1c": null, "egfr": null, "ldl": null, "diagnosisYears": 3,
+    "hospitalisations": 1, "reportAgeDays": null},
+  "ml": {"available": true, "model": "mock-underwriting-ml-2026-09", "standard": true,
+    "confidence": 0.651, "calibrated": true, "ood": false, "evidence_complete": false,
+    "verified_document_hashes": []},
+  "evidence": {"complete": false,
+    "warnings": ["Referenced laboratory report is not among the uploaded documents."],
+    "findings": [{"id": "DOC-1", "source": "Synthetic referral letter", "page": 1,
+      "quote": "Awaiting results of renal and metabolic screen.",
+      "text": "Specialist referral mentions an ongoing investigation; results are not included."}]}
+}

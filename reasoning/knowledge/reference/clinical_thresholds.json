@@ -1,0 +1,73 @@
+{
+  "collection": "Public clinical classifications",
+  "status": "public_reference",
+  "note": "Classification thresholds published by the named clinical bodies, held separately from the underwriting stances that refer to them. A clinical classification describes a measurement; it is not an underwriting decision rule and does not by itself rate, postpone or decline anything.",
+  "cards": [
+    {
+      "id": "REF-BMI-WHO",
+      "type": "knowledge",
+      "title": "WHO adult body mass index classification",
+      "source": "World Health Organization adult BMI classification; WHO 2004 expert consultation on Asian populations",
+      "topics": ["build", "bmi"],
+      "products": ["Life", "Medical"],
+      "keywords": ["bmi", "body mass index", "obese", "overweight"],
+      "applies_when": {"any": [{"field": "bmi", "operator": "gte", "value": 25}, {"field": "bmi", "operator": "lt", "value": 18.5}]},
+      "excerpt": "WHO adult categories: underweight below 18.5; normal range 18.5 to 24.9; overweight 25.0 to 29.9; obesity 30.0 and above, subdivided into class I 30.0-34.9, class II 35.0-39.9 and class III 40.0 and above. The 2004 WHO expert consultation on Asian populations retained these categories but added public-health action points at 23 and 27.5, reflecting higher cardiometabolic risk at a given index in several Asian populations. BMI does not distinguish muscle from fat and is a screening measure rather than a diagnosis."
+    },
+    {
+      "id": "REF-BP-ACC-AHA",
+      "type": "knowledge",
+      "title": "Blood pressure categories: ACC/AHA and ESC/ESH",
+      "source": "2017 ACC/AHA hypertension guideline; 2018 ESC/ESH arterial hypertension guideline",
+      "topics": ["cardiovascular", "blood_pressure"],
+      "products": ["Life", "Medical"],
+      "keywords": ["blood pressure", "hypertension", "systolic", "diastolic"],
+      "applies_when": {"any": [{"field": "systolic", "operator": "gte", "value": 120}, {"field": "diastolic", "operator": "gte", "value": 80}]},
+      "excerpt": "2017 ACC/AHA categories, in mmHg: normal below 120 and below 80; elevated 120-129 and below 80; stage 1 hypertension 130-139 or 80-89; stage 2 hypertension 140 or above, or 90 or above; hypertensive crisis above 180 and/or above 120, requiring prompt clinical attention. The 2018 ESC/ESH guideline uses a different scheme still common outside the United States: grade 1 140-159/90-99, grade 2 160-179/100-109, grade 3 180 or above / 110 or above. Both schemes assume properly taken, repeated measurements; a single office reading classifies nothing."
+    },
+    {
+      "id": "REF-HBA1C-ADA",
+      "type": "knowledge",
+      "title": "Glycaemia thresholds and HbA1c units",
+      "source": "American Diabetes Association Standards of Care, diagnostic criteria",
+      "topics": ["metabolic", "diabetes", "hba1c"],
+      "products": ["Life", "Medical"],
+      "keywords": ["hba1c", "a1c", "diabetes", "prediabetes", "glucose", "mmol/mol"],
+      "applies_when": {"any": [{"field": "hba1c", "operator": "gte", "value": 5.7}]},
+      "excerpt": "ADA diagnostic thresholds: HbA1c below 5.7% is normal, 5.7-6.4% indicates prediabetes, and 6.5% or above meets the criterion for diabetes; fasting plasma glucose 7.0 mmol/L (126 mg/dL) or above, a two-hour value of 11.1 mmol/L (200 mg/dL) or above on an oral glucose tolerance test, or a random value of 11.1 mmol/L or above with classic symptoms are the alternative criteria. In the absence of unequivocal hyperglycaemia, diagnosis requires two abnormal results. A glycaemic target below 7% is appropriate for many non-pregnant adults, with individualised targets elsewhere. Units matter: HbA1c is reported both as NGSP percentage and as IFCC mmol/mol, where 6.5% is approximately 48 mmol/mol and 7.0% approximately 53 mmol/mol. HbA1c is unreliable in haemoglobinopathy, recent transfusion, haemolysis, pregnancy and advanced kidney disease."
+    },
+    {
+      "id": "REF-EGFR-KDIGO",
+      "type": "knowledge",
+      "title": "KDIGO chronic kidney disease categories",
+      "source": "KDIGO clinical practice guideline for the evaluation and management of chronic kidney disease",
+      "topics": ["renal", "egfr"],
+      "products": ["Life", "Medical"],
+      "keywords": ["egfr", "gfr", "ckd", "albuminuria", "creatinine"],
+      "applies_when": {"any": [{"field": "egfr", "operator": "lt", "value": 90}]},
+      "excerpt": "GFR categories, in mL/min/1.73 m squared: G1 90 or above, G2 60-89, G3a 45-59, G3b 30-44, G4 15-29, G5 below 15. Albuminuria categories, by urine albumin-to-creatinine ratio: A1 below 30 mg/g (below 3 mg/mmol), A2 30-300 mg/g, A3 above 300 mg/g. Chronic kidney disease requires the abnormality to persist for more than three months, so a single reduced eGFR is not CKD. G1 and G2 are only CKD when another marker of kidney damage such as albuminuria is present. Risk is described by GFR and albuminuria together, not by GFR alone. Estimating equations, including the 2021 CKD-EPI creatinine equation, are estimates that vary with muscle mass, diet and laboratory method."
+    },
+    {
+      "id": "REF-LIPID-ATP",
+      "type": "knowledge",
+      "title": "LDL cholesterol reference bands and unit conversion",
+      "source": "NCEP ATP III reference categories",
+      "topics": ["metabolic", "lipids", "ldl"],
+      "products": ["Life", "Medical"],
+      "keywords": ["ldl", "cholesterol", "mmol/l", "mg/dl", "lipid"],
+      "applies_when": {"any": [{"field": "ldl", "operator": "gte", "value": 3.4}]},
+      "excerpt": "Widely quoted LDL cholesterol categories: optimal below 2.6 mmol/L (100 mg/dL); near optimal 2.6-3.3 mmol/L (100-129 mg/dL); borderline high 3.4-4.1 mmol/L (130-159 mg/dL); high 4.1-4.9 mmol/L (160-189 mg/dL); very high 4.9 mmol/L (190 mg/dL) and above. Cholesterol values convert between units by dividing mg/dL by approximately 38.67 to obtain mmol/L; triglycerides use a different factor of approximately 88.57, so a value transcribed without its unit and analyte cannot be interpreted. Contemporary guidelines set treatment targets by absolute cardiovascular risk rather than by these bands alone, and an untreated LDL of 4.9 mmol/L or above raises the question of familial hypercholesterolaemia."
+    },
+    {
+      "id": "REF-SMOKING-DOLL",
+      "type": "knowledge",
+      "title": "Mortality associated with cigarette smoking",
+      "source": "Doll, Peto, Boreham and Sutherland, Mortality in relation to smoking: 50 years' observations on male British doctors, BMJ 2004",
+      "topics": ["lifestyle", "tobacco"],
+      "products": ["Life", "Medical"],
+      "keywords": ["smoking", "tobacco", "cessation", "mortality"],
+      "applies_when": {"any": [{"field": "smoker", "operator": "eq", "value": true}]},
+      "excerpt": "The 50-year follow-up of male British doctors found that persistent cigarette smokers born between 1900 and 1930 died on average about ten years younger than lifelong non-smokers, and that stopping at about age 60, 50, 40 or 30 recovered roughly three, six, nine or ten of those years respectively. The cohort is historical, male and occupationally specific, so the figures are evidence that cessation timing matters materially rather than a rating table for any individual applicant."
+    }
+  ]
+}

@@ -1,0 +1,158 @@
+{
+  "case_id": "CASE-029",
+  "profile": {
+    "name": "Ethan Lau",
+    "age": 40,
+    "sex": "Female",
+    "occupation": "Sales executive",
+    "product": "Life",
+    "cover": 481000,
+    "bmi": 23.4,
+    "smoker": false,
+    "condition": "none",
+    "annualIncome": 110000,
+    "existingCover": 500000,
+    "termYears": 10,
+    "systolic": 124,
+    "diastolic": 83,
+    "hba1c": 5.4,
+    "egfr": 101,
+    "ldl": 2.1,
+    "diagnosisYears": 0,
+    "hospitalisations": 0,
+    "reportAgeDays": 59,
+    "evidence_source": "synthetic: written by the sample generator, not extracted from the PDF"
+  },
+  "human": {
+    "outcome": "more_evidence",
+    "decided_by": "sample generator (fictional underwriter)",
+    "decided_at": "2026-08-01",
+    "cohort": "life-discrepancy",
+    "notes": "Declared HbA1c 5.4; the attached report shows 7.2. Repeat test and GP report requested.",
+    "rationale": "more_evidence: HbA1c 7.2. Declared HbA1c 5.4; the attached report shows 7.2. Repeat test and GP report requested.",
+    "evidence_requested": [
+      "repeat HbA1c",
+      "attending physician statement"
+    ],
+    "later_outcome": {
+      "outcome": "standard",
+      "decided_at": "2026-08-20"
+    },
+    "rules_cited": [
+      "non-disclosure review"
+    ]
+  },
+  "instructions": "",
+  "documents": [
+    {
+      "file": "CASE-029-report.pdf"
+    }
+  ],
+  "evidence": {
+    "complete": true,
+    "findings": [
+      {
+        "id": "DOC-1",
+        "source": "Synthetic medical report",
+        "page": 1,
+        "quote": "Declared condition status: none",
+        "text": "Declared condition status recorded as none. Tobacco use: no.",
+        "verified": true
+      },
+      {
+        "id": "DOC-1",
+        "source": "Synthetic medical report",
+        "page": 1,
+        "quote": "HbA1c: 7.2%",
+        "text": "Report records HbA1c, eGFR, LDL, blood pressure. BMI 23.4.",
+        "verified": true
+      }
+    ],
+    "warnings": [],
+    "values": [
+      {
+        "field": "condition",
+        "value": "none",
+        "quote": "Declared condition status: none",
+        "id": "DOC-1",
+        "page": 1,
+        "verified": true
+      },
+      {
+        "field": "smoker",
+        "value": false,
+        "quote": "Tobacco or nicotine use: no",
+        "id": "DOC-1",
+        "page": 1,
+        "verified": true
+      },
+      {
+        "field": "bmi",
+        "value": 23.4,
+        "quote": "Body mass index: 23.4",
+        "id": "DOC-1",
+        "page": 1,
+        "verified": true
+      },
+      {
+        "field": "hospitalisations",
+        "value": 0,
+        "quote": "Hospital admissions in the past 12 months: 0",
+        "id": "DOC-1",
+        "page": 1,
+        "verified": true
+      },
+      {
+        "field": "systolic",
+        "value": 124,
+        "quote": "Blood pressure: 124/83 mmHg",
+        "id": "DOC-1",
+        "page": 1,
+        "verified": true
+      },
+      {
+        "field": "diastolic",
+        "value": 83,
+        "quote": "Blood pressure: 124/83 mmHg",
+        "id": "DOC-1",
+        "page": 1,
+        "verified": true
+      },
+      {
+        "field": "hba1c",
+        "value": 7.2,
+        "quote": "HbA1c: 7.2%",
+        "id": "DOC-1",
+        "page": 1,
+        "verified": true
+      },
+      {
+        "field": "egfr",
+        "value": 101,
+        "quote": "eGFR: 101 mL/min/1.73m2",
+        "id": "DOC-1",
+        "page": 1,
+        "verified": true
+      },
+      {
+        "field": "ldl",
+        "value": 2.1,
+        "quote": "LDL cholesterol: 2.1 mmol/L",
+        "id": "DOC-1",
+        "page": 1,
+        "verified": true
+      }
+    ]
+  },
+  "evidence_source": "synthetic: written by the sample generator, not extracted from the PDF",
+  "ml": {
+    "model": "mock-underwriting-ml-2026-09",
+    "standard": true,
+    "confidence": 0.9527,
+    "calibrated": true,
+    "ood": false,
+    "available": true,
+    "evidence_complete": true,
+    "source": "ml_training model; evidence_complete asserted by the sample generator"
+  }
+}

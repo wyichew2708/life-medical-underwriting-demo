@@ -1,0 +1,147 @@
+{
+  "case_id": "CASE-007",
+  "profile": {
+    "name": "Kenneth Goh",
+    "age": 39,
+    "sex": "Female",
+    "occupation": "Delivery rider",
+    "product": "Life",
+    "cover": 450000,
+    "bmi": 21.1,
+    "smoker": false,
+    "condition": "none",
+    "annualIncome": 110000,
+    "existingCover": 0,
+    "termYears": 10,
+    "systolic": 126,
+    "diastolic": 77,
+    "hba1c": 5.5,
+    "egfr": 93,
+    "ldl": 2.6,
+    "diagnosisYears": 0,
+    "hospitalisations": 0,
+    "reportAgeDays": 20,
+    "evidence_source": "synthetic: written by the sample generator, not extracted from the PDF"
+  },
+  "human": {
+    "outcome": "standard",
+    "decided_by": "sample generator (fictional underwriter)",
+    "decided_at": "2026-08-01",
+    "cohort": "life-standard",
+    "notes": "Synthetic outcome generated from the case archetype.",
+    "rationale": "standard: no adverse findings."
+  },
+  "instructions": "",
+  "documents": [
+    {
+      "file": "CASE-007-report.pdf"
+    }
+  ],
+  "evidence": {
+    "complete": true,
+    "findings": [
+      {
+        "id": "DOC-1",
+        "source": "Synthetic medical report",
+        "page": 1,
+        "quote": "Declared condition status: none",
+        "text": "Declared condition status recorded as none. Tobacco use: no.",
+        "verified": true
+      },
+      {
+        "id": "DOC-1",
+        "source": "Synthetic medical report",
+        "page": 1,
+        "quote": "HbA1c: 5.5%",
+        "text": "Report records HbA1c, eGFR, LDL, blood pressure. BMI 21.1.",
+        "verified": true
+      }
+    ],
+    "warnings": [],
+    "values": [
+      {
+        "field": "condition",
+        "value": "none",
+        "quote": "Declared condition status: none",
+        "id": "DOC-1",
+        "page": 1,
+        "verified": true
+      },
+      {
+        "field": "smoker",
+        "value": false,
+        "quote": "Tobacco or nicotine use: no",
+        "id": "DOC-1",
+        "page": 1,
+        "verified": true
+      },
+      {
+        "field": "bmi",
+        "value": 21.1,
+        "quote": "Body mass index: 21.1",
+        "id": "DOC-1",
+        "page": 1,
+        "verified": true
+      },
+      {
+        "field": "hospitalisations",
+        "value": 0,
+        "quote": "Hospital admissions in the past 12 months: 0",
+        "id": "DOC-1",
+        "page": 1,
+        "verified": true
+      },
+      {
+        "field": "systolic",
+        "value": 126,
+        "quote": "Blood pressure: 126/77 mmHg",
+        "id": "DOC-1",
+        "page": 1,
+        "verified": true
+      },
+      {
+        "field": "diastolic",
+        "value": 77,
+        "quote": "Blood pressure: 126/77 mmHg",
+        "id": "DOC-1",
+        "page": 1,
+        "verified": true
+      },
+      {
+        "field": "hba1c",
+        "value": 5.5,
+        "quote": "HbA1c: 5.5%",
+        "id": "DOC-1",
+        "page": 1,
+        "verified": true
+      },
+      {
+        "field": "egfr",
+        "value": 93,
+        "quote": "eGFR: 93 mL/min/1.73m2",
+        "id": "DOC-1",
+        "page": 1,
+        "verified": true
+      },
+      {
+        "field": "ldl",
+        "value": 2.6,
+        "quote": "LDL cholesterol: 2.6 mmol/L",
+        "id": "DOC-1",
+        "page": 1,
+        "verified": true
+      }
+    ]
+  },
+  "evidence_source": "synthetic: written by the sample generator, not extracted from the PDF",
+  "ml": {
+    "model": "mock-underwriting-ml-2026-09",
+    "standard": true,
+    "confidence": 0.9527,
+    "calibrated": true,
+    "ood": false,
+    "available": true,
+    "evidence_complete": true,
+    "source": "ml_training model; evidence_complete asserted by the sample generator"
+  }
+}

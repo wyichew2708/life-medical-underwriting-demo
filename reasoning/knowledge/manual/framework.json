@@ -1,0 +1,66 @@
+{
+  "collection": "Underwriting framework",
+  "status": "illustrative",
+  "note": "Demonstration stand-in for an insurer's approved underwriting manual. Written for this repository from general industry practice; no proprietary manual text is reproduced. Every threshold is a demo assumption, not an actuarial or medical recommendation.",
+  "cards": [
+    {
+      "id": "UW-FRAME-01",
+      "type": "internal",
+      "title": "Decision outcomes available to an underwriter",
+      "topics": ["framework", "decision"],
+      "products": ["Life", "Medical"],
+      "applies_when": {"always": true},
+      "excerpt": "A life or medical case resolves to one of: accept at standard rates; accept on substandard terms (extra mortality expressed as a table rating or percentage, a per-mille flat extra for a temporary risk, or a benefit exclusion); counter-offer at reduced cover, shorter term or altered benefits; postpone until a defined event or interval has passed; or decline. Postponement and decline are different answers: postponement says the risk cannot be assessed yet, decline says it has been assessed and is outside appetite. An assistant may recommend; only an authorised underwriter decides.",
+      "guidance": {"outcomes": ["standard", "substandard_rating", "flat_extra", "exclusion", "counter_offer", "postpone", "decline"]}
+    },
+    {
+      "id": "UW-FRAME-02",
+      "type": "internal",
+      "title": "Numerical rating system for extra mortality",
+      "topics": ["framework", "rating"],
+      "products": ["Life"],
+      "applies_when": {"always": true},
+      "excerpt": "Life extra mortality is conventionally assembled numerically: standard risk is 100% of expected mortality, each adverse factor adds debits expressed in percentage points, favourable factors may offset with credits, and the total is expressed either as a mortality percentage (for example 150%) or as a table rating, where each table step commonly represents a further 25% of expected mortality. Temporary or event-driven risks are handled instead as a flat extra per mille of sum assured for a stated number of years, because they do not scale with age. Debits from related impairments are not simply added: correlated conditions such as obesity, hypertension and dyslipidaemia are normally assessed as a combined picture to avoid double counting.",
+      "guidance": {"standard": "100% of expected mortality", "table_step": "commonly +25% per table", "flat_extra": "per mille of sum assured for a fixed period"}
+    },
+    {
+      "id": "UW-FRAME-03",
+      "type": "internal",
+      "title": "Evidence hierarchy and what a declaration is worth",
+      "topics": ["framework", "evidence"],
+      "products": ["Life", "Medical"],
+      "applies_when": {"always": true},
+      "excerpt": "Rank evidence explicitly. A self-declaration is an assertion by the applicant. A structured value supplied by the intake form is a declared number, not a measurement, until a verified source is attached. A value extracted from a document is a reading of that document and carries its page and quote. A clinician record or laboratory report from an identified provider is the strongest routine evidence. A test having been ordered is not a diagnosis, and an absent finding is not a negative finding: if required information cannot be located, the case refers rather than proceeding as if the answer were favourable.",
+      "guidance": {"ranking": ["self-declaration", "declared structured value", "extracted document finding with page and quote", "identified clinician or laboratory record"]}
+    },
+    {
+      "id": "UW-FRAME-04",
+      "type": "internal",
+      "title": "Referral triggers in this demonstration",
+      "topics": ["framework", "referral"],
+      "products": ["Life", "Medical"],
+      "applies_when": {"always": true},
+      "excerpt": "This demonstration refers a case to a human underwriter when any of the following hold: age above 75; life cover above SGD 1,000,000; any tobacco use; any declared medical condition; evidence that is missing, stale, internally inconsistent or unreadable; an input the deployed model reports as out of distribution; an impairment with no applicable rule in the retrieved guidance; or a custom operator rule whose action is referral or evidence request. These thresholds are demonstration settings chosen to exercise the routing, not underwriting policy.",
+      "guidance": {"age_referral": 75, "life_cover_referral": 1000000}
+    },
+    {
+      "id": "UW-FRAME-05",
+      "type": "internal",
+      "title": "Anti-selection, disclosure and moral hazard",
+      "topics": ["framework", "disclosure"],
+      "products": ["Life", "Medical"],
+      "applies_when": {"always": true},
+      "excerpt": "Underwriting exists because applicants know more about their health and intentions than the insurer does. Watch for patterns rather than isolated facts: cover that is large relative to demonstrable need or income, a recent or imminent medical investigation, an application made shortly after a diagnosis or a declined application elsewhere, repeated replacement of existing policies, and inconsistencies between the declaration, the financial picture and the medical evidence. Material non-disclosure is a contractual matter for the insurer to determine under the applicable law and policy terms; an assistant flags the inconsistency and refers, and never alleges misrepresentation.",
+      "guidance": {"signals": ["cover disproportionate to need or income", "recent investigation or diagnosis", "policy replacement pattern", "declaration inconsistent with evidence"]}
+    },
+    {
+      "id": "UW-FRAME-06",
+      "type": "internal",
+      "title": "Combining conditions and conservative resolution",
+      "topics": ["framework", "rating"],
+      "products": ["Life", "Medical"],
+      "applies_when": {"always": true},
+      "excerpt": "Where several rules apply, the restrictions combine conservatively: an evidence request takes priority over a referral, a referral takes priority over proposed terms, and no combination of rules produces an automatic acceptance. Where two retrieved rules conflict, the case refers with both cited rather than the assistant choosing between them. Where an impairment has no retrieved rule at all, the correct output is a referral naming the gap, never an inferred threshold."
+    }
+  ]
+}

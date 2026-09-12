@@ -1,0 +1,15 @@
+{
+  "label": "Life case above a product's non-medical limit, to show product rules changing the route",
+  "profile": {"name": "Rahul Menon", "age": 44, "sex": "Male", "occupation": "Business owner",
+    "product": "Life", "cover": 1200000, "bmi": 26.4, "smoker": false, "condition": "none",
+    "annualIncome": 260000, "existingCover": 300000, "termYears": 20, "systolic": 126,
+    "diastolic": 80, "hba1c": 5.5, "egfr": 92, "ldl": 2.9, "diagnosisYears": 0,
+    "hospitalisations": 0, "reportAgeDays": 40},
+  "ml": {"available": true, "model": "mock-underwriting-ml-2026-09", "standard": true,
+    "confidence": 0.961, "calibrated": true, "ood": false, "evidence_complete": true,
+    "verified_document_hashes": ["0000000000000000000000000000000000000000000000000000000000000000"]},
+  "evidence": {"complete": true, "warnings": [],
+    "findings": [{"id": "DOC-1", "source": "Synthetic medical report", "page": 1,
+      "quote": "No chronic conditions; BP 126/80.",
+      "text": "No declared conditions, blood pressure 126/80, routine results within reference ranges."}]}
+}

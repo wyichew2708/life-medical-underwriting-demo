@@ -1,0 +1,62 @@
+{
+  "collection": "Lifestyle, occupation and pursuits",
+  "status": "illustrative",
+  "note": "Demonstration stances. Flat extras and loadings shown are placeholders for an insurer's own rated tables.",
+  "cards": [
+    {
+      "id": "UW-SMOKE-01",
+      "type": "internal",
+      "title": "Tobacco and nicotine use",
+      "topics": ["lifestyle", "tobacco"],
+      "products": ["Life", "Medical"],
+      "keywords": ["smok", "tobacco", "cigarette", "nicotine", "vape", "vaping", "cotinine", "shisha", "cigar"],
+      "applies_when": {"any": [{"field": "smoker", "operator": "eq", "value": true}]},
+      "excerpt": "Smoker status is normally defined as any use of tobacco or nicotine within the preceding twelve months, and most insurers include cigars, pipes, shisha, chewing tobacco, heated tobacco, e-cigarettes and nicotine replacement in that definition. Smoker and non-smoker rates are a separate pricing basis rather than a debit added to the medical assessment, so a smoker with an impairment is rated on smoker rates and then assessed for the impairment. Cotinine testing is the usual verification where evidence is required, and a positive cotinine result against a non-smoker declaration is a discrepancy to refer, not something to interpret. A declaration of recent cessation should record the actual last use date, because the twelve-month clock runs from that date. Smoking also amplifies other impairments, particularly cardiovascular, respiratory and diabetic risk, and is weighed in that combined picture rather than in isolation.",
+      "guidance": {"definition": "any tobacco or nicotine use within the last 12 months", "verification": "cotinine testing where required", "demo_stance": "smoker rates apply; discrepancy between declaration and cotinine refers"}
+    },
+    {
+      "id": "UW-ALCOHOL-01",
+      "type": "internal",
+      "title": "Alcohol and substance use",
+      "topics": ["lifestyle", "alcohol"],
+      "products": ["Life", "Medical"],
+      "keywords": ["alcohol", "drinking", "units per week", "liver", "ggt", "detox", "rehabilitation", "substance", "cannabis", "opioid"],
+      "applies_when": {"never_by_field": true},
+      "excerpt": "Consumption is assessed on quantity, pattern and consequences rather than a single number: a history of dependency, withdrawal, detoxification, alcohol-related liver disease, pancreatitis, drink-driving convictions or absence from work matters more than reported weekly units, which are routinely understated. Raised liver enzymes, particularly GGT, or a raised MCV alongside a modest declaration is a discrepancy to investigate. Demonstration stance: a declared history of dependency is postponed until a documented period of abstinence, commonly measured in years rather than months, and then rated on the evidence of sustained recovery; current dependency or recent relapse refers. Recreational drug use is assessed the same way, on dependency, route of administration, associated infection risk and time since last use.",
+      "guidance": {"signals": ["dependency or detoxification history", "alcohol-related organ damage", "raised GGT or MCV against a modest declaration", "convictions or work absence"], "demo_stance": "postpone during and after recent dependency; refer current use"}
+    },
+    {
+      "id": "UW-OCC-01",
+      "type": "internal",
+      "title": "Occupational hazard",
+      "topics": ["occupation"],
+      "products": ["Life", "Medical"],
+      "keywords": ["occupation", "offshore", "scaffold", "mining", "diver", "security", "armed forces", "night shift", "chemical"],
+      "applies_when": {"never_by_field": true},
+      "excerpt": "Occupational risk is normally handled as a flat extra per mille of sum assured rather than as a mortality percentage, because it does not scale with age, and it is removed if the applicant leaves the occupation. What matters is the actual work done rather than the job title: a construction company director in an office is not a scaffolder. Relevant factors are height, confined spaces, heavy machinery, explosives, electricity, chemical or dust exposure, diving, aviation duties, offshore work, armed or security duties, commercial driving distance and shift patterns. Disability and income-protection benefits are far more occupation-sensitive than life cover and use their own occupational classes. Demonstration stance: hazard classes 1 and 2 attract no occupational extra, class 3 attracts a small flat extra, and class 4 refers for individual assessment.",
+      "guidance": {"mechanism": "flat extra per mille, removable on change of occupation", "demo_classes": {"1-2": "no extra", "3": "small flat extra", "4": "refer"}}
+    },
+    {
+      "id": "UW-AVOCATION-01",
+      "type": "internal",
+      "title": "Hazardous pursuits and aviation",
+      "topics": ["avocation"],
+      "products": ["Life"],
+      "keywords": ["diving", "scuba", "parachute", "skydiv", "climbing", "mountaineer", "motorsport", "racing", "aviation", "pilot", "paraglid", "microlight"],
+      "applies_when": {"never_by_field": true},
+      "excerpt": "Declared pursuits require the relevant questionnaire before any assessment: scuba diving needs depth, certification and dives per year; climbing needs altitude, technicality and destinations; motorsport needs the class and number of events; aviation needs licence type, total and recent hours, aircraft type and whether flying is commercial. Pursuits are handled either by a flat extra per mille for the period of participation or by an exclusion endorsement for the activity, and the two are alternatives that should be explained to the applicant rather than applied silently. Demonstration stance: any declared hazardous pursuit refers, because the questionnaire data is not part of this demo's intake.",
+      "guidance": {"mechanism": "flat extra for the period of participation, or an activity exclusion", "demo_stance": "refer"}
+    },
+    {
+      "id": "UW-RESIDENCE-01",
+      "type": "internal",
+      "title": "Residence and travel",
+      "topics": ["residence", "travel"],
+      "products": ["Life", "Medical"],
+      "keywords": ["travel", "residence", "expatriate", "relocat", "conflict", "posting"],
+      "applies_when": {"never_by_field": true},
+      "excerpt": "Residence affects mortality and morbidity through healthcare access, endemic disease and conflict, and it also affects the insurer's ability to underwrite, service and investigate a claim. Short leisure travel is rarely material; extended residence, work postings to conflict or high-hazard areas, and medical treatment obtained abroad are. Medical expense products are especially sensitive because the geographical scope of cover, provider networks and cost levels differ sharply by territory. Demonstration stance: declared residence or extended posting outside the issuing territory refers.",
+      "guidance": {"demo_stance": "refer extended residence or postings outside the issuing territory"}
+    }
+  ]
+}

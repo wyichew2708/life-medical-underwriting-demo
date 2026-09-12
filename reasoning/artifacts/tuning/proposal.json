@@ -1,0 +1,1759 @@
+{
+  "generated_at": "2026-09-12T14:31:17+00:00",
+  "bank": {
+    "path": "/Users/jimmyc/life-underwriting/reasoning/cases/bank",
+    "cases": 30,
+    "train": 30,
+    "holdout": 30,
+    "folds": 5,
+    "unusable": 0
+  },
+  "method": "5-fold cross-validation",
+  "objective": "severity",
+  "judge": false,
+  "offline": true,
+  "min_delta": 0.01,
+  "min_support": 3,
+  "allow_disable": false,
+  "seed": 11,
+  "product": null,
+  "baseline_config": {
+    "retrieval_source_limit": 30,
+    "include_design_sources": true,
+    "design_source_limit": 3,
+    "precedent_limit": 3,
+    "prompt_variant": "standard",
+    "max_revisions": 1,
+    "require_internal_citation_for_terms": true,
+    "warnings_block_terms": true,
+    "rule_overrides": {},
+    "provenance": {}
+  },
+  "proposed_config": {
+    "retrieval_source_limit": 30,
+    "include_design_sources": true,
+    "design_source_limit": 3,
+    "precedent_limit": 3,
+    "prompt_variant": "standard",
+    "max_revisions": 1,
+    "require_internal_citation_for_terms": true,
+    "warnings_block_terms": true,
+    "rule_overrides": {},
+    "provenance": {}
+  },
+  "diff": {},
+  "stability": {},
+  "not_proposed": {},
+  "comparison": {
+    "train": {
+      "severity_score": {
+        "from": 0.83,
+        "to": 0.83,
+        "delta": 0.0
+      },
+      "quality_score": {
+        "from": 0.8,
+        "to": 0.8,
+        "delta": 0.0
+      },
+      "agreement": {
+        "from": 0.8,
+        "to": 0.8,
+        "delta": 0.0
+      },
+      "unsafe_disagreements": {
+        "from": 1,
+        "to": 1,
+        "delta": 0
+      },
+      "conservative_disagreements": {
+        "from": 5,
+        "to": 5,
+        "delta": 0
+      }
+    },
+    "holdout": {
+      "severity_score": {
+        "from": 0.83,
+        "to": 0.7967,
+        "delta": -0.0333
+      },
+      "quality_score": {
+        "from": 0.8,
+        "to": 0.787,
+        "delta": -0.013
+      },
+      "agreement": {
+        "from": 0.8,
+        "to": 0.7667,
+        "delta": -0.0333
+      },
+      "unsafe_disagreements": {
+        "from": 1,
+        "to": 2,
+        "delta": 1
+      },
+      "conservative_disagreements": {
+        "from": 5,
+        "to": 5,
+        "delta": 0
+      },
+      "per_fold": [
+        {
+          "fold": 1,
+          "holdout": 6,
+          "adopted": 0,
+          "severity_delta": 0.0,
+          "unsafe_delta": 0
+        },
+        {
+          "fold": 2,
+          "holdout": 6,
+          "adopted": 0,
+          "severity_delta": 0.0,
+          "unsafe_delta": 0
+        },
+        {
+          "fold": 3,
+          "holdout": 6,
+          "adopted": 0,
+          "severity_delta": 0.0,
+          "unsafe_delta": 0
+        },
+        {
+          "fold": 4,
+          "holdout": 6,
+          "adopted": 1,
+          "severity_delta": -0.1667,
+          "unsafe_delta": 1
+        },
+        {
+          "fold": 5,
+          "holdout": 6,
+          "adopted": 0,
+          "severity_delta": 0.0,
+          "unsafe_delta": 0
+        }
+      ],
+      "folds": 5
+    },
+    "holdout_changed_cases": [
+      {
+        "case_id": "CASE-029",
+        "human": "more_evidence",
+        "from": "request_evidence",
+        "to": "refer",
+        "verdict": "match -> unsafe"
+      }
+    ]
+  },
+  "accepted": [],
+  "trials_run": 64,
+  "trials": [
+    {
+      "pass": 1,
+      "knob": "RTE-AGE-75 threshold (age gt \u2026)",
+      "from": 75,
+      "value": 60,
+      "severity_score": 0.83,
+      "objective": 0.83,
+      "delta": 0.0,
+      "quality_score": 0.8,
+      "unsafe_disagreements": 1,
+      "agreement": 0.8,
+      "improved": 0,
+      "worsened": 0,
+      "improved_cases": [],
+      "worsened_cases": []
+    },
+    {
+      "pass": 1,
+      "knob": "RTE-AGE-75 threshold (age gt \u2026)",
+      "from": 75,
+      "value": 65,
+      "severity_score": 0.83,
+      "objective": 0.83,
+      "delta": 0.0,
+      "quality_score": 0.8,
+      "unsafe_disagreements": 1,
+      "agreement": 0.8,
+      "improved": 0,
+      "worsened": 0,
+      "improved_cases": [],
+      "worsened_cases": []
+    },
+    {
+      "pass": 1,
+      "knob": "RTE-AGE-75 threshold (age gt \u2026)",
+      "from": 75,
+      "value": 70,
+      "severity_score": 0.83,
+      "objective": 0.83,
+      "delta": 0.0,
+      "quality_score": 0.8,
+      "unsafe_disagreements": 1,
+      "agreement": 0.8,
+      "improved": 0,
+      "worsened": 0,
+      "improved_cases": [],
+      "worsened_cases": []
+    },
+    {
+      "pass": 1,
+      "knob": "RTE-AGE-75 threshold (age gt \u2026)",
+      "from": 75,
+      "value": 80,
+      "severity_score": 0.83,
+      "objective": 0.83,
+      "delta": 0.0,
+      "quality_score": 0.8,
+      "unsafe_disagreements": 1,
+      "agreement": 0.8,
+      "improved": 0,
+      "worsened": 0,
+      "improved_cases": [],
+      "worsened_cases": []
+    },
+    {
+      "pass": 1,
+      "knob": "RTE-LIFE-COVER-1M threshold (cover gt \u2026)",
+      "from": 1000000,
+      "value": 500000,
+      "severity_score": 0.7967,
+      "objective": 0.7967,
+      "delta": -0.0333,
+      "quality_score": 0.806,
+      "unsafe_disagreements": 1,
+      "agreement": 0.7333,
+      "improved": 0,
+      "worsened": 2,
+      "improved_cases": [],
+      "worsened_cases": [
+        "CASE-002",
+        "CASE-004"
+      ]
+    },
+    {
+      "pass": 1,
+      "knob": "RTE-LIFE-COVER-1M threshold (cover gt \u2026)",
+      "from": 1000000,
+      "value": 875000,
+      "severity_score": 0.83,
+      "objective": 0.83,
+      "delta": 0.0,
+      "quality_score": 0.8,
+      "unsafe_disagreements": 1,
+      "agreement": 0.8,
+      "improved": 0,
+      "worsened": 0,
+      "improved_cases": [],
+      "worsened_cases": []
+    },
+    {
+      "pass": 1,
+      "knob": "RTE-LIFE-COVER-1M threshold (cover gt \u2026)",
+      "from": 1000000,
+      "value": 1250000,
+      "severity_score": 0.83,
+      "objective": 0.83,
+      "delta": 0.0,
+      "quality_score": 0.799,
+      "unsafe_disagreements": 1,
+      "agreement": 0.8,
+      "improved": 0,
+      "worsened": 0,
+      "improved_cases": [],
+      "worsened_cases": []
+    },
+    {
+      "pass": 1,
+      "knob": "RTE-LIFE-COVER-1M threshold (cover gt \u2026)",
+      "from": 1000000,
+      "value": 1625000,
+      "severity_score": 0.83,
+      "objective": 0.83,
+      "delta": 0.0,
+      "quality_score": 0.799,
+      "unsafe_disagreements": 1,
+      "agreement": 0.8,
+      "improved": 0,
+      "worsened": 0,
+      "improved_cases": [],
+      "worsened_cases": []
+    },
+    {
+      "pass": 1,
+      "knob": "RTE-LIFE-COVER-1M threshold (cover gt \u2026)",
+      "from": 1000000,
+      "value": 2000000,
+      "severity_score": 0.83,
+      "objective": 0.83,
+      "delta": 0.0,
+      "quality_score": 0.797,
+      "unsafe_disagreements": 1,
+      "agreement": 0.8,
+      "improved": 0,
+      "worsened": 0,
+      "improved_cases": [],
+      "worsened_cases": []
+    },
+    {
+      "pass": 1,
+      "knob": "RTE-COVER-2M threshold (cover gte \u2026)",
+      "from": 2000000,
+      "value": 1000000,
+      "severity_score": 0.83,
+      "objective": 0.83,
+      "delta": 0.0,
+      "quality_score": 0.801,
+      "unsafe_disagreements": 1,
+      "agreement": 0.8,
+      "improved": 0,
+      "worsened": 0,
+      "improved_cases": [],
+      "worsened_cases": []
+    },
+    {
+      "pass": 1,
+      "knob": "RTE-COVER-2M threshold (cover gte \u2026)",
+      "from": 2000000,
+      "value": 3000000,
+      "severity_score": 0.83,
+      "objective": 0.83,
+      "delta": 0.0,
+      "quality_score": 0.8,
+      "unsafe_disagreements": 1,
+      "agreement": 0.8,
+      "improved": 0,
+      "worsened": 0,
+      "improved_cases": [],
+      "worsened_cases": []
+    },
+    {
+      "pass": 1,
+      "knob": "RTE-COVER-2M threshold (cover gte \u2026)",
+      "from": 2000000,
+      "value": 4000000,
+      "severity_score": 0.83,
+      "objective": 0.83,
+      "delta": 0.0,
+      "quality_score": 0.8,
+      "unsafe_disagreements": 1,
+      "agreement": 0.8,
+      "improved": 0,
+      "worsened": 0,
+      "improved_cases": [],
+      "worsened_cases": []
+    },
+    {
+      "pass": 1,
+      "knob": "RTE-COVER-2M threshold (cover gte \u2026)",
+      "from": 2000000,
+      "value": 5000000,
+      "severity_score": 0.83,
+      "objective": 0.83,
+      "delta": 0.0,
+      "quality_score": 0.8,
+      "unsafe_disagreements": 1,
+      "agreement": 0.8,
+      "improved": 0,
+      "worsened": 0,
+      "improved_cases": [],
+      "worsened_cases": []
+    },
+    {
+      "pass": 1,
+      "knob": "RTE-BMI-40 threshold (bmi gte \u2026)",
+      "from": 40,
+      "value": 32,
+      "severity_score": 0.83,
+      "objective": 0.83,
+      "delta": 0.0,
+      "quality_score": 0.8,
+      "unsafe_disagreements": 1,
+      "agreement": 0.8,
+      "improved": 0,
+      "worsened": 0,
+      "improved_cases": [],
+      "worsened_cases": []
+    },
+    {
+      "pass": 1,
+      "knob": "RTE-BMI-40 threshold (bmi gte \u2026)",
+      "from": 40,
+      "value": 35.2,
+      "severity_score": 0.83,
+      "objective": 0.83,
+      "delta": 0.0,
+      "quality_score": 0.8,
+      "unsafe_disagreements": 1,
+      "agreement": 0.8,
+      "improved": 0,
+      "worsened": 0,
+      "improved_cases": [],
+      "worsened_cases": []
+    },
+    {
+      "pass": 1,
+      "knob": "RTE-BMI-40 threshold (bmi gte \u2026)",
+      "from": 40,
+      "value": 38.5,
+      "severity_score": 0.83,
+      "objective": 0.83,
+      "delta": 0.0,
+      "quality_score": 0.8,
+      "unsafe_disagreements": 1,
+      "agreement": 0.8,
+      "improved": 0,
+      "worsened": 0,
+      "improved_cases": [],
+      "worsened_cases": []
+    },
+    {
+      "pass": 1,
+      "knob": "RTE-BMI-40 threshold (bmi gte \u2026)",
+      "from": 40,
+      "value": 41.8,
+      "severity_score": 0.83,
+      "objective": 0.83,
+      "delta": 0.0,
+      "quality_score": 0.8,
+      "unsafe_disagreements": 1,
+      "agreement": 0.8,
+      "improved": 0,
+      "worsened": 0,
+      "improved_cases": [],
+      "worsened_cases": []
+    },
+    {
+      "pass": 1,
+      "knob": "RTE-BMI-40 threshold (bmi gte \u2026)",
+      "from": 40,
+      "value": 45,
+      "severity_score": 0.83,
+      "objective": 0.83,
+      "delta": 0.0,
+      "quality_score": 0.8,
+      "unsafe_disagreements": 1,
+      "agreement": 0.8,
+      "improved": 0,
+      "worsened": 0,
+      "improved_cases": [],
+      "worsened_cases": []
+    },
+    {
+      "pass": 1,
+      "knob": "RTE-BMI-LOW threshold (bmi lt \u2026)",
+      "from": 18.5,
+      "value": 16,
+      "severity_score": 0.83,
+      "objective": 0.83,
+      "delta": 0.0,
+      "quality_score": 0.8,
+      "unsafe_disagreements": 1,
+      "agreement": 0.8,
+      "improved": 0,
+      "worsened": 0,
+      "improved_cases": [],
+      "worsened_cases": []
+    },
+    {
+      "pass": 1,
+      "knob": "RTE-BMI-LOW threshold (bmi lt \u2026)",
+      "from": 18.5,
+      "value": 16.8,
+      "severity_score": 0.83,
+      "objective": 0.83,
+      "delta": 0.0,
+      "quality_score": 0.8,
+      "unsafe_disagreements": 1,
+      "agreement": 0.8,
+      "improved": 0,
+      "worsened": 0,
+      "improved_cases": [],
+      "worsened_cases": []
+    },
+    {
+      "pass": 1,
+      "knob": "RTE-BMI-LOW threshold (bmi lt \u2026)",
+      "from": 18.5,
+      "value": 17.5,
+      "severity_score": 0.83,
+      "objective": 0.83,
+      "delta": 0.0,
+      "quality_score": 0.8,
+      "unsafe_disagreements": 1,
+      "agreement": 0.8,
+      "improved": 0,
+      "worsened": 0,
+      "improved_cases": [],
+      "worsened_cases": []
+    },
+    {
+      "pass": 1,
+      "knob": "RTE-BMI-LOW threshold (bmi lt \u2026)",
+      "from": 18.5,
+      "value": 18.2,
+      "severity_score": 0.83,
+      "objective": 0.83,
+      "delta": 0.0,
+      "quality_score": 0.8,
+      "unsafe_disagreements": 1,
+      "agreement": 0.8,
+      "improved": 0,
+      "worsened": 0,
+      "improved_cases": [],
+      "worsened_cases": []
+    },
+    {
+      "pass": 1,
+      "knob": "RTE-BMI-LOW threshold (bmi lt \u2026)",
+      "from": 18.5,
+      "value": 19,
+      "severity_score": 0.83,
+      "objective": 0.83,
+      "delta": 0.0,
+      "quality_score": 0.8,
+      "unsafe_disagreements": 1,
+      "agreement": 0.8,
+      "improved": 0,
+      "worsened": 0,
+      "improved_cases": [],
+      "worsened_cases": []
+    },
+    {
+      "pass": 1,
+      "knob": "RTE-BP-SYS-160 threshold (systolic gte \u2026)",
+      "from": 160,
+      "value": 140,
+      "severity_score": 0.83,
+      "objective": 0.83,
+      "delta": 0.0,
+      "quality_score": 0.767,
+      "unsafe_disagreements": 1,
+      "agreement": 0.8,
+      "improved": 0,
+      "worsened": 0,
+      "improved_cases": [],
+      "worsened_cases": []
+    },
+    {
+      "pass": 1,
+      "knob": "RTE-BP-SYS-160 threshold (systolic gte \u2026)",
+      "from": 160,
+      "value": 150,
+      "severity_score": 0.83,
+      "objective": 0.83,
+      "delta": 0.0,
+      "quality_score": 0.767,
+      "unsafe_disagreements": 1,
+      "agreement": 0.8,
+      "improved": 0,
+      "worsened": 0,
+      "improved_cases": [],
+      "worsened_cases": []
+    },
+    {
+      "pass": 1,
+      "knob": "RTE-BP-SYS-160 threshold (systolic gte \u2026)",
+      "from": 160,
+      "value": 170,
+      "severity_score": 0.83,
+      "objective": 0.83,
+      "delta": 0.0,
+      "quality_score": 0.766,
+      "unsafe_disagreements": 1,
+      "agreement": 0.8,
+      "improved": 0,
+      "worsened": 0,
+      "improved_cases": [],
+      "worsened_cases": []
+    },
+    {
+      "pass": 1,
+      "knob": "RTE-BP-SYS-160 threshold (systolic gte \u2026)",
+      "from": 160,
+      "value": 180,
+      "severity_score": 0.83,
+      "objective": 0.83,
+      "delta": 0.0,
+      "quality_score": 0.765,
+      "unsafe_disagreements": 1,
+      "agreement": 0.8,
+      "improved": 0,
+      "worsened": 0,
+      "improved_cases": [],
+      "worsened_cases": []
+    },
+    {
+      "pass": 1,
+      "knob": "RTE-BP-DIA-100 threshold (diastolic gte \u2026)",
+      "from": 100,
+      "value": 90,
+      "severity_score": 0.83,
+      "objective": 0.83,
+      "delta": 0.0,
+      "quality_score": 0.8,
+      "unsafe_disagreements": 1,
+      "agreement": 0.8,
+      "improved": 0,
+      "worsened": 0,
+      "improved_cases": [],
+      "worsened_cases": []
+    },
+    {
+      "pass": 1,
+      "knob": "RTE-BP-DIA-100 threshold (diastolic gte \u2026)",
+      "from": 100,
+      "value": 95,
+      "severity_score": 0.83,
+      "objective": 0.83,
+      "delta": 0.0,
+      "quality_score": 0.8,
+      "unsafe_disagreements": 1,
+      "agreement": 0.8,
+      "improved": 0,
+      "worsened": 0,
+      "improved_cases": [],
+      "worsened_cases": []
+    },
+    {
+      "pass": 1,
+      "knob": "RTE-BP-DIA-100 threshold (diastolic gte \u2026)",
+      "from": 100,
+      "value": 105,
+      "severity_score": 0.83,
+      "objective": 0.83,
+      "delta": 0.0,
+      "quality_score": 0.8,
+      "unsafe_disagreements": 1,
+      "agreement": 0.8,
+      "improved": 0,
+      "worsened": 0,
+      "improved_cases": [],
+      "worsened_cases": []
+    },
+    {
+      "pass": 1,
+      "knob": "RTE-BP-DIA-100 threshold (diastolic gte \u2026)",
+      "from": 100,
+      "value": 110,
+      "severity_score": 0.83,
+      "objective": 0.83,
+      "delta": 0.0,
+      "quality_score": 0.8,
+      "unsafe_disagreements": 1,
+      "agreement": 0.8,
+      "improved": 0,
+      "worsened": 0,
+      "improved_cases": [],
+      "worsened_cases": []
+    },
+    {
+      "pass": 1,
+      "knob": "RTE-HBA1C-85 threshold (hba1c gt \u2026)",
+      "from": 8.5,
+      "value": 7.0,
+      "severity_score": 0.83,
+      "objective": 0.83,
+      "delta": 0.0,
+      "quality_score": 0.8,
+      "unsafe_disagreements": 1,
+      "agreement": 0.8,
+      "improved": 0,
+      "worsened": 0,
+      "improved_cases": [],
+      "worsened_cases": []
+    },
+    {
+      "pass": 1,
+      "knob": "RTE-HBA1C-85 threshold (hba1c gt \u2026)",
+      "from": 8.5,
+      "value": 7.8,
+      "severity_score": 0.83,
+      "objective": 0.83,
+      "delta": 0.0,
+      "quality_score": 0.8,
+      "unsafe_disagreements": 1,
+      "agreement": 0.8,
+      "improved": 0,
+      "worsened": 0,
+      "improved_cases": [],
+      "worsened_cases": []
+    },
+    {
+      "pass": 1,
+      "knob": "RTE-HBA1C-85 threshold (hba1c gt \u2026)",
+      "from": 8.5,
+      "value": 9.2,
+      "severity_score": 0.83,
+      "objective": 0.83,
+      "delta": 0.0,
+      "quality_score": 0.8,
+      "unsafe_disagreements": 1,
+      "agreement": 0.8,
+      "improved": 0,
+      "worsened": 0,
+      "improved_cases": [],
+      "worsened_cases": []
+    },
+    {
+      "pass": 1,
+      "knob": "RTE-HBA1C-85 threshold (hba1c gt \u2026)",
+      "from": 8.5,
+      "value": 10.0,
+      "severity_score": 0.83,
+      "objective": 0.83,
+      "delta": 0.0,
+      "quality_score": 0.8,
+      "unsafe_disagreements": 1,
+      "agreement": 0.8,
+      "improved": 0,
+      "worsened": 0,
+      "improved_cases": [],
+      "worsened_cases": []
+    },
+    {
+      "pass": 1,
+      "knob": "RTE-HBA1C-65 threshold (hba1c gte \u2026)",
+      "from": 6.5,
+      "value": 5.7,
+      "severity_score": 0.8033,
+      "objective": 0.8033,
+      "delta": -0.0267,
+      "quality_score": 0.767,
+      "unsafe_disagreements": 1,
+      "agreement": 0.7333,
+      "improved": 0,
+      "worsened": 3,
+      "improved_cases": [],
+      "worsened_cases": [
+        "CASE-012",
+        "CASE-013",
+        "CASE-020"
+      ]
+    },
+    {
+      "pass": 1,
+      "knob": "RTE-HBA1C-65 threshold (hba1c gte \u2026)",
+      "from": 6.5,
+      "value": 6.2,
+      "severity_score": 0.8033,
+      "objective": 0.8033,
+      "delta": -0.0267,
+      "quality_score": 0.767,
+      "unsafe_disagreements": 1,
+      "agreement": 0.7333,
+      "improved": 0,
+      "worsened": 3,
+      "improved_cases": [],
+      "worsened_cases": [
+        "CASE-012",
+        "CASE-013",
+        "CASE-020"
+      ]
+    },
+    {
+      "pass": 1,
+      "knob": "RTE-HBA1C-65 threshold (hba1c gte \u2026)",
+      "from": 6.5,
+      "value": 6.6,
+      "severity_score": 0.83,
+      "objective": 0.83,
+      "delta": 0.0,
+      "quality_score": 0.766,
+      "unsafe_disagreements": 1,
+      "agreement": 0.8,
+      "improved": 0,
+      "worsened": 0,
+      "improved_cases": [],
+      "worsened_cases": []
+    },
+    {
+      "pass": 1,
+      "knob": "RTE-HBA1C-65 threshold (hba1c gte \u2026)",
+      "from": 6.5,
+      "value": 7.0,
+      "severity_score": 0.83,
+      "objective": 0.83,
+      "delta": 0.0,
+      "quality_score": 0.766,
+      "unsafe_disagreements": 1,
+      "agreement": 0.8,
+      "improved": 0,
+      "worsened": 0,
+      "improved_cases": [],
+      "worsened_cases": []
+    },
+    {
+      "pass": 1,
+      "knob": "RTE-HBA1C-65 threshold (hba1c gte \u2026)",
+      "from": 6.5,
+      "value": 7.5,
+      "severity_score": 0.8233,
+      "objective": 0.8233,
+      "delta": -0.0067,
+      "quality_score": 0.752,
+      "unsafe_disagreements": 2,
+      "agreement": 0.8333,
+      "improved": 3,
+      "worsened": 1,
+      "improved_cases": [
+        "CASE-010",
+        "CASE-011",
+        "CASE-023"
+      ],
+      "worsened_cases": [
+        "CASE-029"
+      ],
+      "rejected": "increases less-cautious disagreements from 1 to 2"
+    },
+    {
+      "pass": 1,
+      "knob": "RTE-EGFR-45 threshold (egfr lt \u2026)",
+      "from": 45,
+      "value": 30,
+      "severity_score": 0.83,
+      "objective": 0.83,
+      "delta": 0.0,
+      "quality_score": 0.8,
+      "unsafe_disagreements": 1,
+      "agreement": 0.8,
+      "improved": 0,
+      "worsened": 0,
+      "improved_cases": [],
+      "worsened_cases": []
+    },
+    {
+      "pass": 1,
+      "knob": "RTE-EGFR-45 threshold (egfr lt \u2026)",
+      "from": 45,
+      "value": 36,
+      "severity_score": 0.83,
+      "objective": 0.83,
+      "delta": 0.0,
+      "quality_score": 0.8,
+      "unsafe_disagreements": 1,
+      "agreement": 0.8,
+      "improved": 0,
+      "worsened": 0,
+      "improved_cases": [],
+      "worsened_cases": []
+    },
+    {
+      "pass": 1,
+      "knob": "RTE-EGFR-45 threshold (egfr lt \u2026)",
+      "from": 45,
+      "value": 42,
+      "severity_score": 0.83,
+      "objective": 0.83,
+      "delta": 0.0,
+      "quality_score": 0.8,
+      "unsafe_disagreements": 1,
+      "agreement": 0.8,
+      "improved": 0,
+      "worsened": 0,
+      "improved_cases": [],
+      "worsened_cases": []
+    },
+    {
+      "pass": 1,
+      "knob": "RTE-EGFR-45 threshold (egfr lt \u2026)",
+      "from": 45,
+      "value": 49,
+      "severity_score": 0.83,
+      "objective": 0.83,
+      "delta": 0.0,
+      "quality_score": 0.8,
+      "unsafe_disagreements": 1,
+      "agreement": 0.8,
+      "improved": 0,
+      "worsened": 0,
+      "improved_cases": [],
+      "worsened_cases": []
+    },
+    {
+      "pass": 1,
+      "knob": "RTE-EGFR-45 threshold (egfr lt \u2026)",
+      "from": 45,
+      "value": 55,
+      "severity_score": 0.83,
+      "objective": 0.83,
+      "delta": 0.0,
+      "quality_score": 0.8,
+      "unsafe_disagreements": 1,
+      "agreement": 0.8,
+      "improved": 0,
+      "worsened": 0,
+      "improved_cases": [],
+      "worsened_cases": []
+    },
+    {
+      "pass": 1,
+      "knob": "RTE-EGFR-60 threshold (egfr lt \u2026)",
+      "from": 60,
+      "value": 45,
+      "severity_score": 0.83,
+      "objective": 0.83,
+      "delta": 0.0,
+      "quality_score": 0.798,
+      "unsafe_disagreements": 1,
+      "agreement": 0.8,
+      "improved": 0,
+      "worsened": 0,
+      "improved_cases": [],
+      "worsened_cases": []
+    },
+    {
+      "pass": 1,
+      "knob": "RTE-EGFR-60 threshold (egfr lt \u2026)",
+      "from": 60,
+      "value": 52,
+      "severity_score": 0.83,
+      "objective": 0.83,
+      "delta": 0.0,
+      "quality_score": 0.799,
+      "unsafe_disagreements": 1,
+      "agreement": 0.8,
+      "improved": 0,
+      "worsened": 0,
+      "improved_cases": [],
+      "worsened_cases": []
+    },
+    {
+      "pass": 1,
+      "knob": "RTE-EGFR-60 threshold (egfr lt \u2026)",
+      "from": 60,
+      "value": 68,
+      "severity_score": 0.83,
+      "objective": 0.83,
+      "delta": 0.0,
+      "quality_score": 0.8,
+      "unsafe_disagreements": 1,
+      "agreement": 0.8,
+      "improved": 0,
+      "worsened": 0,
+      "improved_cases": [],
+      "worsened_cases": []
+    },
+    {
+      "pass": 1,
+      "knob": "RTE-EGFR-60 threshold (egfr lt \u2026)",
+      "from": 60,
+      "value": 75,
+      "severity_score": 0.82,
+      "objective": 0.82,
+      "delta": -0.01,
+      "quality_score": 0.8,
+      "unsafe_disagreements": 1,
+      "agreement": 0.7667,
+      "improved": 0,
+      "worsened": 1,
+      "improved_cases": [],
+      "worsened_cases": [
+        "CASE-012"
+      ]
+    },
+    {
+      "pass": 1,
+      "knob": "RTE-LDL-49 threshold (ldl gte \u2026)",
+      "from": 4.9,
+      "value": 4.1,
+      "severity_score": 0.83,
+      "objective": 0.83,
+      "delta": 0.0,
+      "quality_score": 0.767,
+      "unsafe_disagreements": 1,
+      "agreement": 0.8,
+      "improved": 0,
+      "worsened": 0,
+      "improved_cases": [],
+      "worsened_cases": []
+    },
+    {
+      "pass": 1,
+      "knob": "RTE-LDL-49 threshold (ldl gte \u2026)",
+      "from": 4.9,
+      "value": 4.6,
+      "severity_score": 0.83,
+      "objective": 0.83,
+      "delta": 0.0,
+      "quality_score": 0.767,
+      "unsafe_disagreements": 1,
+      "agreement": 0.8,
+      "improved": 0,
+      "worsened": 0,
+      "improved_cases": [],
+      "worsened_cases": []
+    },
+    {
+      "pass": 1,
+      "knob": "RTE-LDL-49 threshold (ldl gte \u2026)",
+      "from": 4.9,
+      "value": 5.0,
+      "severity_score": 0.83,
+      "objective": 0.83,
+      "delta": 0.0,
+      "quality_score": 0.767,
+      "unsafe_disagreements": 1,
+      "agreement": 0.8,
+      "improved": 0,
+      "worsened": 0,
+      "improved_cases": [],
+      "worsened_cases": []
+    },
+    {
+      "pass": 1,
+      "knob": "RTE-LDL-49 threshold (ldl gte \u2026)",
+      "from": 4.9,
+      "value": 5.5,
+      "severity_score": 0.83,
+      "objective": 0.83,
+      "delta": 0.0,
+      "quality_score": 0.767,
+      "unsafe_disagreements": 1,
+      "agreement": 0.8,
+      "improved": 0,
+      "worsened": 0,
+      "improved_cases": [],
+      "worsened_cases": []
+    },
+    {
+      "pass": 1,
+      "knob": "RTE-LDL-49 threshold (ldl gte \u2026)",
+      "from": 4.9,
+      "value": 6.0,
+      "severity_score": 0.83,
+      "objective": 0.83,
+      "delta": 0.0,
+      "quality_score": 0.767,
+      "unsafe_disagreements": 1,
+      "agreement": 0.8,
+      "improved": 0,
+      "worsened": 0,
+      "improved_cases": [],
+      "worsened_cases": []
+    },
+    {
+      "pass": 1,
+      "knob": "RTE-HOSPITAL-2 threshold (hospitalisations gte \u2026)",
+      "from": 2,
+      "value": 1,
+      "severity_score": 0.83,
+      "objective": 0.83,
+      "delta": 0.0,
+      "quality_score": 0.8,
+      "unsafe_disagreements": 1,
+      "agreement": 0.8,
+      "improved": 0,
+      "worsened": 0,
+      "improved_cases": [],
+      "worsened_cases": []
+    },
+    {
+      "pass": 1,
+      "knob": "RTE-HOSPITAL-2 threshold (hospitalisations gte \u2026)",
+      "from": 2,
+      "value": 1.8,
+      "severity_score": 0.83,
+      "objective": 0.83,
+      "delta": 0.0,
+      "quality_score": 0.8,
+      "unsafe_disagreements": 1,
+      "agreement": 0.8,
+      "improved": 0,
+      "worsened": 0,
+      "improved_cases": [],
+      "worsened_cases": []
+    },
+    {
+      "pass": 1,
+      "knob": "RTE-HOSPITAL-2 threshold (hospitalisations gte \u2026)",
+      "from": 2,
+      "value": 2.5,
+      "severity_score": 0.83,
+      "objective": 0.83,
+      "delta": 0.0,
+      "quality_score": 0.8,
+      "unsafe_disagreements": 1,
+      "agreement": 0.8,
+      "improved": 0,
+      "worsened": 0,
+      "improved_cases": [],
+      "worsened_cases": []
+    },
+    {
+      "pass": 1,
+      "knob": "RTE-HOSPITAL-2 threshold (hospitalisations gte \u2026)",
+      "from": 2,
+      "value": 3.2,
+      "severity_score": 0.83,
+      "objective": 0.83,
+      "delta": 0.0,
+      "quality_score": 0.8,
+      "unsafe_disagreements": 1,
+      "agreement": 0.8,
+      "improved": 0,
+      "worsened": 0,
+      "improved_cases": [],
+      "worsened_cases": []
+    },
+    {
+      "pass": 1,
+      "knob": "RTE-HOSPITAL-2 threshold (hospitalisations gte \u2026)",
+      "from": 2,
+      "value": 4,
+      "severity_score": 0.83,
+      "objective": 0.83,
+      "delta": 0.0,
+      "quality_score": 0.8,
+      "unsafe_disagreements": 1,
+      "agreement": 0.8,
+      "improved": 0,
+      "worsened": 0,
+      "improved_cases": [],
+      "worsened_cases": []
+    },
+    {
+      "pass": 1,
+      "knob": "RTE-REPORT-STALE threshold (reportAgeDays gt \u2026)",
+      "from": 365,
+      "value": 180,
+      "severity_score": 0.83,
+      "objective": 0.83,
+      "delta": 0.0,
+      "quality_score": 0.767,
+      "unsafe_disagreements": 1,
+      "agreement": 0.8,
+      "improved": 0,
+      "worsened": 0,
+      "improved_cases": [],
+      "worsened_cases": []
+    },
+    {
+      "pass": 1,
+      "knob": "RTE-REPORT-STALE threshold (reportAgeDays gt \u2026)",
+      "from": 365,
+      "value": 318,
+      "severity_score": 0.83,
+      "objective": 0.83,
+      "delta": 0.0,
+      "quality_score": 0.767,
+      "unsafe_disagreements": 1,
+      "agreement": 0.8,
+      "improved": 0,
+      "worsened": 0,
+      "improved_cases": [],
+      "worsened_cases": []
+    },
+    {
+      "pass": 1,
+      "knob": "RTE-REPORT-STALE threshold (reportAgeDays gt \u2026)",
+      "from": 365,
+      "value": 455,
+      "severity_score": 0.83,
+      "objective": 0.83,
+      "delta": 0.0,
+      "quality_score": 0.767,
+      "unsafe_disagreements": 1,
+      "agreement": 0.8,
+      "improved": 0,
+      "worsened": 0,
+      "improved_cases": [],
+      "worsened_cases": []
+    },
+    {
+      "pass": 1,
+      "knob": "RTE-REPORT-STALE threshold (reportAgeDays gt \u2026)",
+      "from": 365,
+      "value": 592,
+      "severity_score": 0.83,
+      "objective": 0.83,
+      "delta": 0.0,
+      "quality_score": 0.767,
+      "unsafe_disagreements": 1,
+      "agreement": 0.8,
+      "improved": 0,
+      "worsened": 0,
+      "improved_cases": [],
+      "worsened_cases": []
+    },
+    {
+      "pass": 1,
+      "knob": "RTE-REPORT-STALE threshold (reportAgeDays gt \u2026)",
+      "from": 365,
+      "value": 730,
+      "severity_score": 0.83,
+      "objective": 0.83,
+      "delta": 0.0,
+      "quality_score": 0.767,
+      "unsafe_disagreements": 1,
+      "agreement": 0.8,
+      "improved": 0,
+      "worsened": 0,
+      "improved_cases": [],
+      "worsened_cases": []
+    }
+  ],
+  "rule_evidence": {
+    "RTE-BMI-40": {
+      "fired": 1,
+      "human_outcomes": {
+        "more_evidence": 1
+      },
+      "verdicts": {
+        "match": 1
+      },
+      "cases": [
+        "CASE-028"
+      ]
+    },
+    "RTE-BP-DIA-100": {
+      "fired": 9,
+      "human_outcomes": {
+        "more_evidence": 6,
+        "refer": 1,
+        "postpone": 1,
+        "decline": 1
+      },
+      "verdicts": {
+        "match": 6,
+        "acceptable": 2,
+        "conservative": 1
+      },
+      "cases": [
+        "CASE-014",
+        "CASE-015",
+        "CASE-016",
+        "CASE-017",
+        "CASE-018",
+        "CASE-019",
+        "CASE-025",
+        "CASE-026",
+        "CASE-028"
+      ]
+    },
+    "RTE-BP-SYS-160": {
+      "fired": 8,
+      "human_outcomes": {
+        "more_evidence": 6,
+        "decline": 2
+      },
+      "verdicts": {
+        "match": 6,
+        "conservative": 2
+      },
+      "cases": [
+        "CASE-014",
+        "CASE-015",
+        "CASE-016",
+        "CASE-017",
+        "CASE-018",
+        "CASE-026",
+        "CASE-027",
+        "CASE-028"
+      ]
+    },
+    "RTE-CONDITION": {
+      "fired": 20,
+      "human_outcomes": {
+        "standard": 1,
+        "terms": 4,
+        "more_evidence": 6,
+        "refer": 5,
+        "postpone": 2,
+        "decline": 2
+      },
+      "verdicts": {
+        "conservative": 5,
+        "acceptable": 8,
+        "match": 7
+      },
+      "cases": [
+        "CASE-009",
+        "CASE-010",
+        "CASE-011",
+        "CASE-012",
+        "CASE-013",
+        "CASE-014",
+        "CASE-015",
+        "CASE-016",
+        "CASE-017",
+        "CASE-018",
+        "CASE-019",
+        "CASE-020",
+        "CASE-021",
+        "CASE-022",
+        "CASE-023",
+        "CASE-024",
+        "CASE-025",
+        "CASE-026",
+        "CASE-027",
+        "CASE-028"
+      ]
+    },
+    "RTE-CONDITION-COMPLEX": {
+      "fired": 5,
+      "human_outcomes": {
+        "postpone": 2,
+        "decline": 2,
+        "more_evidence": 1
+      },
+      "verdicts": {
+        "acceptable": 2,
+        "conservative": 2,
+        "match": 1
+      },
+      "cases": [
+        "CASE-024",
+        "CASE-025",
+        "CASE-026",
+        "CASE-027",
+        "CASE-028"
+      ]
+    },
+    "RTE-COVER-2M": {
+      "fired": 4,
+      "human_outcomes": {
+        "refer": 4
+      },
+      "verdicts": {
+        "match": 1,
+        "acceptable": 3
+      },
+      "cases": [
+        "CASE-020",
+        "CASE-021",
+        "CASE-022",
+        "CASE-023"
+      ]
+    },
+    "RTE-EGFR-45": {
+      "fired": 7,
+      "human_outcomes": {
+        "more_evidence": 6,
+        "decline": 1
+      },
+      "verdicts": {
+        "match": 6,
+        "conservative": 1
+      },
+      "cases": [
+        "CASE-014",
+        "CASE-015",
+        "CASE-016",
+        "CASE-017",
+        "CASE-018",
+        "CASE-026",
+        "CASE-028"
+      ]
+    },
+    "RTE-EGFR-60": {
+      "fired": 10,
+      "human_outcomes": {
+        "more_evidence": 6,
+        "refer": 2,
+        "decline": 2
+      },
+      "verdicts": {
+        "match": 6,
+        "acceptable": 2,
+        "conservative": 2
+      },
+      "cases": [
+        "CASE-014",
+        "CASE-015",
+        "CASE-016",
+        "CASE-017",
+        "CASE-018",
+        "CASE-019",
+        "CASE-021",
+        "CASE-026",
+        "CASE-027",
+        "CASE-028"
+      ]
+    },
+    "RTE-HBA1C-65": {
+      "fired": 18,
+      "human_outcomes": {
+        "standard": 1,
+        "terms": 2,
+        "more_evidence": 7,
+        "refer": 4,
+        "postpone": 2,
+        "decline": 2
+      },
+      "verdicts": {
+        "conservative": 5,
+        "match": 7,
+        "acceptable": 6
+      },
+      "cases": [
+        "CASE-009",
+        "CASE-010",
+        "CASE-011",
+        "CASE-014",
+        "CASE-015",
+        "CASE-016",
+        "CASE-017",
+        "CASE-018",
+        "CASE-019",
+        "CASE-021",
+        "CASE-022",
+        "CASE-023",
+        "CASE-024",
+        "CASE-025",
+        "CASE-026",
+        "CASE-027",
+        "CASE-028",
+        "CASE-029"
+      ]
+    },
+    "RTE-HBA1C-85": {
+      "fired": 8,
+      "human_outcomes": {
+        "more_evidence": 6,
+        "decline": 2
+      },
+      "verdicts": {
+        "match": 6,
+        "conservative": 2
+      },
+      "cases": [
+        "CASE-014",
+        "CASE-015",
+        "CASE-016",
+        "CASE-017",
+        "CASE-018",
+        "CASE-026",
+        "CASE-027",
+        "CASE-028"
+      ]
+    },
+    "RTE-HOSPITAL-2": {
+      "fired": 4,
+      "human_outcomes": {
+        "postpone": 1,
+        "decline": 2,
+        "more_evidence": 1
+      },
+      "verdicts": {
+        "acceptable": 1,
+        "conservative": 2,
+        "match": 1
+      },
+      "cases": [
+        "CASE-024",
+        "CASE-026",
+        "CASE-027",
+        "CASE-028"
+      ]
+    },
+    "RTE-LDL-49": {
+      "fired": 8,
+      "human_outcomes": {
+        "more_evidence": 6,
+        "decline": 2
+      },
+      "verdicts": {
+        "match": 6,
+        "conservative": 2
+      },
+      "cases": [
+        "CASE-014",
+        "CASE-015",
+        "CASE-016",
+        "CASE-017",
+        "CASE-018",
+        "CASE-026",
+        "CASE-027",
+        "CASE-028"
+      ]
+    },
+    "RTE-LIFE-COVER-1M": {
+      "fired": 7,
+      "human_outcomes": {
+        "more_evidence": 1,
+        "refer": 5,
+        "decline": 1
+      },
+      "verdicts": {
+        "match": 2,
+        "acceptable": 4,
+        "conservative": 1
+      },
+      "cases": [
+        "CASE-017",
+        "CASE-019",
+        "CASE-020",
+        "CASE-021",
+        "CASE-022",
+        "CASE-023",
+        "CASE-026"
+      ]
+    },
+    "RTE-MEDICAL-PRODUCT": {
+      "fired": 5,
+      "human_outcomes": {
+        "terms": 1,
+        "more_evidence": 3,
+        "decline": 1
+      },
+      "verdicts": {
+        "conservative": 2,
+        "match": 3
+      },
+      "cases": [
+        "CASE-011",
+        "CASE-014",
+        "CASE-015",
+        "CASE-027",
+        "CASE-028"
+      ]
+    },
+    "RTE-REPORT-STALE": {
+      "fired": 6,
+      "human_outcomes": {
+        "more_evidence": 5,
+        "postpone": 1
+      },
+      "verdicts": {
+        "match": 5,
+        "acceptable": 1
+      },
+      "cases": [
+        "CASE-014",
+        "CASE-015",
+        "CASE-016",
+        "CASE-017",
+        "CASE-018",
+        "CASE-025"
+      ]
+    },
+    "RTE-SMOKER": {
+      "fired": 9,
+      "human_outcomes": {
+        "refer": 6,
+        "decline": 2,
+        "more_evidence": 1
+      },
+      "verdicts": {
+        "acceptable": 4,
+        "match": 3,
+        "conservative": 2
+      },
+      "cases": [
+        "CASE-019",
+        "CASE-020",
+        "CASE-021",
+        "CASE-022",
+        "CASE-023",
+        "CASE-026",
+        "CASE-027",
+        "CASE-028",
+        "CASE-030"
+      ]
+    }
+  },
+  "folds": [
+    {
+      "fold": 1,
+      "train": 24,
+      "holdout": 6,
+      "diff": {},
+      "comparison": {
+        "severity_score": {
+          "from": 0.85,
+          "to": 0.85,
+          "delta": 0.0
+        },
+        "quality_score": {
+          "from": 0.818,
+          "to": 0.818,
+          "delta": 0.0
+        },
+        "agreement": {
+          "from": 0.8333,
+          "to": 0.8333,
+          "delta": 0.0
+        },
+        "unsafe_disagreements": {
+          "from": 0,
+          "to": 0,
+          "delta": 0
+        },
+        "conservative_disagreements": {
+          "from": 1,
+          "to": 1,
+          "delta": 0
+        }
+      },
+      "changed_cases": [],
+      "adopted": 0
+    },
+    {
+      "fold": 2,
+      "train": 24,
+      "holdout": 6,
+      "diff": {},
+      "comparison": {
+        "severity_score": {
+          "from": 0.8,
+          "to": 0.8,
+          "delta": 0.0
+        },
+        "quality_score": {
+          "from": 0.865,
+          "to": 0.865,
+          "delta": 0.0
+        },
+        "agreement": {
+          "from": 0.6667,
+          "to": 0.6667,
+          "delta": 0.0
+        },
+        "unsafe_disagreements": {
+          "from": 0,
+          "to": 0,
+          "delta": 0
+        },
+        "conservative_disagreements": {
+          "from": 2,
+          "to": 2,
+          "delta": 0
+        }
+      },
+      "changed_cases": [],
+      "adopted": 0
+    },
+    {
+      "fold": 3,
+      "train": 24,
+      "holdout": 6,
+      "diff": {},
+      "comparison": {
+        "severity_score": {
+          "from": 0.8,
+          "to": 0.8,
+          "delta": 0.0
+        },
+        "quality_score": {
+          "from": 0.815,
+          "to": 0.815,
+          "delta": 0.0
+        },
+        "agreement": {
+          "from": 0.6667,
+          "to": 0.6667,
+          "delta": 0.0
+        },
+        "unsafe_disagreements": {
+          "from": 0,
+          "to": 0,
+          "delta": 0
+        },
+        "conservative_disagreements": {
+          "from": 2,
+          "to": 2,
+          "delta": 0
+        }
+      },
+      "changed_cases": [],
+      "adopted": 0
+    },
+    {
+      "fold": 4,
+      "train": 24,
+      "holdout": 6,
+      "diff": {
+        "rule RTE-HBA1C-65": {
+          "from": null,
+          "to": {
+            "value": 7.5
+          }
+        }
+      },
+      "comparison": {
+        "severity_score": {
+          "from": 0.8,
+          "to": 0.6333,
+          "delta": -0.1667
+        },
+        "quality_score": {
+          "from": 0.696,
+          "to": 0.63,
+          "delta": -0.066
+        },
+        "agreement": {
+          "from": 0.8333,
+          "to": 0.6667,
+          "delta": -0.1666
+        },
+        "unsafe_disagreements": {
+          "from": 1,
+          "to": 2,
+          "delta": 1
+        },
+        "conservative_disagreements": {
+          "from": 0,
+          "to": 0,
+          "delta": 0
+        }
+      },
+      "changed_cases": [
+        {
+          "case_id": "CASE-029",
+          "human": "more_evidence",
+          "from": "request_evidence",
+          "to": "refer",
+          "verdict": "match -> unsafe"
+        }
+      ],
+      "adopted": 1
+    },
+    {
+      "fold": 5,
+      "train": 24,
+      "holdout": 6,
+      "diff": {},
+      "comparison": {
+        "severity_score": {
+          "from": 0.9,
+          "to": 0.9,
+          "delta": 0.0
+        },
+        "quality_score": {
+          "from": 0.808,
+          "to": 0.808,
+          "delta": 0.0
+        },
+        "agreement": {
+          "from": 1.0,
+          "to": 1.0,
+          "delta": 0.0
+        },
+        "unsafe_disagreements": {
+          "from": 0,
+          "to": 0,
+          "delta": 0
+        },
+        "conservative_disagreements": {
+          "from": 0,
+          "to": 0,
+          "delta": 0
+        }
+      },
+      "changed_cases": [],
+      "adopted": 0
+    }
+  ],
+  "warnings": [
+    "The search was less cautious than the current configuration on the held-out cases of fold(s) 4. Do not apply it.",
+    "Only 30 usable cases. A gain measured here is as likely to be noise as signal; treat this as a hypothesis to test on more cases.",
+    "The tuned configuration is less cautious than the current one on held-out cases. Do not apply it.",
+    "Tuned offline: only rule thresholds were searched. Retrieval, revision budget and prompt variant cannot change a deterministic outcome, so they were left alone.",
+    "Switching rules off was not searched (pass --allow-disable to include it).",
+    "No change is proposed. The current configuration is the best the search could justify on this bank."
+  ],
+  "applied": false
+}

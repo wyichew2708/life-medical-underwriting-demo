@@ -1,0 +1,3 @@
+# The pipeline itself needs only the standard library.
+# PyMuPDF is needed to read PDF spec sheets and to render case documents for extraction.
+PyMuPDF>=1.24,<2

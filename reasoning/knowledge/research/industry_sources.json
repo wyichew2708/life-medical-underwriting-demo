@@ -1,0 +1,105 @@
+{
+  "collection": "Research and industry evidence",
+  "status": "carried_from_repository_research",
+  "note": "Carried from demo/dist/research.html, which records the research behind this architecture. Titles, dates and characterisations are reproduced as that report states them and have NOT been independently re-verified in this repository. Each card keeps the distinction the report insists on: what a source demonstrates versus what it does not.",
+  "cards": [
+    {
+      "id": "RES-SWISSRE-01",
+      "type": "external",
+      "title": "Swiss Re: automated assessment plus an assistant for referrals",
+      "url": "https://www.swissre.com/risk-knowledge/advancing-societal-benefits-digitalisation/reimagining-life-insurance-underwriting.html",
+      "topics": ["research", "architecture"],
+      "products": ["Life", "Medical"],
+      "applies_when": {"always": true},
+      "excerpt": "Swiss Re describes an underwriting assistant that extracts and normalises structured and unstructured applicant data using OCR, NLP and LLMs, highlights information gaps, and integrates referral rules and underwriting manuals, reported as deployed in North America with proof-of-concept activity elsewhere (disclosure dated 13 August 2025). Supports: an assistant working beside an existing decision engine. Does not support: an LLM independently determining complex-case risk. Benefits reported are first-party observations, not independently audited accuracy.",
+      "provenance": "Summarised in demo/dist/research.html; not re-verified here."
+    },
+    {
+      "id": "RES-MUNICHRE-01",
+      "type": "external",
+      "title": "Munich Re alitheia: missing information leads to referral",
+      "url": "https://www.munichre.com/us-life/en/insights/future-of-risk/beyond-the-model-building-assessments-risk-tools-for-EHRs-in-alitheia.html",
+      "topics": ["research", "missing_data"],
+      "products": ["Life", "Medical"],
+      "applies_when": {"always": true},
+      "excerpt": "Munich Re states that loading manuals and electronic health records into an LLM and asking it for decisions is not by itself a practical solution, and describes underwriter and data-scientist collaboration with rules that refer a case when required information cannot be found (account dated 20 November 2025). Supports: explicit missing-data gates and human review, and treating an absent finding as unknown rather than negative. Does not supply: a reproducible model evaluation or a complete implementation.",
+      "provenance": "Summarised in demo/dist/research.html; not re-verified here."
+    },
+    {
+      "id": "RES-MUNICHRE-02",
+      "type": "external",
+      "title": "Munich Re Rule AI: generate, review, test, then operationalise",
+      "url": "https://www.munichre.com/us-life/en/insights/future-of-risk/scaling-underwriting-expertise-with-rule-ai-.html",
+      "topics": ["research", "rules"],
+      "products": ["Life", "Medical"],
+      "applies_when": {"always": true},
+      "excerpt": "An account dated 25 August 2026 describes translating underwriting manuals into structured logic, reviewing that logic with underwriters, and testing it against historical or synthetic cases. The reported figure of approximately 87% outcome alignment concerns an early atrial-fibrillation proof of concept on synthetic cases, with qualifications about referred declines; it is not production accuracy, a mortality result or an acceptance threshold. Missed declines linked to source formatting are reported, which is the argument for inspecting and testing generated rules rather than deploying them.",
+      "provenance": "Summarised in demo/dist/research.html; not re-verified here."
+    },
+    {
+      "id": "RES-RGA-01",
+      "type": "external",
+      "title": "RGA and DigitalOwl: evidence visibility is not underwriting validation",
+      "url": "https://www.rgare.com/docs/default-source/knowledge-center-articles/identifying_key_impairments_w_generative_ai.pdf?sfvrsn=b61ddedd_1",
+      "topics": ["research", "extraction"],
+      "products": ["Life", "Medical"],
+      "applies_when": {"always": true},
+      "excerpt": "An analysis of roughly 2,000 anonymised cases across about 40 impairment categories and several evidence sources, which explicitly excludes risk prediction, pricing, mortality and clinical or underwriting accuracy validation. Extracted tags were not adjudicated by underwriters, and overlapping evidence and cohort selection limit interpretation. Supports: document organisation and layered evidence collection. Does not support: the correctness of extracted impairment labels or of decisions derived from them.",
+      "provenance": "Summarised in demo/dist/research.html; publication date not established in the accessed PDF."
+    },
+    {
+      "id": "RES-CALIB-01",
+      "type": "external",
+      "title": "Accurate classifiers can still be badly calibrated",
+      "url": "https://proceedings.mlr.press/v70/guo17a.html",
+      "topics": ["research", "calibration"],
+      "products": ["Life", "Medical"],
+      "applies_when": {"always": true},
+      "excerpt": "Guo and colleagues (ICML 2017) show that modern neural classifiers can be accurate yet poorly calibrated, and evaluate post-processing calibration methods. The design implication is to demand validation evidence for a probability rather than treating a high model score as self-validating. Their experiments say nothing about the calibration of any insurance model, including the one in this repository.",
+      "provenance": "Cited in demo/dist/research.html."
+    },
+    {
+      "id": "RES-DOCHALLU-01",
+      "type": "external",
+      "title": "Vision-language models hallucinate when the evidence is not legible",
+      "url": "https://aclanthology.org/2026.findings-acl.1237/",
+      "topics": ["research", "extraction", "guardrail"],
+      "products": ["Life", "Medical"],
+      "applies_when": {"always": true},
+      "excerpt": "Work on perceptual hallucination reports that vision-language models produce confident content, including numerical content, when the visual evidence is absent or damaged. The design implication for underwriting is to expose unreadability explicitly, require a page and quote for every extracted finding, and keep source images available for inspection, rather than to treat the benchmark results as an insurance accuracy estimate.",
+      "provenance": "Summarised in demo/dist/research.html as Hwang et al., ACL Findings, July 2026; not re-verified here."
+    },
+    {
+      "id": "RES-AGENTS-01",
+      "type": "external",
+      "title": "Fixed workflows before autonomous agents",
+      "url": "https://www.anthropic.com/engineering/building-effective-agents",
+      "topics": ["research", "architecture"],
+      "products": ["Life", "Medical"],
+      "applies_when": {"always": true},
+      "excerpt": "Engineering guidance distinguishing predictable workflows from dynamically controlled agents, and supporting routing, programmatic gates and evaluator-optimiser loops where they add measurable value (dated 19 December 2024). The implication taken here is that a fixed, inspectable workflow is the correct starting point for underwriting, with more autonomous behaviour treated as something to evaluate later rather than assume.",
+      "provenance": "Cited in demo/dist/research.html, which notes subsequent tooling changes."
+    },
+    {
+      "id": "RES-EIOPA-01",
+      "type": "external",
+      "title": "EIOPA opinion on AI governance and risk management",
+      "url": "https://www.eiopa.europa.eu/eiopa-publishes-opinion-ai-governance-and-risk-management-2025-08-06_en",
+      "topics": ["research", "governance"],
+      "products": ["Life", "Medical"],
+      "applies_when": {"always": true},
+      "excerpt": "A supervisory opinion dated 6 August 2025 discussing insurance AI governance, explainability, record-keeping and human oversight, which explicitly excludes AI Act high-risk and prohibited systems from its own scope while noting life and health risk assessment and pricing as high-risk uses. It is European supervisory material: it is not a directly applicable rule for a Singapore or Malaysia deployment and is not the sole EU compliance standard.",
+      "provenance": "Cited in demo/dist/research.html."
+    },
+    {
+      "id": "RES-GAP-01",
+      "type": "external",
+      "title": "Recorded research gap: local supervisory requirements",
+      "topics": ["research", "governance", "gap"],
+      "products": ["Life", "Medical"],
+      "applies_when": {"always": true},
+      "excerpt": "The research behind this repository identified MAS FEAT and Veritas material and later AI risk-management publications, but the original MAS pages returned an unavailable or maintenance response at the time, and no Bank Negara Malaysia primary source was established. No Singapore or Malaysia legal compliance conclusion is therefore available from this repository. This card exists so that the gap is retrievable and citable rather than silently absent: where a case turns on a local regulatory question, the correct output is a referral naming this gap.",
+      "provenance": "Recorded in demo/dist/research.html as an explicit research gap."
+    }
+  ]
+}

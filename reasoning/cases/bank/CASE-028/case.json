@@ -1,0 +1,156 @@
+{
+  "case_id": "CASE-028",
+  "profile": {
+    "name": "Natalie Seah",
+    "age": 72,
+    "sex": "Female",
+    "occupation": "Designer",
+    "product": "Medical",
+    "cover": 759000,
+    "bmi": 41.1,
+    "smoker": true,
+    "condition": "complex",
+    "annualIncome": 60000,
+    "existingCover": 0,
+    "termYears": 30,
+    "systolic": 169,
+    "diastolic": 101,
+    "hba1c": 10.2,
+    "egfr": 38,
+    "ldl": 5.5,
+    "diagnosisYears": 2,
+    "hospitalisations": 4,
+    "reportAgeDays": 289,
+    "evidence_source": "synthetic: written by the sample generator, not extracted from the PDF"
+  },
+  "human": {
+    "outcome": "more_evidence",
+    "decided_by": "sample generator (fictional underwriter)",
+    "decided_at": "2026-08-01",
+    "cohort": "medical-decline",
+    "notes": "Declined only after a specialist report was obtained; recorded as an evidence request.",
+    "rationale": "more_evidence: tobacco use, complex declared condition, HbA1c 10.2, eGFR 38, systolic 169. Declined only after a specialist report was obtained; recorded as an evidence request.",
+    "evidence_requested": [
+      "GP report covering the declared condition",
+      "repeat HbA1c",
+      "attending physician statement"
+    ],
+    "later_outcome": {
+      "outcome": "terms",
+      "decided_at": "2026-08-20"
+    }
+  },
+  "instructions": "",
+  "documents": [
+    {
+      "file": "CASE-028-report.pdf"
+    }
+  ],
+  "evidence": {
+    "complete": true,
+    "findings": [
+      {
+        "id": "DOC-1",
+        "source": "Synthetic medical report",
+        "page": 1,
+        "quote": "Declared condition status: complex",
+        "text": "Declared condition status recorded as complex, diagnosed 2 years ago. Tobacco use: yes.",
+        "verified": true
+      },
+      {
+        "id": "DOC-1",
+        "source": "Synthetic medical report",
+        "page": 1,
+        "quote": "HbA1c: 10.2%",
+        "text": "Report records HbA1c, eGFR, LDL, blood pressure. BMI 41.1.",
+        "verified": true
+      }
+    ],
+    "warnings": [],
+    "values": [
+      {
+        "field": "condition",
+        "value": "complex",
+        "quote": "Declared condition status: complex",
+        "id": "DOC-1",
+        "page": 1,
+        "verified": true
+      },
+      {
+        "field": "smoker",
+        "value": true,
+        "quote": "Tobacco or nicotine use: yes",
+        "id": "DOC-1",
+        "page": 1,
+        "verified": true
+      },
+      {
+        "field": "bmi",
+        "value": 41.1,
+        "quote": "Body mass index: 41.1",
+        "id": "DOC-1",
+        "page": 1,
+        "verified": true
+      },
+      {
+        "field": "hospitalisations",
+        "value": 4,
+        "quote": "Hospital admissions in the past 12 months: 4",
+        "id": "DOC-1",
+        "page": 1,
+        "verified": true
+      },
+      {
+        "field": "systolic",
+        "value": 169,
+        "quote": "Blood pressure: 169/101 mmHg",
+        "id": "DOC-1",
+        "page": 1,
+        "verified": true
+      },
+      {
+        "field": "diastolic",
+        "value": 101,
+        "quote": "Blood pressure: 169/101 mmHg",
+        "id": "DOC-1",
+        "page": 1,
+        "verified": true
+      },
+      {
+        "field": "hba1c",
+        "value": 10.2,
+        "quote": "HbA1c: 10.2%",
+        "id": "DOC-1",
+        "page": 1,
+        "verified": true
+      },
+      {
+        "field": "egfr",
+        "value": 38,
+        "quote": "eGFR: 38 mL/min/1.73m2",
+        "id": "DOC-1",
+        "page": 1,
+        "verified": true
+      },
+      {
+        "field": "ldl",
+        "value": 5.5,
+        "quote": "LDL cholesterol: 5.5 mmol/L",
+        "id": "DOC-1",
+        "page": 1,
+        "verified": true
+      }
+    ]
+  },
+  "evidence_source": "synthetic: written by the sample generator, not extracted from the PDF",
+  "ml": {
+    "model": "mock-underwriting-ml-2026-09",
+    "standard": false,
+    "confidence": 0.999,
+    "calibrated": true,
+    "ood": true,
+    "available": true,
+    "evidence_complete": true,
+    "source": "ml_training model; evidence_complete asserted by the sample generator"
+  }
+}

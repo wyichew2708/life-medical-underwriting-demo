@@ -1,0 +1,14 @@
+{
+  "label": "Standard life case with a certified ML screen (mirrors the demo's Alex Tan)",
+  "profile": {"name": "Alex Tan", "age": 32, "sex": "Male", "occupation": "Office professional",
+    "product": "Life", "cover": 500000, "bmi": 23.1, "smoker": false, "condition": "none",
+    "annualIncome": 90000, "existingCover": 100000, "termYears": 25, "systolic": 118,
+    "diastolic": 76, "hba1c": 5.2, "egfr": 100, "ldl": 2.5, "diagnosisYears": 0,
+    "hospitalisations": 0, "reportAgeDays": 30},
+  "ml": {"available": true, "model": "mock-underwriting-ml-2026-09", "standard": true,
+    "confidence": 0.9532, "calibrated": true, "ood": false, "evidence_complete": true,
+    "verified_document_hashes": ["0000000000000000000000000000000000000000000000000000000000000000"]},
+  "evidence": {"complete": true, "warnings": [],
+    "findings": [{"id": "DOC-1", "source": "Synthetic medical report", "page": 1,
+      "quote": "No chronic conditions declared.", "text": "No declared conditions and no abnormal findings recorded."}]}
+}

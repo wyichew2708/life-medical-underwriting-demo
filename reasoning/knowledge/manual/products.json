@@ -1,0 +1,28 @@
+{
+  "collection": "Product-specific underwriting",
+  "status": "illustrative",
+  "cards": [
+    {
+      "id": "UW-PROD-01",
+      "type": "internal",
+      "title": "Medical expense cover is morbidity, not mortality",
+      "topics": ["product", "medical"],
+      "products": ["Medical"],
+      "keywords": ["pre-existing", "exclusion", "waiting period", "moratorium", "rider"],
+      "applies_when": {"any": [{"field": "product", "operator": "eq", "value": "Medical"}]},
+      "excerpt": "Medical expense and health products are underwritten for frequency and cost of treatment rather than for death, so conditions that barely affect life cover can be highly material here: musculoskeletal problems, migraine, endometriosis, mental health, allergies and anything likely to recur or to require investigation. The tools differ too. Instead of a mortality rating, the usual responses are a premium loading, a specific exclusion for a named condition and its complications, a waiting period, or a moratorium under which pre-existing conditions are covered only after a defined symptom-free interval. Exclusions must be worded precisely enough for a claims assessor to apply them, and an assistant should propose their substance for underwriter drafting rather than invent policy wording. Life and medical assessments of the same applicant can legitimately reach different outcomes.",
+      "guidance": {"responses": ["premium loading", "specific exclusion", "waiting period", "moratorium"], "note": "life and medical outcomes for one applicant may differ"}
+    },
+    {
+      "id": "UW-PROD-02",
+      "type": "internal",
+      "title": "Critical illness and disability benefits",
+      "topics": ["product", "critical_illness"],
+      "products": ["Life", "Medical"],
+      "keywords": ["critical illness", "ci rider", "disability", "income protection", "total permanent"],
+      "applies_when": {"never_by_field": true},
+      "excerpt": "Critical-illness cover pays on a defined list of conditions meeting stated severity definitions, so underwriting weighs the incidence of those specific conditions rather than mortality: family history of cancer or early cardiovascular disease, and any condition that raises the chance of a defined event, carry more weight than they would for death cover. Disability and income protection are the most sensitive to occupation, duties, the definition of incapacity, the deferred period and the applicant's financial incentive to claim, and they are also the most sensitive to mental health and musculoskeletal history. Where a case includes these riders, the rider assessment is separate from the life assessment and may be declined while life cover is accepted.",
+      "guidance": {"note": "rider decisions are separate from the life decision and may differ"}
+    }
+  ]
+}

@@ -1,0 +1,3853 @@
+{
+  "note": "Fictional cases for testing the case bank and tuner. No real people or decisions.",
+  "cases": [
+    {
+      "case_id": "CASE-001",
+      "profile": {
+        "name": "Wei Ming Tan",
+        "age": 29,
+        "sex": "Male",
+        "occupation": "Nurse",
+        "product": "Medical",
+        "cover": 327000,
+        "bmi": 21.3,
+        "smoker": false,
+        "condition": "none",
+        "annualIncome": 150000,
+        "existingCover": 500000,
+        "termYears": 10,
+        "systolic": 124,
+        "diastolic": 75,
+        "hba1c": 5.0,
+        "egfr": 103,
+        "ldl": 2.8,
+        "diagnosisYears": 0,
+        "hospitalisations": 0,
+        "reportAgeDays": 20
+      },
+      "documents": [
+        "CASE-001-report.pdf"
+      ],
+      "evidence": {
+        "complete": true,
+        "findings": [
+          {
+            "id": "DOC-1",
+            "source": "Synthetic medical report",
+            "page": 1,
+            "quote": "Declared condition status: none",
+            "text": "Declared condition status recorded as none. Tobacco use: no."
+          },
+          {
+            "id": "DOC-1",
+            "source": "Synthetic medical report",
+            "page": 1,
+            "quote": "HbA1c: 5.0%",
+            "text": "Report records HbA1c, eGFR, LDL, blood pressure. BMI 21.3."
+          }
+        ],
+        "warnings": [],
+        "values": [
+          {
+            "field": "condition",
+            "value": "none",
+            "quote": "Declared condition status: none",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "smoker",
+            "value": false,
+            "quote": "Tobacco or nicotine use: no",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "bmi",
+            "value": 21.3,
+            "quote": "Body mass index: 21.3",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "hospitalisations",
+            "value": 0,
+            "quote": "Hospital admissions in the past 12 months: 0",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "systolic",
+            "value": 124,
+            "quote": "Blood pressure: 124/75 mmHg",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "diastolic",
+            "value": 75,
+            "quote": "Blood pressure: 124/75 mmHg",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "hba1c",
+            "value": 5.0,
+            "quote": "HbA1c: 5.0%",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "egfr",
+            "value": 103,
+            "quote": "eGFR: 103 mL/min/1.73m2",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "ldl",
+            "value": 2.8,
+            "quote": "LDL cholesterol: 2.8 mmol/L",
+            "id": "DOC-1",
+            "page": 1
+          }
+        ]
+      },
+      "evidence_source": "synthetic: written by the sample generator, not extracted from the PDF",
+      "ml": {
+        "model": "mock-underwriting-ml-2026-09",
+        "standard": true,
+        "confidence": 0.999,
+        "calibrated": true,
+        "ood": false,
+        "available": true,
+        "evidence_complete": true,
+        "source": "ml_training model; evidence_complete asserted by the sample generator"
+      },
+      "human": {
+        "outcome": "refer",
+        "decided_by": "sample generator (fictional underwriter)",
+        "decided_at": "2026-08-01",
+        "cohort": "medical-standard",
+        "notes": "Escalated on a prior-claim file note not visible in the structured data.",
+        "rationale": "refer: no adverse findings. Escalated on a prior-claim file note not visible in the structured data."
+      }
+    },
+    {
+      "case_id": "CASE-002",
+      "profile": {
+        "name": "Aisha Rahman",
+        "age": 28,
+        "sex": "Female",
+        "occupation": "Construction supervisor",
+        "product": "Life",
+        "cover": 518000,
+        "bmi": 21.6,
+        "smoker": false,
+        "condition": "none",
+        "annualIncome": 110000,
+        "existingCover": 500000,
+        "termYears": 10,
+        "systolic": 126,
+        "diastolic": 79,
+        "hba1c": 5.1,
+        "egfr": 97,
+        "ldl": 2.1,
+        "diagnosisYears": 0,
+        "hospitalisations": 0,
+        "reportAgeDays": 37
+      },
+      "documents": [
+        "CASE-002-report.pdf"
+      ],
+      "evidence": {
+        "complete": true,
+        "findings": [
+          {
+            "id": "DOC-1",
+            "source": "Synthetic medical report",
+            "page": 1,
+            "quote": "Declared condition status: none",
+            "text": "Declared condition status recorded as none. Tobacco use: no."
+          },
+          {
+            "id": "DOC-1",
+            "source": "Synthetic medical report",
+            "page": 1,
+            "quote": "HbA1c: 5.1%",
+            "text": "Report records HbA1c, eGFR, LDL, blood pressure. BMI 21.6."
+          }
+        ],
+        "warnings": [],
+        "values": [
+          {
+            "field": "condition",
+            "value": "none",
+            "quote": "Declared condition status: none",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "smoker",
+            "value": false,
+            "quote": "Tobacco or nicotine use: no",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "bmi",
+            "value": 21.6,
+            "quote": "Body mass index: 21.6",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "hospitalisations",
+            "value": 0,
+            "quote": "Hospital admissions in the past 12 months: 0",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "systolic",
+            "value": 126,
+            "quote": "Blood pressure: 126/79 mmHg",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "diastolic",
+            "value": 79,
+            "quote": "Blood pressure: 126/79 mmHg",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "hba1c",
+            "value": 5.1,
+            "quote": "HbA1c: 5.1%",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "egfr",
+            "value": 97,
+            "quote": "eGFR: 97 mL/min/1.73m2",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "ldl",
+            "value": 2.1,
+            "quote": "LDL cholesterol: 2.1 mmol/L",
+            "id": "DOC-1",
+            "page": 1
+          }
+        ]
+      },
+      "evidence_source": "synthetic: written by the sample generator, not extracted from the PDF",
+      "ml": {
+        "model": "mock-underwriting-ml-2026-09",
+        "standard": true,
+        "confidence": 0.999,
+        "calibrated": true,
+        "ood": false,
+        "available": true,
+        "evidence_complete": true,
+        "source": "ml_training model; evidence_complete asserted by the sample generator"
+      },
+      "human": {
+        "outcome": "standard",
+        "decided_by": "sample generator (fictional underwriter)",
+        "decided_at": "2026-08-01",
+        "cohort": "life-standard",
+        "notes": "Synthetic outcome generated from the case archetype.",
+        "rationale": "standard: no adverse findings."
+      }
+    },
+    {
+      "case_id": "CASE-003",
+      "profile": {
+        "name": "Daniel Ong",
+        "age": 40,
+        "sex": "Female",
+        "occupation": "Sales executive",
+        "product": "Life",
+        "cover": 481000,
+        "bmi": 23.4,
+        "smoker": false,
+        "condition": "none",
+        "annualIncome": 110000,
+        "existingCover": 500000,
+        "termYears": 10,
+        "systolic": 124,
+        "diastolic": 83,
+        "hba1c": 5.4,
+        "egfr": 101,
+        "ldl": 2.1,
+        "diagnosisYears": 0,
+        "hospitalisations": 0,
+        "reportAgeDays": 59
+      },
+      "documents": [
+        "CASE-003-report.pdf"
+      ],
+      "evidence": {
+        "complete": true,
+        "findings": [
+          {
+            "id": "DOC-1",
+            "source": "Synthetic medical report",
+            "page": 1,
+            "quote": "Declared condition status: none",
+            "text": "Declared condition status recorded as none. Tobacco use: no."
+          },
+          {
+            "id": "DOC-1",
+            "source": "Synthetic medical report",
+            "page": 1,
+            "quote": "HbA1c: 5.4%",
+            "text": "Report records HbA1c, eGFR, LDL, blood pressure. BMI 23.4."
+          }
+        ],
+        "warnings": [],
+        "values": [
+          {
+            "field": "condition",
+            "value": "none",
+            "quote": "Declared condition status: none",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "smoker",
+            "value": false,
+            "quote": "Tobacco or nicotine use: no",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "bmi",
+            "value": 23.4,
+            "quote": "Body mass index: 23.4",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "hospitalisations",
+            "value": 0,
+            "quote": "Hospital admissions in the past 12 months: 0",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "systolic",
+            "value": 124,
+            "quote": "Blood pressure: 124/83 mmHg",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "diastolic",
+            "value": 83,
+            "quote": "Blood pressure: 124/83 mmHg",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "hba1c",
+            "value": 5.4,
+            "quote": "HbA1c: 5.4%",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "egfr",
+            "value": 101,
+            "quote": "eGFR: 101 mL/min/1.73m2",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "ldl",
+            "value": 2.1,
+            "quote": "LDL cholesterol: 2.1 mmol/L",
+            "id": "DOC-1",
+            "page": 1
+          }
+        ]
+      },
+      "evidence_source": "synthetic: written by the sample generator, not extracted from the PDF",
+      "ml": {
+        "model": "mock-underwriting-ml-2026-09",
+        "standard": true,
+        "confidence": 0.9527,
+        "calibrated": true,
+        "ood": false,
+        "available": true,
+        "evidence_complete": true,
+        "source": "ml_training model; evidence_complete asserted by the sample generator"
+      },
+      "human": {
+        "outcome": "standard",
+        "decided_by": "sample generator (fictional underwriter)",
+        "decided_at": "2026-08-01",
+        "cohort": "life-standard",
+        "notes": "Synthetic outcome generated from the case archetype.",
+        "rationale": "standard: no adverse findings."
+      }
+    },
+    {
+      "case_id": "CASE-004",
+      "profile": {
+        "name": "Priya Nair",
+        "age": 43,
+        "sex": "Male",
+        "occupation": "Nurse",
+        "product": "Life",
+        "cover": 516000,
+        "bmi": 23.3,
+        "smoker": false,
+        "condition": "none",
+        "annualIncome": 60000,
+        "existingCover": 100000,
+        "termYears": 25,
+        "systolic": 110,
+        "diastolic": 68,
+        "hba1c": 5.3,
+        "egfr": 99,
+        "ldl": 3.0,
+        "diagnosisYears": 0,
+        "hospitalisations": 0,
+        "reportAgeDays": 28
+      },
+      "documents": [
+        "CASE-004-report.pdf"
+      ],
+      "evidence": {
+        "complete": true,
+        "findings": [
+          {
+            "id": "DOC-1",
+            "source": "Synthetic medical report",
+            "page": 1,
+            "quote": "Declared condition status: none",
+            "text": "Declared condition status recorded as none. Tobacco use: no."
+          },
+          {
+            "id": "DOC-1",
+            "source": "Synthetic medical report",
+            "page": 1,
+            "quote": "HbA1c: 5.3%",
+            "text": "Report records HbA1c, eGFR, LDL, blood pressure. BMI 23.3."
+          }
+        ],
+        "warnings": [],
+        "values": [
+          {
+            "field": "condition",
+            "value": "none",
+            "quote": "Declared condition status: none",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "smoker",
+            "value": false,
+            "quote": "Tobacco or nicotine use: no",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "bmi",
+            "value": 23.3,
+            "quote": "Body mass index: 23.3",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "hospitalisations",
+            "value": 0,
+            "quote": "Hospital admissions in the past 12 months: 0",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "systolic",
+            "value": 110,
+            "quote": "Blood pressure: 110/68 mmHg",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "diastolic",
+            "value": 68,
+            "quote": "Blood pressure: 110/68 mmHg",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "hba1c",
+            "value": 5.3,
+            "quote": "HbA1c: 5.3%",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "egfr",
+            "value": 99,
+            "quote": "eGFR: 99 mL/min/1.73m2",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "ldl",
+            "value": 3.0,
+            "quote": "LDL cholesterol: 3.0 mmol/L",
+            "id": "DOC-1",
+            "page": 1
+          }
+        ]
+      },
+      "evidence_source": "synthetic: written by the sample generator, not extracted from the PDF",
+      "ml": {
+        "model": "mock-underwriting-ml-2026-09",
+        "standard": true,
+        "confidence": 0.9527,
+        "calibrated": true,
+        "ood": false,
+        "available": true,
+        "evidence_complete": true,
+        "source": "ml_training model; evidence_complete asserted by the sample generator"
+      },
+      "human": {
+        "outcome": "standard",
+        "decided_by": "sample generator (fictional underwriter)",
+        "decided_at": "2026-08-01",
+        "cohort": "life-standard",
+        "notes": "Synthetic outcome generated from the case archetype.",
+        "rationale": "standard: no adverse findings."
+      }
+    },
+    {
+      "case_id": "CASE-005",
+      "profile": {
+        "name": "Marcus Lee",
+        "age": 33,
+        "sex": "Male",
+        "occupation": "Office professional",
+        "product": "Medical",
+        "cover": 444000,
+        "bmi": 20.7,
+        "smoker": false,
+        "condition": "none",
+        "annualIncome": 240000,
+        "existingCover": 0,
+        "termYears": 10,
+        "systolic": 122,
+        "diastolic": 80,
+        "hba1c": 5.2,
+        "egfr": 106,
+        "ldl": 2.2,
+        "diagnosisYears": 0,
+        "hospitalisations": 0,
+        "reportAgeDays": 86
+      },
+      "documents": [
+        "CASE-005-report.pdf"
+      ],
+      "evidence": {
+        "complete": true,
+        "findings": [
+          {
+            "id": "DOC-1",
+            "source": "Synthetic medical report",
+            "page": 1,
+            "quote": "Declared condition status: none",
+            "text": "Declared condition status recorded as none. Tobacco use: no."
+          },
+          {
+            "id": "DOC-1",
+            "source": "Synthetic medical report",
+            "page": 1,
+            "quote": "HbA1c: 5.2%",
+            "text": "Report records HbA1c, eGFR, LDL, blood pressure. BMI 20.7."
+          }
+        ],
+        "warnings": [],
+        "values": [
+          {
+            "field": "condition",
+            "value": "none",
+            "quote": "Declared condition status: none",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "smoker",
+            "value": false,
+            "quote": "Tobacco or nicotine use: no",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "bmi",
+            "value": 20.7,
+            "quote": "Body mass index: 20.7",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "hospitalisations",
+            "value": 0,
+            "quote": "Hospital admissions in the past 12 months: 0",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "systolic",
+            "value": 122,
+            "quote": "Blood pressure: 122/80 mmHg",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "diastolic",
+            "value": 80,
+            "quote": "Blood pressure: 122/80 mmHg",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "hba1c",
+            "value": 5.2,
+            "quote": "HbA1c: 5.2%",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "egfr",
+            "value": 106,
+            "quote": "eGFR: 106 mL/min/1.73m2",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "ldl",
+            "value": 2.2,
+            "quote": "LDL cholesterol: 2.2 mmol/L",
+            "id": "DOC-1",
+            "page": 1
+          }
+        ]
+      },
+      "evidence_source": "synthetic: written by the sample generator, not extracted from the PDF",
+      "ml": {
+        "model": "mock-underwriting-ml-2026-09",
+        "standard": true,
+        "confidence": 0.999,
+        "calibrated": true,
+        "ood": false,
+        "available": true,
+        "evidence_complete": true,
+        "source": "ml_training model; evidence_complete asserted by the sample generator"
+      },
+      "human": {
+        "outcome": "standard",
+        "decided_by": "sample generator (fictional underwriter)",
+        "decided_at": "2026-08-01",
+        "cohort": "medical-standard",
+        "notes": "Synthetic outcome generated from the case archetype.",
+        "rationale": "standard: no adverse findings."
+      }
+    },
+    {
+      "case_id": "CASE-006",
+      "profile": {
+        "name": "Siti Zubaidah",
+        "age": 44,
+        "sex": "Male",
+        "occupation": "Engineer",
+        "product": "Life",
+        "cover": 239000,
+        "bmi": 25.8,
+        "smoker": false,
+        "condition": "none",
+        "annualIncome": 85000,
+        "existingCover": 500000,
+        "termYears": 30,
+        "systolic": 128,
+        "diastolic": 86,
+        "hba1c": 5.3,
+        "egfr": 98,
+        "ldl": 2.0,
+        "diagnosisYears": 0,
+        "hospitalisations": 0,
+        "reportAgeDays": 49
+      },
+      "documents": [
+        "CASE-006-report.pdf"
+      ],
+      "evidence": {
+        "complete": true,
+        "findings": [
+          {
+            "id": "DOC-1",
+            "source": "Synthetic medical report",
+            "page": 1,
+            "quote": "Declared condition status: none",
+            "text": "Declared condition status recorded as none. Tobacco use: no."
+          },
+          {
+            "id": "DOC-1",
+            "source": "Synthetic medical report",
+            "page": 1,
+            "quote": "HbA1c: 5.3%",
+            "text": "Report records HbA1c, eGFR, LDL, blood pressure. BMI 25.8."
+          }
+        ],
+        "warnings": [],
+        "values": [
+          {
+            "field": "condition",
+            "value": "none",
+            "quote": "Declared condition status: none",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "smoker",
+            "value": false,
+            "quote": "Tobacco or nicotine use: no",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "bmi",
+            "value": 25.8,
+            "quote": "Body mass index: 25.8",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "hospitalisations",
+            "value": 0,
+            "quote": "Hospital admissions in the past 12 months: 0",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "systolic",
+            "value": 128,
+            "quote": "Blood pressure: 128/86 mmHg",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "diastolic",
+            "value": 86,
+            "quote": "Blood pressure: 128/86 mmHg",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "hba1c",
+            "value": 5.3,
+            "quote": "HbA1c: 5.3%",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "egfr",
+            "value": 98,
+            "quote": "eGFR: 98 mL/min/1.73m2",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "ldl",
+            "value": 2.0,
+            "quote": "LDL cholesterol: 2.0 mmol/L",
+            "id": "DOC-1",
+            "page": 1
+          }
+        ]
+      },
+      "evidence_source": "synthetic: written by the sample generator, not extracted from the PDF",
+      "ml": {
+        "model": "mock-underwriting-ml-2026-09",
+        "standard": true,
+        "confidence": 0.9527,
+        "calibrated": true,
+        "ood": false,
+        "available": true,
+        "evidence_complete": true,
+        "source": "ml_training model; evidence_complete asserted by the sample generator"
+      },
+      "human": {
+        "outcome": "standard",
+        "decided_by": "sample generator (fictional underwriter)",
+        "decided_at": "2026-08-01",
+        "cohort": "life-standard",
+        "notes": "Synthetic outcome generated from the case archetype.",
+        "rationale": "standard: no adverse findings."
+      }
+    },
+    {
+      "case_id": "CASE-007",
+      "profile": {
+        "name": "Kenneth Goh",
+        "age": 39,
+        "sex": "Female",
+        "occupation": "Delivery rider",
+        "product": "Life",
+        "cover": 450000,
+        "bmi": 21.1,
+        "smoker": false,
+        "condition": "none",
+        "annualIncome": 110000,
+        "existingCover": 0,
+        "termYears": 10,
+        "systolic": 126,
+        "diastolic": 77,
+        "hba1c": 5.5,
+        "egfr": 93,
+        "ldl": 2.6,
+        "diagnosisYears": 0,
+        "hospitalisations": 0,
+        "reportAgeDays": 20
+      },
+      "documents": [
+        "CASE-007-report.pdf"
+      ],
+      "evidence": {
+        "complete": true,
+        "findings": [
+          {
+            "id": "DOC-1",
+            "source": "Synthetic medical report",
+            "page": 1,
+            "quote": "Declared condition status: none",
+            "text": "Declared condition status recorded as none. Tobacco use: no."
+          },
+          {
+            "id": "DOC-1",
+            "source": "Synthetic medical report",
+            "page": 1,
+            "quote": "HbA1c: 5.5%",
+            "text": "Report records HbA1c, eGFR, LDL, blood pressure. BMI 21.1."
+          }
+        ],
+        "warnings": [],
+        "values": [
+          {
+            "field": "condition",
+            "value": "none",
+            "quote": "Declared condition status: none",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "smoker",
+            "value": false,
+            "quote": "Tobacco or nicotine use: no",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "bmi",
+            "value": 21.1,
+            "quote": "Body mass index: 21.1",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "hospitalisations",
+            "value": 0,
+            "quote": "Hospital admissions in the past 12 months: 0",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "systolic",
+            "value": 126,
+            "quote": "Blood pressure: 126/77 mmHg",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "diastolic",
+            "value": 77,
+            "quote": "Blood pressure: 126/77 mmHg",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "hba1c",
+            "value": 5.5,
+            "quote": "HbA1c: 5.5%",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "egfr",
+            "value": 93,
+            "quote": "eGFR: 93 mL/min/1.73m2",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "ldl",
+            "value": 2.6,
+            "quote": "LDL cholesterol: 2.6 mmol/L",
+            "id": "DOC-1",
+            "page": 1
+          }
+        ]
+      },
+      "evidence_source": "synthetic: written by the sample generator, not extracted from the PDF",
+      "ml": {
+        "model": "mock-underwriting-ml-2026-09",
+        "standard": true,
+        "confidence": 0.9527,
+        "calibrated": true,
+        "ood": false,
+        "available": true,
+        "evidence_complete": true,
+        "source": "ml_training model; evidence_complete asserted by the sample generator"
+      },
+      "human": {
+        "outcome": "standard",
+        "decided_by": "sample generator (fictional underwriter)",
+        "decided_at": "2026-08-01",
+        "cohort": "life-standard",
+        "notes": "Synthetic outcome generated from the case archetype.",
+        "rationale": "standard: no adverse findings."
+      }
+    },
+    {
+      "case_id": "CASE-008",
+      "profile": {
+        "name": "Ravi Kumar",
+        "age": 32,
+        "sex": "Female",
+        "occupation": "Designer",
+        "product": "Life",
+        "cover": 402000,
+        "bmi": 26.2,
+        "smoker": false,
+        "condition": "none",
+        "annualIncome": 85000,
+        "existingCover": 0,
+        "termYears": 20,
+        "systolic": 128,
+        "diastolic": 83,
+        "hba1c": 5.1,
+        "egfr": 114,
+        "ldl": 2.0,
+        "diagnosisYears": 0,
+        "hospitalisations": 0,
+        "reportAgeDays": 63
+      },
+      "documents": [
+        "CASE-008-report.pdf"
+      ],
+      "evidence": {
+        "complete": true,
+        "findings": [
+          {
+            "id": "DOC-1",
+            "source": "Synthetic medical report",
+            "page": 1,
+            "quote": "Declared condition status: none",
+            "text": "Declared condition status recorded as none. Tobacco use: no."
+          },
+          {
+            "id": "DOC-1",
+            "source": "Synthetic medical report",
+            "page": 1,
+            "quote": "HbA1c: 5.1%",
+            "text": "Report records HbA1c, eGFR, LDL, blood pressure. BMI 26.2."
+          }
+        ],
+        "warnings": [],
+        "values": [
+          {
+            "field": "condition",
+            "value": "none",
+            "quote": "Declared condition status: none",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "smoker",
+            "value": false,
+            "quote": "Tobacco or nicotine use: no",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "bmi",
+            "value": 26.2,
+            "quote": "Body mass index: 26.2",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "hospitalisations",
+            "value": 0,
+            "quote": "Hospital admissions in the past 12 months: 0",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "systolic",
+            "value": 128,
+            "quote": "Blood pressure: 128/83 mmHg",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "diastolic",
+            "value": 83,
+            "quote": "Blood pressure: 128/83 mmHg",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "hba1c",
+            "value": 5.1,
+            "quote": "HbA1c: 5.1%",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "egfr",
+            "value": 114,
+            "quote": "eGFR: 114 mL/min/1.73m2",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "ldl",
+            "value": 2.0,
+            "quote": "LDL cholesterol: 2.0 mmol/L",
+            "id": "DOC-1",
+            "page": 1
+          }
+        ]
+      },
+      "evidence_source": "synthetic: written by the sample generator, not extracted from the PDF",
+      "ml": {
+        "model": "mock-underwriting-ml-2026-09",
+        "standard": true,
+        "confidence": 0.999,
+        "calibrated": true,
+        "ood": false,
+        "available": true,
+        "evidence_complete": true,
+        "source": "ml_training model; evidence_complete asserted by the sample generator"
+      },
+      "human": {
+        "outcome": "standard",
+        "decided_by": "sample generator (fictional underwriter)",
+        "decided_at": "2026-08-01",
+        "cohort": "life-standard",
+        "notes": "Synthetic outcome generated from the case archetype.",
+        "rationale": "standard: no adverse findings."
+      }
+    },
+    {
+      "case_id": "CASE-009",
+      "profile": {
+        "name": "Joanne Lim",
+        "age": 56,
+        "sex": "Female",
+        "occupation": "Teacher",
+        "product": "Life",
+        "cover": 544000,
+        "bmi": 32.8,
+        "smoker": false,
+        "condition": "controlled",
+        "annualIncome": 85000,
+        "existingCover": 0,
+        "termYears": 25,
+        "systolic": 149,
+        "diastolic": 99,
+        "hba1c": 6.5,
+        "egfr": 67,
+        "ldl": 3.7,
+        "diagnosisYears": 3,
+        "hospitalisations": 0,
+        "reportAgeDays": 45
+      },
+      "documents": [
+        "CASE-009-report.pdf"
+      ],
+      "evidence": {
+        "complete": true,
+        "findings": [
+          {
+            "id": "DOC-1",
+            "source": "Synthetic medical report",
+            "page": 1,
+            "quote": "Declared condition status: controlled",
+            "text": "Declared condition status recorded as controlled, diagnosed 3 years ago. Tobacco use: no."
+          },
+          {
+            "id": "DOC-1",
+            "source": "Synthetic medical report",
+            "page": 1,
+            "quote": "HbA1c: 6.5%",
+            "text": "Report records HbA1c, eGFR, LDL, blood pressure. BMI 32.8."
+          }
+        ],
+        "warnings": [],
+        "values": [
+          {
+            "field": "condition",
+            "value": "controlled",
+            "quote": "Declared condition status: controlled",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "smoker",
+            "value": false,
+            "quote": "Tobacco or nicotine use: no",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "bmi",
+            "value": 32.8,
+            "quote": "Body mass index: 32.8",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "hospitalisations",
+            "value": 0,
+            "quote": "Hospital admissions in the past 12 months: 0",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "systolic",
+            "value": 149,
+            "quote": "Blood pressure: 149/99 mmHg",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "diastolic",
+            "value": 99,
+            "quote": "Blood pressure: 149/99 mmHg",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "hba1c",
+            "value": 6.5,
+            "quote": "HbA1c: 6.5%",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "egfr",
+            "value": 67,
+            "quote": "eGFR: 67 mL/min/1.73m2",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "ldl",
+            "value": 3.7,
+            "quote": "LDL cholesterol: 3.7 mmol/L",
+            "id": "DOC-1",
+            "page": 1
+          }
+        ]
+      },
+      "evidence_source": "synthetic: written by the sample generator, not extracted from the PDF",
+      "ml": {
+        "model": "mock-underwriting-ml-2026-09",
+        "standard": true,
+        "confidence": 0.7619,
+        "calibrated": true,
+        "ood": false,
+        "available": true,
+        "evidence_complete": true,
+        "source": "ml_training model; evidence_complete asserted by the sample generator"
+      },
+      "human": {
+        "outcome": "standard",
+        "decided_by": "sample generator (fictional underwriter)",
+        "decided_at": "2026-08-01",
+        "cohort": "life-terms",
+        "notes": "Long-standing well-controlled condition; senior underwriter accepted at standard rates.",
+        "rationale": "standard: controlled declared condition, HbA1c 6.5. Long-standing well-controlled condition; senior underwriter accepted at standard rates."
+      }
+    },
+    {
+      "case_id": "CASE-010",
+      "profile": {
+        "name": "Farid Hassan",
+        "age": 51,
+        "sex": "Male",
+        "occupation": "Teacher",
+        "product": "Life",
+        "cover": 725000,
+        "bmi": 32.7,
+        "smoker": false,
+        "condition": "controlled",
+        "annualIncome": 150000,
+        "existingCover": 250000,
+        "termYears": 30,
+        "systolic": 140,
+        "diastolic": 88,
+        "hba1c": 7.1,
+        "egfr": 82,
+        "ldl": 4.2,
+        "diagnosisYears": 10,
+        "hospitalisations": 0,
+        "reportAgeDays": 143
+      },
+      "documents": [
+        "CASE-010-report.pdf"
+      ],
+      "evidence": {
+        "complete": true,
+        "findings": [
+          {
+            "id": "DOC-1",
+            "source": "Synthetic medical report",
+            "page": 1,
+            "quote": "Declared condition status: controlled",
+            "text": "Declared condition status recorded as controlled, diagnosed 10 years ago. Tobacco use: no."
+          },
+          {
+            "id": "DOC-1",
+            "source": "Synthetic medical report",
+            "page": 1,
+            "quote": "HbA1c: 7.1%",
+            "text": "Report records HbA1c, eGFR, LDL, blood pressure. BMI 32.7."
+          }
+        ],
+        "warnings": [],
+        "values": [
+          {
+            "field": "condition",
+            "value": "controlled",
+            "quote": "Declared condition status: controlled",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "smoker",
+            "value": false,
+            "quote": "Tobacco or nicotine use: no",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "bmi",
+            "value": 32.7,
+            "quote": "Body mass index: 32.7",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "hospitalisations",
+            "value": 0,
+            "quote": "Hospital admissions in the past 12 months: 0",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "systolic",
+            "value": 140,
+            "quote": "Blood pressure: 140/88 mmHg",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "diastolic",
+            "value": 88,
+            "quote": "Blood pressure: 140/88 mmHg",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "hba1c",
+            "value": 7.1,
+            "quote": "HbA1c: 7.1%",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "egfr",
+            "value": 82,
+            "quote": "eGFR: 82 mL/min/1.73m2",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "ldl",
+            "value": 4.2,
+            "quote": "LDL cholesterol: 4.2 mmol/L",
+            "id": "DOC-1",
+            "page": 1
+          }
+        ]
+      },
+      "evidence_source": "synthetic: written by the sample generator, not extracted from the PDF",
+      "ml": {
+        "model": "mock-underwriting-ml-2026-09",
+        "standard": true,
+        "confidence": 0.6757,
+        "calibrated": true,
+        "ood": false,
+        "available": true,
+        "evidence_complete": true,
+        "source": "ml_training model; evidence_complete asserted by the sample generator"
+      },
+      "human": {
+        "outcome": "terms",
+        "decided_by": "sample generator (fictional underwriter)",
+        "decided_at": "2026-08-01",
+        "cohort": "life-terms",
+        "notes": "Synthetic outcome generated from the case archetype.",
+        "rationale": "terms: controlled declared condition, HbA1c 7.1.",
+        "rating": "+50%"
+      }
+    },
+    {
+      "case_id": "CASE-011",
+      "profile": {
+        "name": "Chloe Teo",
+        "age": 58,
+        "sex": "Female",
+        "occupation": "Designer",
+        "product": "Medical",
+        "cover": 225000,
+        "bmi": 33.5,
+        "smoker": false,
+        "condition": "controlled",
+        "annualIncome": 110000,
+        "existingCover": 500000,
+        "termYears": 15,
+        "systolic": 149,
+        "diastolic": 92,
+        "hba1c": 7.3,
+        "egfr": 70,
+        "ldl": 3.6,
+        "diagnosisYears": 11,
+        "hospitalisations": 0,
+        "reportAgeDays": 49
+      },
+      "documents": [
+        "CASE-011-report.pdf"
+      ],
+      "evidence": {
+        "complete": true,
+        "findings": [
+          {
+            "id": "DOC-1",
+            "source": "Synthetic medical report",
+            "page": 1,
+            "quote": "Declared condition status: controlled",
+            "text": "Declared condition status recorded as controlled, diagnosed 11 years ago. Tobacco use: no."
+          },
+          {
+            "id": "DOC-1",
+            "source": "Synthetic medical report",
+            "page": 1,
+            "quote": "HbA1c: 7.3%",
+            "text": "Report records HbA1c, eGFR, LDL, blood pressure. BMI 33.5."
+          }
+        ],
+        "warnings": [],
+        "values": [
+          {
+            "field": "condition",
+            "value": "controlled",
+            "quote": "Declared condition status: controlled",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "smoker",
+            "value": false,
+            "quote": "Tobacco or nicotine use: no",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "bmi",
+            "value": 33.5,
+            "quote": "Body mass index: 33.5",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "hospitalisations",
+            "value": 0,
+            "quote": "Hospital admissions in the past 12 months: 0",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "systolic",
+            "value": 149,
+            "quote": "Blood pressure: 149/92 mmHg",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "diastolic",
+            "value": 92,
+            "quote": "Blood pressure: 149/92 mmHg",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "hba1c",
+            "value": 7.3,
+            "quote": "HbA1c: 7.3%",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "egfr",
+            "value": 70,
+            "quote": "eGFR: 70 mL/min/1.73m2",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "ldl",
+            "value": 3.6,
+            "quote": "LDL cholesterol: 3.6 mmol/L",
+            "id": "DOC-1",
+            "page": 1
+          }
+        ]
+      },
+      "evidence_source": "synthetic: written by the sample generator, not extracted from the PDF",
+      "ml": {
+        "model": "mock-underwriting-ml-2026-09",
+        "standard": true,
+        "confidence": 0.6351,
+        "calibrated": true,
+        "ood": false,
+        "available": true,
+        "evidence_complete": true,
+        "source": "ml_training model; evidence_complete asserted by the sample generator"
+      },
+      "human": {
+        "outcome": "terms",
+        "decided_by": "sample generator (fictional underwriter)",
+        "decided_at": "2026-08-01",
+        "cohort": "medical-terms",
+        "notes": "Synthetic outcome generated from the case archetype.",
+        "rationale": "terms: controlled declared condition, HbA1c 7.3.",
+        "rating": "+50%"
+      }
+    },
+    {
+      "case_id": "CASE-012",
+      "profile": {
+        "name": "Arun Pillai",
+        "age": 53,
+        "sex": "Female",
+        "occupation": "Engineer",
+        "product": "Life",
+        "cover": 643000,
+        "bmi": 31.8,
+        "smoker": false,
+        "condition": "controlled",
+        "annualIncome": 110000,
+        "existingCover": 0,
+        "termYears": 15,
+        "systolic": 141,
+        "diastolic": 85,
+        "hba1c": 6.2,
+        "egfr": 73,
+        "ldl": 3.2,
+        "diagnosisYears": 6,
+        "hospitalisations": 0,
+        "reportAgeDays": 30
+      },
+      "documents": [
+        "CASE-012-report.pdf"
+      ],
+      "evidence": {
+        "complete": true,
+        "findings": [
+          {
+            "id": "DOC-1",
+            "source": "Synthetic medical report",
+            "page": 1,
+            "quote": "Declared condition status: controlled",
+            "text": "Declared condition status recorded as controlled, diagnosed 6 years ago. Tobacco use: no."
+          },
+          {
+            "id": "DOC-1",
+            "source": "Synthetic medical report",
+            "page": 1,
+            "quote": "HbA1c: 6.2%",
+            "text": "Report records HbA1c, eGFR, LDL, blood pressure. BMI 31.8."
+          }
+        ],
+        "warnings": [],
+        "values": [
+          {
+            "field": "condition",
+            "value": "controlled",
+            "quote": "Declared condition status: controlled",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "smoker",
+            "value": false,
+            "quote": "Tobacco or nicotine use: no",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "bmi",
+            "value": 31.8,
+            "quote": "Body mass index: 31.8",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "hospitalisations",
+            "value": 0,
+            "quote": "Hospital admissions in the past 12 months: 0",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "systolic",
+            "value": 141,
+            "quote": "Blood pressure: 141/85 mmHg",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "diastolic",
+            "value": 85,
+            "quote": "Blood pressure: 141/85 mmHg",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "hba1c",
+            "value": 6.2,
+            "quote": "HbA1c: 6.2%",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "egfr",
+            "value": 73,
+            "quote": "eGFR: 73 mL/min/1.73m2",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "ldl",
+            "value": 3.2,
+            "quote": "LDL cholesterol: 3.2 mmol/L",
+            "id": "DOC-1",
+            "page": 1
+          }
+        ]
+      },
+      "evidence_source": "synthetic: written by the sample generator, not extracted from the PDF",
+      "ml": {
+        "model": "mock-underwriting-ml-2026-09",
+        "standard": true,
+        "confidence": 0.8182,
+        "calibrated": true,
+        "ood": false,
+        "available": true,
+        "evidence_complete": true,
+        "source": "ml_training model; evidence_complete asserted by the sample generator"
+      },
+      "human": {
+        "outcome": "terms",
+        "decided_by": "sample generator (fictional underwriter)",
+        "decided_at": "2026-08-01",
+        "cohort": "life-terms",
+        "notes": "Synthetic outcome generated from the case archetype.",
+        "rationale": "terms: controlled declared condition.",
+        "rating": "+25%"
+      }
+    },
+    {
+      "case_id": "CASE-013",
+      "profile": {
+        "name": "Grace Yeo",
+        "age": 48,
+        "sex": "Female",
+        "occupation": "Construction supervisor",
+        "product": "Life",
+        "cover": 726000,
+        "bmi": 29.3,
+        "smoker": false,
+        "condition": "controlled",
+        "annualIncome": 60000,
+        "existingCover": 500000,
+        "termYears": 10,
+        "systolic": 140,
+        "diastolic": 90,
+        "hba1c": 6.3,
+        "egfr": 83,
+        "ldl": 3.8,
+        "diagnosisYears": 5,
+        "hospitalisations": 0,
+        "reportAgeDays": 89
+      },
+      "documents": [
+        "CASE-013-report.pdf"
+      ],
+      "evidence": {
+        "complete": true,
+        "findings": [
+          {
+            "id": "DOC-1",
+            "source": "Synthetic medical report",
+            "page": 1,
+            "quote": "Declared condition status: controlled",
+            "text": "Declared condition status recorded as controlled, diagnosed 5 years ago. Tobacco use: no."
+          },
+          {
+            "id": "DOC-1",
+            "source": "Synthetic medical report",
+            "page": 1,
+            "quote": "HbA1c: 6.3%",
+            "text": "Report records HbA1c, eGFR, LDL, blood pressure. BMI 29.3."
+          }
+        ],
+        "warnings": [],
+        "values": [
+          {
+            "field": "condition",
+            "value": "controlled",
+            "quote": "Declared condition status: controlled",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "smoker",
+            "value": false,
+            "quote": "Tobacco or nicotine use: no",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "bmi",
+            "value": 29.3,
+            "quote": "Body mass index: 29.3",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "hospitalisations",
+            "value": 0,
+            "quote": "Hospital admissions in the past 12 months: 0",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "systolic",
+            "value": 140,
+            "quote": "Blood pressure: 140/90 mmHg",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "diastolic",
+            "value": 90,
+            "quote": "Blood pressure: 140/90 mmHg",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "hba1c",
+            "value": 6.3,
+            "quote": "HbA1c: 6.3%",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "egfr",
+            "value": 83,
+            "quote": "eGFR: 83 mL/min/1.73m2",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "ldl",
+            "value": 3.8,
+            "quote": "LDL cholesterol: 3.8 mmol/L",
+            "id": "DOC-1",
+            "page": 1
+          }
+        ]
+      },
+      "evidence_source": "synthetic: written by the sample generator, not extracted from the PDF",
+      "ml": {
+        "model": "mock-underwriting-ml-2026-09",
+        "standard": true,
+        "confidence": 0.7857,
+        "calibrated": true,
+        "ood": false,
+        "available": true,
+        "evidence_complete": true,
+        "source": "ml_training model; evidence_complete asserted by the sample generator"
+      },
+      "human": {
+        "outcome": "terms",
+        "decided_by": "sample generator (fictional underwriter)",
+        "decided_at": "2026-08-01",
+        "cohort": "life-terms",
+        "notes": "Synthetic outcome generated from the case archetype.",
+        "rationale": "terms: controlled declared condition.",
+        "rating": "+25%"
+      }
+    },
+    {
+      "case_id": "CASE-014",
+      "profile": {
+        "name": "Hakim Yusof",
+        "age": 55,
+        "sex": "Female",
+        "occupation": "Accountant",
+        "product": "Medical",
+        "cover": 906000,
+        "bmi": 26.1,
+        "smoker": false,
+        "condition": "controlled",
+        "annualIncome": 150000,
+        "existingCover": 250000,
+        "termYears": 20,
+        "systolic": null,
+        "diastolic": null,
+        "hba1c": null,
+        "egfr": null,
+        "ldl": null,
+        "diagnosisYears": 4,
+        "hospitalisations": 0,
+        "reportAgeDays": null
+      },
+      "documents": [
+        "CASE-014-report.pdf"
+      ],
+      "evidence": {
+        "complete": false,
+        "findings": [
+          {
+            "id": "DOC-1",
+            "source": "Synthetic medical report",
+            "page": 1,
+            "quote": "Declared condition status: controlled",
+            "text": "Declared condition status recorded as controlled, diagnosed 4 years ago. Tobacco use: no."
+          }
+        ],
+        "warnings": [
+          "The report contains no laboratory results; the metabolic and renal screen is absent."
+        ],
+        "values": [
+          {
+            "field": "condition",
+            "value": "controlled",
+            "quote": "Declared condition status: controlled",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "smoker",
+            "value": false,
+            "quote": "Tobacco or nicotine use: no",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "bmi",
+            "value": 26.1,
+            "quote": "Body mass index: 26.1",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "hospitalisations",
+            "value": 0,
+            "quote": "Hospital admissions in the past 12 months: 0",
+            "id": "DOC-1",
+            "page": 1
+          }
+        ]
+      },
+      "evidence_source": "synthetic: written by the sample generator, not extracted from the PDF",
+      "ml": {
+        "model": "mock-underwriting-ml-2026-09",
+        "standard": true,
+        "confidence": 0.9004,
+        "calibrated": true,
+        "ood": false,
+        "available": true,
+        "evidence_complete": true,
+        "source": "ml_training model; evidence_complete asserted by the sample generator"
+      },
+      "human": {
+        "outcome": "more_evidence",
+        "decided_by": "sample generator (fictional underwriter)",
+        "decided_at": "2026-08-01",
+        "cohort": "medical-more_evidence",
+        "notes": "Synthetic outcome generated from the case archetype.",
+        "rationale": "more_evidence: controlled declared condition.",
+        "evidence_requested": [
+          "GP report covering the declared condition",
+          "HbA1c",
+          "eGFR",
+          "lipid profile",
+          "blood pressure readings"
+        ],
+        "later_outcome": {
+          "outcome": "terms",
+          "decided_at": "2026-08-20"
+        }
+      }
+    },
+    {
+      "case_id": "CASE-015",
+      "profile": {
+        "name": "Ivy Chan",
+        "age": 41,
+        "sex": "Female",
+        "occupation": "Engineer",
+        "product": "Medical",
+        "cover": 701000,
+        "bmi": 29.5,
+        "smoker": false,
+        "condition": "controlled",
+        "annualIncome": 150000,
+        "existingCover": 500000,
+        "termYears": 25,
+        "systolic": null,
+        "diastolic": null,
+        "hba1c": null,
+        "egfr": null,
+        "ldl": null,
+        "diagnosisYears": 1,
+        "hospitalisations": 0,
+        "reportAgeDays": null
+      },
+      "documents": [
+        "CASE-015-report.pdf"
+      ],
+      "evidence": {
+        "complete": false,
+        "findings": [
+          {
+            "id": "DOC-1",
+            "source": "Synthetic medical report",
+            "page": 1,
+            "quote": "Declared condition status: controlled",
+            "text": "Declared condition status recorded as controlled, diagnosed 1 years ago. Tobacco use: no."
+          }
+        ],
+        "warnings": [
+          "The report contains no laboratory results; the metabolic and renal screen is absent."
+        ],
+        "values": [
+          {
+            "field": "condition",
+            "value": "controlled",
+            "quote": "Declared condition status: controlled",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "smoker",
+            "value": false,
+            "quote": "Tobacco or nicotine use: no",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "bmi",
+            "value": 29.5,
+            "quote": "Body mass index: 29.5",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "hospitalisations",
+            "value": 0,
+            "quote": "Hospital admissions in the past 12 months: 0",
+            "id": "DOC-1",
+            "page": 1
+          }
+        ]
+      },
+      "evidence_source": "synthetic: written by the sample generator, not extracted from the PDF",
+      "ml": {
+        "model": "mock-underwriting-ml-2026-09",
+        "standard": true,
+        "confidence": 0.9043,
+        "calibrated": true,
+        "ood": false,
+        "available": true,
+        "evidence_complete": true,
+        "source": "ml_training model; evidence_complete asserted by the sample generator"
+      },
+      "human": {
+        "outcome": "more_evidence",
+        "decided_by": "sample generator (fictional underwriter)",
+        "decided_at": "2026-08-01",
+        "cohort": "medical-more_evidence",
+        "notes": "Synthetic outcome generated from the case archetype.",
+        "rationale": "more_evidence: controlled declared condition.",
+        "evidence_requested": [
+          "GP report covering the declared condition",
+          "HbA1c",
+          "eGFR",
+          "lipid profile",
+          "blood pressure readings"
+        ],
+        "later_outcome": {
+          "outcome": "terms",
+          "decided_at": "2026-08-20"
+        }
+      }
+    },
+    {
+      "case_id": "CASE-016",
+      "profile": {
+        "name": "Nurul Aina",
+        "age": 39,
+        "sex": "Female",
+        "occupation": "Sales executive",
+        "product": "Life",
+        "cover": 883000,
+        "bmi": 23.5,
+        "smoker": false,
+        "condition": "controlled",
+        "annualIncome": 320000,
+        "existingCover": 500000,
+        "termYears": 20,
+        "systolic": null,
+        "diastolic": null,
+        "hba1c": null,
+        "egfr": null,
+        "ldl": null,
+        "diagnosisYears": 8,
+        "hospitalisations": 0,
+        "reportAgeDays": null
+      },
+      "documents": [
+        "CASE-016-report.pdf"
+      ],
+      "evidence": {
+        "complete": false,
+        "findings": [
+          {
+            "id": "DOC-1",
+            "source": "Synthetic medical report",
+            "page": 1,
+            "quote": "Declared condition status: controlled",
+            "text": "Declared condition status recorded as controlled, diagnosed 8 years ago. Tobacco use: no."
+          }
+        ],
+        "warnings": [
+          "The report contains no laboratory results; the metabolic and renal screen is absent."
+        ],
+        "values": [
+          {
+            "field": "condition",
+            "value": "controlled",
+            "quote": "Declared condition status: controlled",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "smoker",
+            "value": false,
+            "quote": "Tobacco or nicotine use: no",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "bmi",
+            "value": 23.5,
+            "quote": "Body mass index: 23.5",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "hospitalisations",
+            "value": 0,
+            "quote": "Hospital admissions in the past 12 months: 0",
+            "id": "DOC-1",
+            "page": 1
+          }
+        ]
+      },
+      "evidence_source": "synthetic: written by the sample generator, not extracted from the PDF",
+      "ml": {
+        "model": "mock-underwriting-ml-2026-09",
+        "standard": true,
+        "confidence": 0.9004,
+        "calibrated": true,
+        "ood": false,
+        "available": true,
+        "evidence_complete": true,
+        "source": "ml_training model; evidence_complete asserted by the sample generator"
+      },
+      "human": {
+        "outcome": "more_evidence",
+        "decided_by": "sample generator (fictional underwriter)",
+        "decided_at": "2026-08-01",
+        "cohort": "life-more_evidence",
+        "notes": "Synthetic outcome generated from the case archetype.",
+        "rationale": "more_evidence: controlled declared condition.",
+        "evidence_requested": [
+          "GP report covering the declared condition",
+          "HbA1c",
+          "eGFR",
+          "lipid profile",
+          "blood pressure readings"
+        ],
+        "later_outcome": {
+          "outcome": "terms",
+          "decided_at": "2026-08-20"
+        }
+      }
+    },
+    {
+      "case_id": "CASE-017",
+      "profile": {
+        "name": "Benjamin Koh",
+        "age": 37,
+        "sex": "Female",
+        "occupation": "Business owner",
+        "product": "Life",
+        "cover": 1022000,
+        "bmi": 26.0,
+        "smoker": false,
+        "condition": "controlled",
+        "annualIncome": 85000,
+        "existingCover": 0,
+        "termYears": 10,
+        "systolic": null,
+        "diastolic": null,
+        "hba1c": null,
+        "egfr": null,
+        "ldl": null,
+        "diagnosisYears": 5,
+        "hospitalisations": 0,
+        "reportAgeDays": null
+      },
+      "documents": [
+        "CASE-017-report.pdf"
+      ],
+      "evidence": {
+        "complete": false,
+        "findings": [
+          {
+            "id": "DOC-1",
+            "source": "Synthetic medical report",
+            "page": 1,
+            "quote": "Declared condition status: controlled",
+            "text": "Declared condition status recorded as controlled, diagnosed 5 years ago. Tobacco use: no."
+          }
+        ],
+        "warnings": [
+          "The report contains no laboratory results; the metabolic and renal screen is absent."
+        ],
+        "values": [
+          {
+            "field": "condition",
+            "value": "controlled",
+            "quote": "Declared condition status: controlled",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "smoker",
+            "value": false,
+            "quote": "Tobacco or nicotine use: no",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "bmi",
+            "value": 26.0,
+            "quote": "Body mass index: 26.0",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "hospitalisations",
+            "value": 0,
+            "quote": "Hospital admissions in the past 12 months: 0",
+            "id": "DOC-1",
+            "page": 1
+          }
+        ]
+      },
+      "evidence_source": "synthetic: written by the sample generator, not extracted from the PDF",
+      "ml": {
+        "model": "mock-underwriting-ml-2026-09",
+        "standard": true,
+        "confidence": 0.9043,
+        "calibrated": true,
+        "ood": false,
+        "available": true,
+        "evidence_complete": true,
+        "source": "ml_training model; evidence_complete asserted by the sample generator"
+      },
+      "human": {
+        "outcome": "more_evidence",
+        "decided_by": "sample generator (fictional underwriter)",
+        "decided_at": "2026-08-01",
+        "cohort": "life-more_evidence",
+        "notes": "Synthetic outcome generated from the case archetype.",
+        "rationale": "more_evidence: controlled declared condition, cover above 1m.",
+        "evidence_requested": [
+          "GP report covering the declared condition",
+          "HbA1c",
+          "eGFR",
+          "lipid profile",
+          "blood pressure readings"
+        ],
+        "later_outcome": {
+          "outcome": "terms",
+          "decided_at": "2026-08-20"
+        }
+      }
+    },
+    {
+      "case_id": "CASE-018",
+      "profile": {
+        "name": "Sharmila Devi",
+        "age": 57,
+        "sex": "Female",
+        "occupation": "Accountant",
+        "product": "Life",
+        "cover": 699000,
+        "bmi": 28.2,
+        "smoker": false,
+        "condition": "controlled",
+        "annualIncome": 320000,
+        "existingCover": 100000,
+        "termYears": 10,
+        "systolic": null,
+        "diastolic": null,
+        "hba1c": null,
+        "egfr": null,
+        "ldl": null,
+        "diagnosisYears": 2,
+        "hospitalisations": 0,
+        "reportAgeDays": null
+      },
+      "documents": [
+        "CASE-018-report.pdf"
+      ],
+      "evidence": {
+        "complete": false,
+        "findings": [
+          {
+            "id": "DOC-1",
+            "source": "Synthetic medical report",
+            "page": 1,
+            "quote": "Declared condition status: controlled",
+            "text": "Declared condition status recorded as controlled, diagnosed 2 years ago. Tobacco use: no."
+          }
+        ],
+        "warnings": [
+          "The report contains no laboratory results; the metabolic and renal screen is absent."
+        ],
+        "values": [
+          {
+            "field": "condition",
+            "value": "controlled",
+            "quote": "Declared condition status: controlled",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "smoker",
+            "value": false,
+            "quote": "Tobacco or nicotine use: no",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "bmi",
+            "value": 28.2,
+            "quote": "Body mass index: 28.2",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "hospitalisations",
+            "value": 0,
+            "quote": "Hospital admissions in the past 12 months: 0",
+            "id": "DOC-1",
+            "page": 1
+          }
+        ]
+      },
+      "evidence_source": "synthetic: written by the sample generator, not extracted from the PDF",
+      "ml": {
+        "model": "mock-underwriting-ml-2026-09",
+        "standard": true,
+        "confidence": 0.8571,
+        "calibrated": true,
+        "ood": false,
+        "available": true,
+        "evidence_complete": true,
+        "source": "ml_training model; evidence_complete asserted by the sample generator"
+      },
+      "human": {
+        "outcome": "more_evidence",
+        "decided_by": "sample generator (fictional underwriter)",
+        "decided_at": "2026-08-01",
+        "cohort": "life-more_evidence",
+        "notes": "Synthetic outcome generated from the case archetype.",
+        "rationale": "more_evidence: controlled declared condition.",
+        "evidence_requested": [
+          "GP report covering the declared condition",
+          "HbA1c",
+          "eGFR",
+          "lipid profile",
+          "blood pressure readings"
+        ],
+        "later_outcome": {
+          "outcome": "terms",
+          "decided_at": "2026-08-20"
+        }
+      }
+    },
+    {
+      "case_id": "CASE-019",
+      "profile": {
+        "name": "Adrian Sim",
+        "age": 56,
+        "sex": "Female",
+        "occupation": "Teacher",
+        "product": "Life",
+        "cover": 1795000,
+        "bmi": 30.4,
+        "smoker": true,
+        "condition": "controlled",
+        "annualIncome": 240000,
+        "existingCover": 500000,
+        "termYears": 10,
+        "systolic": 155,
+        "diastolic": 103,
+        "hba1c": 7.3,
+        "egfr": 59,
+        "ldl": 3.4,
+        "diagnosisYears": 4,
+        "hospitalisations": 1,
+        "reportAgeDays": 108
+      },
+      "documents": [
+        "CASE-019-report.pdf"
+      ],
+      "evidence": {
+        "complete": true,
+        "findings": [
+          {
+            "id": "DOC-1",
+            "source": "Synthetic medical report",
+            "page": 1,
+            "quote": "Declared condition status: controlled",
+            "text": "Declared condition status recorded as controlled, diagnosed 4 years ago. Tobacco use: yes."
+          },
+          {
+            "id": "DOC-1",
+            "source": "Synthetic medical report",
+            "page": 1,
+            "quote": "HbA1c: 7.3%",
+            "text": "Report records HbA1c, eGFR, LDL, blood pressure. BMI 30.4."
+          }
+        ],
+        "warnings": [],
+        "values": [
+          {
+            "field": "condition",
+            "value": "controlled",
+            "quote": "Declared condition status: controlled",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "smoker",
+            "value": true,
+            "quote": "Tobacco or nicotine use: yes",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "bmi",
+            "value": 30.4,
+            "quote": "Body mass index: 30.4",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "hospitalisations",
+            "value": 1,
+            "quote": "Hospital admissions in the past 12 months: 1",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "systolic",
+            "value": 155,
+            "quote": "Blood pressure: 155/103 mmHg",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "diastolic",
+            "value": 103,
+            "quote": "Blood pressure: 155/103 mmHg",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "hba1c",
+            "value": 7.3,
+            "quote": "HbA1c: 7.3%",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "egfr",
+            "value": 59,
+            "quote": "eGFR: 59 mL/min/1.73m2",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "ldl",
+            "value": 3.4,
+            "quote": "LDL cholesterol: 3.4 mmol/L",
+            "id": "DOC-1",
+            "page": 1
+          }
+        ]
+      },
+      "evidence_source": "synthetic: written by the sample generator, not extracted from the PDF",
+      "ml": {
+        "model": "mock-underwriting-ml-2026-09",
+        "standard": false,
+        "confidence": 0.7586,
+        "calibrated": true,
+        "ood": false,
+        "available": true,
+        "evidence_complete": true,
+        "source": "ml_training model; evidence_complete asserted by the sample generator"
+      },
+      "human": {
+        "outcome": "refer",
+        "decided_by": "sample generator (fictional underwriter)",
+        "decided_at": "2026-08-01",
+        "cohort": "life-refer",
+        "notes": "Synthetic outcome generated from the case archetype.",
+        "rationale": "refer: tobacco use, controlled declared condition, HbA1c 7.3, eGFR 59, cover above 1m."
+      }
+    },
+    {
+      "case_id": "CASE-020",
+      "profile": {
+        "name": "Mei Ling Ho",
+        "age": 51,
+        "sex": "Female",
+        "occupation": "Delivery rider",
+        "product": "Life",
+        "cover": 2310000,
+        "bmi": 34.2,
+        "smoker": true,
+        "condition": "controlled",
+        "annualIncome": 320000,
+        "existingCover": 100000,
+        "termYears": 25,
+        "systolic": 157,
+        "diastolic": 96,
+        "hba1c": 6.3,
+        "egfr": 77,
+        "ldl": 3.4,
+        "diagnosisYears": 6,
+        "hospitalisations": 1,
+        "reportAgeDays": 130
+      },
+      "documents": [
+        "CASE-020-report.pdf"
+      ],
+      "evidence": {
+        "complete": true,
+        "findings": [
+          {
+            "id": "DOC-1",
+            "source": "Synthetic medical report",
+            "page": 1,
+            "quote": "Declared condition status: controlled",
+            "text": "Declared condition status recorded as controlled, diagnosed 6 years ago. Tobacco use: yes."
+          },
+          {
+            "id": "DOC-1",
+            "source": "Synthetic medical report",
+            "page": 1,
+            "quote": "HbA1c: 6.3%",
+            "text": "Report records HbA1c, eGFR, LDL, blood pressure. BMI 34.2."
+          }
+        ],
+        "warnings": [],
+        "values": [
+          {
+            "field": "condition",
+            "value": "controlled",
+            "quote": "Declared condition status: controlled",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "smoker",
+            "value": true,
+            "quote": "Tobacco or nicotine use: yes",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "bmi",
+            "value": 34.2,
+            "quote": "Body mass index: 34.2",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "hospitalisations",
+            "value": 1,
+            "quote": "Hospital admissions in the past 12 months: 1",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "systolic",
+            "value": 157,
+            "quote": "Blood pressure: 157/96 mmHg",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "diastolic",
+            "value": 96,
+            "quote": "Blood pressure: 157/96 mmHg",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "hba1c",
+            "value": 6.3,
+            "quote": "HbA1c: 6.3%",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "egfr",
+            "value": 77,
+            "quote": "eGFR: 77 mL/min/1.73m2",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "ldl",
+            "value": 3.4,
+            "quote": "LDL cholesterol: 3.4 mmol/L",
+            "id": "DOC-1",
+            "page": 1
+          }
+        ]
+      },
+      "evidence_source": "synthetic: written by the sample generator, not extracted from the PDF",
+      "ml": {
+        "model": "mock-underwriting-ml-2026-09",
+        "standard": false,
+        "confidence": 0.7586,
+        "calibrated": true,
+        "ood": false,
+        "available": true,
+        "evidence_complete": true,
+        "source": "ml_training model; evidence_complete asserted by the sample generator"
+      },
+      "human": {
+        "outcome": "refer",
+        "decided_by": "sample generator (fictional underwriter)",
+        "decided_at": "2026-08-01",
+        "cohort": "life-refer",
+        "notes": "Synthetic outcome generated from the case archetype.",
+        "rationale": "refer: tobacco use, controlled declared condition, cover above 1m."
+      }
+    },
+    {
+      "case_id": "CASE-021",
+      "profile": {
+        "name": "Zainab Omar",
+        "age": 54,
+        "sex": "Male",
+        "occupation": "Teacher",
+        "product": "Life",
+        "cover": 2371000,
+        "bmi": 30.9,
+        "smoker": true,
+        "condition": "controlled",
+        "annualIncome": 320000,
+        "existingCover": 500000,
+        "termYears": 10,
+        "systolic": 147,
+        "diastolic": 93,
+        "hba1c": 7.7,
+        "egfr": 58,
+        "ldl": 3.6,
+        "diagnosisYears": 6,
+        "hospitalisations": 1,
+        "reportAgeDays": 168
+      },
+      "documents": [
+        "CASE-021-report.pdf"
+      ],
+      "evidence": {
+        "complete": true,
+        "findings": [
+          {
+            "id": "DOC-1",
+            "source": "Synthetic medical report",
+            "page": 1,
+            "quote": "Declared condition status: controlled",
+            "text": "Declared condition status recorded as controlled, diagnosed 6 years ago. Tobacco use: yes."
+          },
+          {
+            "id": "DOC-1",
+            "source": "Synthetic medical report",
+            "page": 1,
+            "quote": "HbA1c: 7.7%",
+            "text": "Report records HbA1c, eGFR, LDL, blood pressure. BMI 30.9."
+          }
+        ],
+        "warnings": [],
+        "values": [
+          {
+            "field": "condition",
+            "value": "controlled",
+            "quote": "Declared condition status: controlled",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "smoker",
+            "value": true,
+            "quote": "Tobacco or nicotine use: yes",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "bmi",
+            "value": 30.9,
+            "quote": "Body mass index: 30.9",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "hospitalisations",
+            "value": 1,
+            "quote": "Hospital admissions in the past 12 months: 1",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "systolic",
+            "value": 147,
+            "quote": "Blood pressure: 147/93 mmHg",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "diastolic",
+            "value": 93,
+            "quote": "Blood pressure: 147/93 mmHg",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "hba1c",
+            "value": 7.7,
+            "quote": "HbA1c: 7.7%",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "egfr",
+            "value": 58,
+            "quote": "eGFR: 58 mL/min/1.73m2",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "ldl",
+            "value": 3.6,
+            "quote": "LDL cholesterol: 3.6 mmol/L",
+            "id": "DOC-1",
+            "page": 1
+          }
+        ]
+      },
+      "evidence_source": "synthetic: written by the sample generator, not extracted from the PDF",
+      "ml": {
+        "model": "mock-underwriting-ml-2026-09",
+        "standard": false,
+        "confidence": 0.7586,
+        "calibrated": true,
+        "ood": true,
+        "available": true,
+        "evidence_complete": true,
+        "source": "ml_training model; evidence_complete asserted by the sample generator"
+      },
+      "human": {
+        "outcome": "refer",
+        "decided_by": "sample generator (fictional underwriter)",
+        "decided_at": "2026-08-01",
+        "cohort": "life-refer",
+        "notes": "Synthetic outcome generated from the case archetype.",
+        "rationale": "refer: tobacco use, controlled declared condition, HbA1c 7.7, eGFR 58, cover above 1m."
+      }
+    },
+    {
+      "case_id": "CASE-022",
+      "profile": {
+        "name": "Terence Ng",
+        "age": 67,
+        "sex": "Male",
+        "occupation": "Nurse",
+        "product": "Life",
+        "cover": 2241000,
+        "bmi": 30.1,
+        "smoker": true,
+        "condition": "controlled",
+        "annualIncome": 110000,
+        "existingCover": 0,
+        "termYears": 30,
+        "systolic": 156,
+        "diastolic": 99,
+        "hba1c": 7.5,
+        "egfr": 66,
+        "ldl": 3.8,
+        "diagnosisYears": 6,
+        "hospitalisations": 1,
+        "reportAgeDays": 141
+      },
+      "documents": [
+        "CASE-022-report.pdf"
+      ],
+      "evidence": {
+        "complete": true,
+        "findings": [
+          {
+            "id": "DOC-1",
+            "source": "Synthetic medical report",
+            "page": 1,
+            "quote": "Declared condition status: controlled",
+            "text": "Declared condition status recorded as controlled, diagnosed 6 years ago. Tobacco use: yes."
+          },
+          {
+            "id": "DOC-1",
+            "source": "Synthetic medical report",
+            "page": 1,
+            "quote": "HbA1c: 7.5%",
+            "text": "Report records HbA1c, eGFR, LDL, blood pressure. BMI 30.1."
+          }
+        ],
+        "warnings": [],
+        "values": [
+          {
+            "field": "condition",
+            "value": "controlled",
+            "quote": "Declared condition status: controlled",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "smoker",
+            "value": true,
+            "quote": "Tobacco or nicotine use: yes",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "bmi",
+            "value": 30.1,
+            "quote": "Body mass index: 30.1",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "hospitalisations",
+            "value": 1,
+            "quote": "Hospital admissions in the past 12 months: 1",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "systolic",
+            "value": 156,
+            "quote": "Blood pressure: 156/99 mmHg",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "diastolic",
+            "value": 99,
+            "quote": "Blood pressure: 156/99 mmHg",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "hba1c",
+            "value": 7.5,
+            "quote": "HbA1c: 7.5%",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "egfr",
+            "value": 66,
+            "quote": "eGFR: 66 mL/min/1.73m2",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "ldl",
+            "value": 3.8,
+            "quote": "LDL cholesterol: 3.8 mmol/L",
+            "id": "DOC-1",
+            "page": 1
+          }
+        ]
+      },
+      "evidence_source": "synthetic: written by the sample generator, not extracted from the PDF",
+      "ml": {
+        "model": "mock-underwriting-ml-2026-09",
+        "standard": false,
+        "confidence": 0.8529,
+        "calibrated": true,
+        "ood": false,
+        "available": true,
+        "evidence_complete": true,
+        "source": "ml_training model; evidence_complete asserted by the sample generator"
+      },
+      "human": {
+        "outcome": "refer",
+        "decided_by": "sample generator (fictional underwriter)",
+        "decided_at": "2026-08-01",
+        "cohort": "life-refer",
+        "notes": "Synthetic outcome generated from the case archetype.",
+        "rationale": "refer: tobacco use, controlled declared condition, HbA1c 7.5, cover above 1m."
+      }
+    },
+    {
+      "case_id": "CASE-023",
+      "profile": {
+        "name": "Lydia Wong",
+        "age": 64,
+        "sex": "Female",
+        "occupation": "Accountant",
+        "product": "Life",
+        "cover": 2472000,
+        "bmi": 32.1,
+        "smoker": true,
+        "condition": "controlled",
+        "annualIncome": 110000,
+        "existingCover": 500000,
+        "termYears": 25,
+        "systolic": 151,
+        "diastolic": 91,
+        "hba1c": 7.3,
+        "egfr": 79,
+        "ldl": 3.5,
+        "diagnosisYears": 10,
+        "hospitalisations": 1,
+        "reportAgeDays": 91
+      },
+      "documents": [
+        "CASE-023-report.pdf"
+      ],
+      "evidence": {
+        "complete": true,
+        "findings": [
+          {
+            "id": "DOC-1",
+            "source": "Synthetic medical report",
+            "page": 1,
+            "quote": "Declared condition status: controlled",
+            "text": "Declared condition status recorded as controlled, diagnosed 10 years ago. Tobacco use: yes."
+          },
+          {
+            "id": "DOC-1",
+            "source": "Synthetic medical report",
+            "page": 1,
+            "quote": "HbA1c: 7.3%",
+            "text": "Report records HbA1c, eGFR, LDL, blood pressure. BMI 32.1."
+          }
+        ],
+        "warnings": [],
+        "values": [
+          {
+            "field": "condition",
+            "value": "controlled",
+            "quote": "Declared condition status: controlled",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "smoker",
+            "value": true,
+            "quote": "Tobacco or nicotine use: yes",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "bmi",
+            "value": 32.1,
+            "quote": "Body mass index: 32.1",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "hospitalisations",
+            "value": 1,
+            "quote": "Hospital admissions in the past 12 months: 1",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "systolic",
+            "value": 151,
+            "quote": "Blood pressure: 151/91 mmHg",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "diastolic",
+            "value": 91,
+            "quote": "Blood pressure: 151/91 mmHg",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "hba1c",
+            "value": 7.3,
+            "quote": "HbA1c: 7.3%",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "egfr",
+            "value": 79,
+            "quote": "eGFR: 79 mL/min/1.73m2",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "ldl",
+            "value": 3.5,
+            "quote": "LDL cholesterol: 3.5 mmol/L",
+            "id": "DOC-1",
+            "page": 1
+          }
+        ]
+      },
+      "evidence_source": "synthetic: written by the sample generator, not extracted from the PDF",
+      "ml": {
+        "model": "mock-underwriting-ml-2026-09",
+        "standard": false,
+        "confidence": 0.8529,
+        "calibrated": true,
+        "ood": false,
+        "available": true,
+        "evidence_complete": true,
+        "source": "ml_training model; evidence_complete asserted by the sample generator"
+      },
+      "human": {
+        "outcome": "refer",
+        "decided_by": "sample generator (fictional underwriter)",
+        "decided_at": "2026-08-01",
+        "cohort": "life-refer",
+        "notes": "Synthetic outcome generated from the case archetype.",
+        "rationale": "refer: tobacco use, controlled declared condition, HbA1c 7.3, cover above 1m."
+      }
+    },
+    {
+      "case_id": "CASE-024",
+      "profile": {
+        "name": "Iqbal Salleh",
+        "age": 56,
+        "sex": "Male",
+        "occupation": "Business owner",
+        "product": "Life",
+        "cover": 842000,
+        "bmi": 28.0,
+        "smoker": false,
+        "condition": "complex",
+        "annualIncome": 150000,
+        "existingCover": 0,
+        "termYears": 20,
+        "systolic": 141,
+        "diastolic": 95,
+        "hba1c": 7.8,
+        "egfr": 77,
+        "ldl": 4.4,
+        "diagnosisYears": 5,
+        "hospitalisations": 2,
+        "reportAgeDays": 269
+      },
+      "documents": [
+        "CASE-024-report.pdf"
+      ],
+      "evidence": {
+        "complete": true,
+        "findings": [
+          {
+            "id": "DOC-1",
+            "source": "Synthetic medical report",
+            "page": 1,
+            "quote": "Declared condition status: complex",
+            "text": "Declared condition status recorded as complex, diagnosed 5 years ago. Tobacco use: no."
+          },
+          {
+            "id": "DOC-1",
+            "source": "Synthetic medical report",
+            "page": 1,
+            "quote": "HbA1c: 7.8%",
+            "text": "Report records HbA1c, eGFR, LDL, blood pressure. BMI 28.0."
+          }
+        ],
+        "warnings": [],
+        "values": [
+          {
+            "field": "condition",
+            "value": "complex",
+            "quote": "Declared condition status: complex",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "smoker",
+            "value": false,
+            "quote": "Tobacco or nicotine use: no",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "bmi",
+            "value": 28.0,
+            "quote": "Body mass index: 28.0",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "hospitalisations",
+            "value": 2,
+            "quote": "Hospital admissions in the past 12 months: 2",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "systolic",
+            "value": 141,
+            "quote": "Blood pressure: 141/95 mmHg",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "diastolic",
+            "value": 95,
+            "quote": "Blood pressure: 141/95 mmHg",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "hba1c",
+            "value": 7.8,
+            "quote": "HbA1c: 7.8%",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "egfr",
+            "value": 77,
+            "quote": "eGFR: 77 mL/min/1.73m2",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "ldl",
+            "value": 4.4,
+            "quote": "LDL cholesterol: 4.4 mmol/L",
+            "id": "DOC-1",
+            "page": 1
+          }
+        ]
+      },
+      "evidence_source": "synthetic: written by the sample generator, not extracted from the PDF",
+      "ml": {
+        "model": "mock-underwriting-ml-2026-09",
+        "standard": false,
+        "confidence": 0.9394,
+        "calibrated": true,
+        "ood": true,
+        "available": true,
+        "evidence_complete": true,
+        "source": "ml_training model; evidence_complete asserted by the sample generator"
+      },
+      "human": {
+        "outcome": "postpone",
+        "decided_by": "sample generator (fictional underwriter)",
+        "decided_at": "2026-08-01",
+        "cohort": "life-postpone",
+        "notes": "Synthetic outcome generated from the case archetype.",
+        "rationale": "postpone: complex declared condition, HbA1c 7.8."
+      }
+    },
+    {
+      "case_id": "CASE-025",
+      "profile": {
+        "name": "Samuel Chia",
+        "age": 54,
+        "sex": "Male",
+        "occupation": "Teacher",
+        "product": "Life",
+        "cover": 796000,
+        "bmi": 24.4,
+        "smoker": false,
+        "condition": "complex",
+        "annualIncome": 85000,
+        "existingCover": 0,
+        "termYears": 10,
+        "systolic": 154,
+        "diastolic": 101,
+        "hba1c": 7.1,
+        "egfr": 71,
+        "ldl": 4.3,
+        "diagnosisYears": 4,
+        "hospitalisations": 1,
+        "reportAgeDays": 409
+      },
+      "documents": [
+        "CASE-025-report.pdf"
+      ],
+      "evidence": {
+        "complete": true,
+        "findings": [
+          {
+            "id": "DOC-1",
+            "source": "Synthetic medical report",
+            "page": 1,
+            "quote": "Declared condition status: complex",
+            "text": "Declared condition status recorded as complex, diagnosed 4 years ago. Tobacco use: no."
+          },
+          {
+            "id": "DOC-1",
+            "source": "Synthetic medical report",
+            "page": 1,
+            "quote": "HbA1c: 7.1%",
+            "text": "Report records HbA1c, eGFR, LDL, blood pressure. BMI 24.4."
+          }
+        ],
+        "warnings": [
+          "The report is more than a year old at the date of application."
+        ],
+        "values": [
+          {
+            "field": "condition",
+            "value": "complex",
+            "quote": "Declared condition status: complex",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "smoker",
+            "value": false,
+            "quote": "Tobacco or nicotine use: no",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "bmi",
+            "value": 24.4,
+            "quote": "Body mass index: 24.4",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "hospitalisations",
+            "value": 1,
+            "quote": "Hospital admissions in the past 12 months: 1",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "systolic",
+            "value": 154,
+            "quote": "Blood pressure: 154/101 mmHg",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "diastolic",
+            "value": 101,
+            "quote": "Blood pressure: 154/101 mmHg",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "hba1c",
+            "value": 7.1,
+            "quote": "HbA1c: 7.1%",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "egfr",
+            "value": 71,
+            "quote": "eGFR: 71 mL/min/1.73m2",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "ldl",
+            "value": 4.3,
+            "quote": "LDL cholesterol: 4.3 mmol/L",
+            "id": "DOC-1",
+            "page": 1
+          }
+        ]
+      },
+      "evidence_source": "synthetic: written by the sample generator, not extracted from the PDF",
+      "ml": {
+        "model": "mock-underwriting-ml-2026-09",
+        "standard": false,
+        "confidence": 0.7586,
+        "calibrated": true,
+        "ood": true,
+        "available": true,
+        "evidence_complete": true,
+        "source": "ml_training model; evidence_complete asserted by the sample generator"
+      },
+      "human": {
+        "outcome": "postpone",
+        "decided_by": "sample generator (fictional underwriter)",
+        "decided_at": "2026-08-01",
+        "cohort": "life-postpone",
+        "notes": "Synthetic outcome generated from the case archetype.",
+        "rationale": "postpone: complex declared condition, HbA1c 7.1."
+      }
+    },
+    {
+      "case_id": "CASE-026",
+      "profile": {
+        "name": "Rachel Phua",
+        "age": 58,
+        "sex": "Male",
+        "occupation": "Business owner",
+        "product": "Life",
+        "cover": 1837000,
+        "bmi": 35.1,
+        "smoker": true,
+        "condition": "complex",
+        "annualIncome": 60000,
+        "existingCover": 0,
+        "termYears": 20,
+        "systolic": 171,
+        "diastolic": 106,
+        "hba1c": 10.1,
+        "egfr": 25,
+        "ldl": 5.1,
+        "diagnosisYears": 3,
+        "hospitalisations": 3,
+        "reportAgeDays": 143
+      },
+      "documents": [
+        "CASE-026-report.pdf"
+      ],
+      "evidence": {
+        "complete": true,
+        "findings": [
+          {
+            "id": "DOC-1",
+            "source": "Synthetic medical report",
+            "page": 1,
+            "quote": "Declared condition status: complex",
+            "text": "Declared condition status recorded as complex, diagnosed 3 years ago. Tobacco use: yes."
+          },
+          {
+            "id": "DOC-1",
+            "source": "Synthetic medical report",
+            "page": 1,
+            "quote": "HbA1c: 10.1%",
+            "text": "Report records HbA1c, eGFR, LDL, blood pressure. BMI 35.1."
+          }
+        ],
+        "warnings": [],
+        "values": [
+          {
+            "field": "condition",
+            "value": "complex",
+            "quote": "Declared condition status: complex",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "smoker",
+            "value": true,
+            "quote": "Tobacco or nicotine use: yes",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "bmi",
+            "value": 35.1,
+            "quote": "Body mass index: 35.1",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "hospitalisations",
+            "value": 3,
+            "quote": "Hospital admissions in the past 12 months: 3",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "systolic",
+            "value": 171,
+            "quote": "Blood pressure: 171/106 mmHg",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "diastolic",
+            "value": 106,
+            "quote": "Blood pressure: 171/106 mmHg",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "hba1c",
+            "value": 10.1,
+            "quote": "HbA1c: 10.1%",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "egfr",
+            "value": 25,
+            "quote": "eGFR: 25 mL/min/1.73m2",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "ldl",
+            "value": 5.1,
+            "quote": "LDL cholesterol: 5.1 mmol/L",
+            "id": "DOC-1",
+            "page": 1
+          }
+        ]
+      },
+      "evidence_source": "synthetic: written by the sample generator, not extracted from the PDF",
+      "ml": {
+        "model": "mock-underwriting-ml-2026-09",
+        "standard": false,
+        "confidence": 0.999,
+        "calibrated": true,
+        "ood": true,
+        "available": true,
+        "evidence_complete": true,
+        "source": "ml_training model; evidence_complete asserted by the sample generator"
+      },
+      "human": {
+        "outcome": "decline",
+        "decided_by": "sample generator (fictional underwriter)",
+        "decided_at": "2026-08-01",
+        "cohort": "life-decline",
+        "notes": "Synthetic outcome generated from the case archetype.",
+        "rationale": "decline: tobacco use, complex declared condition, HbA1c 10.1, eGFR 25, systolic 171, cover above 1m."
+      }
+    },
+    {
+      "case_id": "CASE-027",
+      "profile": {
+        "name": "Vikram Raj",
+        "age": 56,
+        "sex": "Female",
+        "occupation": "Delivery rider",
+        "product": "Medical",
+        "cover": 1031000,
+        "bmi": 36.4,
+        "smoker": true,
+        "condition": "complex",
+        "annualIncome": 60000,
+        "existingCover": 250000,
+        "termYears": 10,
+        "systolic": 161,
+        "diastolic": 97,
+        "hba1c": 10.8,
+        "egfr": 47,
+        "ldl": 5.2,
+        "diagnosisYears": 4,
+        "hospitalisations": 3,
+        "reportAgeDays": 170
+      },
+      "documents": [
+        "CASE-027-report.pdf"
+      ],
+      "evidence": {
+        "complete": true,
+        "findings": [
+          {
+            "id": "DOC-1",
+            "source": "Synthetic medical report",
+            "page": 1,
+            "quote": "Declared condition status: complex",
+            "text": "Declared condition status recorded as complex, diagnosed 4 years ago. Tobacco use: yes."
+          },
+          {
+            "id": "DOC-1",
+            "source": "Synthetic medical report",
+            "page": 1,
+            "quote": "HbA1c: 10.8%",
+            "text": "Report records HbA1c, eGFR, LDL, blood pressure. BMI 36.4."
+          }
+        ],
+        "warnings": [],
+        "values": [
+          {
+            "field": "condition",
+            "value": "complex",
+            "quote": "Declared condition status: complex",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "smoker",
+            "value": true,
+            "quote": "Tobacco or nicotine use: yes",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "bmi",
+            "value": 36.4,
+            "quote": "Body mass index: 36.4",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "hospitalisations",
+            "value": 3,
+            "quote": "Hospital admissions in the past 12 months: 3",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "systolic",
+            "value": 161,
+            "quote": "Blood pressure: 161/97 mmHg",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "diastolic",
+            "value": 97,
+            "quote": "Blood pressure: 161/97 mmHg",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "hba1c",
+            "value": 10.8,
+            "quote": "HbA1c: 10.8%",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "egfr",
+            "value": 47,
+            "quote": "eGFR: 47 mL/min/1.73m2",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "ldl",
+            "value": 5.2,
+            "quote": "LDL cholesterol: 5.2 mmol/L",
+            "id": "DOC-1",
+            "page": 1
+          }
+        ]
+      },
+      "evidence_source": "synthetic: written by the sample generator, not extracted from the PDF",
+      "ml": {
+        "model": "mock-underwriting-ml-2026-09",
+        "standard": false,
+        "confidence": 0.999,
+        "calibrated": true,
+        "ood": true,
+        "available": true,
+        "evidence_complete": true,
+        "source": "ml_training model; evidence_complete asserted by the sample generator"
+      },
+      "human": {
+        "outcome": "decline",
+        "decided_by": "sample generator (fictional underwriter)",
+        "decided_at": "2026-08-01",
+        "cohort": "medical-decline",
+        "notes": "Synthetic outcome generated from the case archetype.",
+        "rationale": "decline: tobacco use, complex declared condition, HbA1c 10.8, eGFR 47, systolic 161, cover above 1m."
+      }
+    },
+    {
+      "case_id": "CASE-028",
+      "profile": {
+        "name": "Natalie Seah",
+        "age": 72,
+        "sex": "Female",
+        "occupation": "Designer",
+        "product": "Medical",
+        "cover": 759000,
+        "bmi": 41.1,
+        "smoker": true,
+        "condition": "complex",
+        "annualIncome": 60000,
+        "existingCover": 0,
+        "termYears": 30,
+        "systolic": 169,
+        "diastolic": 101,
+        "hba1c": 10.2,
+        "egfr": 38,
+        "ldl": 5.5,
+        "diagnosisYears": 2,
+        "hospitalisations": 4,
+        "reportAgeDays": 289
+      },
+      "documents": [
+        "CASE-028-report.pdf"
+      ],
+      "evidence": {
+        "complete": true,
+        "findings": [
+          {
+            "id": "DOC-1",
+            "source": "Synthetic medical report",
+            "page": 1,
+            "quote": "Declared condition status: complex",
+            "text": "Declared condition status recorded as complex, diagnosed 2 years ago. Tobacco use: yes."
+          },
+          {
+            "id": "DOC-1",
+            "source": "Synthetic medical report",
+            "page": 1,
+            "quote": "HbA1c: 10.2%",
+            "text": "Report records HbA1c, eGFR, LDL, blood pressure. BMI 41.1."
+          }
+        ],
+        "warnings": [],
+        "values": [
+          {
+            "field": "condition",
+            "value": "complex",
+            "quote": "Declared condition status: complex",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "smoker",
+            "value": true,
+            "quote": "Tobacco or nicotine use: yes",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "bmi",
+            "value": 41.1,
+            "quote": "Body mass index: 41.1",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "hospitalisations",
+            "value": 4,
+            "quote": "Hospital admissions in the past 12 months: 4",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "systolic",
+            "value": 169,
+            "quote": "Blood pressure: 169/101 mmHg",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "diastolic",
+            "value": 101,
+            "quote": "Blood pressure: 169/101 mmHg",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "hba1c",
+            "value": 10.2,
+            "quote": "HbA1c: 10.2%",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "egfr",
+            "value": 38,
+            "quote": "eGFR: 38 mL/min/1.73m2",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "ldl",
+            "value": 5.5,
+            "quote": "LDL cholesterol: 5.5 mmol/L",
+            "id": "DOC-1",
+            "page": 1
+          }
+        ]
+      },
+      "evidence_source": "synthetic: written by the sample generator, not extracted from the PDF",
+      "ml": {
+        "model": "mock-underwriting-ml-2026-09",
+        "standard": false,
+        "confidence": 0.999,
+        "calibrated": true,
+        "ood": true,
+        "available": true,
+        "evidence_complete": true,
+        "source": "ml_training model; evidence_complete asserted by the sample generator"
+      },
+      "human": {
+        "outcome": "more_evidence",
+        "decided_by": "sample generator (fictional underwriter)",
+        "decided_at": "2026-08-01",
+        "cohort": "medical-decline",
+        "notes": "Declined only after a specialist report was obtained; recorded as an evidence request.",
+        "rationale": "more_evidence: tobacco use, complex declared condition, HbA1c 10.2, eGFR 38, systolic 169. Declined only after a specialist report was obtained; recorded as an evidence request.",
+        "evidence_requested": [
+          "GP report covering the declared condition",
+          "repeat HbA1c",
+          "attending physician statement"
+        ],
+        "later_outcome": {
+          "outcome": "terms",
+          "decided_at": "2026-08-20"
+        }
+      }
+    },
+    {
+      "case_id": "CASE-029",
+      "profile": {
+        "name": "Ethan Lau",
+        "age": 40,
+        "sex": "Female",
+        "occupation": "Sales executive",
+        "product": "Life",
+        "cover": 481000,
+        "bmi": 23.4,
+        "smoker": false,
+        "condition": "none",
+        "annualIncome": 110000,
+        "existingCover": 500000,
+        "termYears": 10,
+        "systolic": 124,
+        "diastolic": 83,
+        "hba1c": 5.4,
+        "egfr": 101,
+        "ldl": 2.1,
+        "diagnosisYears": 0,
+        "hospitalisations": 0,
+        "reportAgeDays": 59
+      },
+      "documents": [
+        "CASE-029-report.pdf"
+      ],
+      "evidence": {
+        "complete": true,
+        "findings": [
+          {
+            "id": "DOC-1",
+            "source": "Synthetic medical report",
+            "page": 1,
+            "quote": "Declared condition status: none",
+            "text": "Declared condition status recorded as none. Tobacco use: no."
+          },
+          {
+            "id": "DOC-1",
+            "source": "Synthetic medical report",
+            "page": 1,
+            "quote": "HbA1c: 7.2%",
+            "text": "Report records HbA1c, eGFR, LDL, blood pressure. BMI 23.4."
+          }
+        ],
+        "warnings": [],
+        "values": [
+          {
+            "field": "condition",
+            "value": "none",
+            "quote": "Declared condition status: none",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "smoker",
+            "value": false,
+            "quote": "Tobacco or nicotine use: no",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "bmi",
+            "value": 23.4,
+            "quote": "Body mass index: 23.4",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "hospitalisations",
+            "value": 0,
+            "quote": "Hospital admissions in the past 12 months: 0",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "systolic",
+            "value": 124,
+            "quote": "Blood pressure: 124/83 mmHg",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "diastolic",
+            "value": 83,
+            "quote": "Blood pressure: 124/83 mmHg",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "hba1c",
+            "value": 7.2,
+            "quote": "HbA1c: 7.2%",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "egfr",
+            "value": 101,
+            "quote": "eGFR: 101 mL/min/1.73m2",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "ldl",
+            "value": 2.1,
+            "quote": "LDL cholesterol: 2.1 mmol/L",
+            "id": "DOC-1",
+            "page": 1
+          }
+        ]
+      },
+      "evidence_source": "synthetic: written by the sample generator, not extracted from the PDF",
+      "ml": {
+        "model": "mock-underwriting-ml-2026-09",
+        "standard": true,
+        "confidence": 0.9527,
+        "calibrated": true,
+        "ood": false,
+        "available": true,
+        "evidence_complete": true,
+        "source": "ml_training model; evidence_complete asserted by the sample generator"
+      },
+      "human": {
+        "outcome": "more_evidence",
+        "decided_by": "sample generator (fictional underwriter)",
+        "decided_at": "2026-08-01",
+        "cohort": "life-discrepancy",
+        "notes": "Declared HbA1c 5.4; the attached report shows 7.2. Repeat test and GP report requested.",
+        "rationale": "more_evidence: HbA1c 7.2. Declared HbA1c 5.4; the attached report shows 7.2. Repeat test and GP report requested.",
+        "evidence_requested": [
+          "repeat HbA1c",
+          "attending physician statement"
+        ],
+        "later_outcome": {
+          "outcome": "standard",
+          "decided_at": "2026-08-20"
+        },
+        "rules_cited": [
+          "non-disclosure review"
+        ]
+      }
+    },
+    {
+      "case_id": "CASE-030",
+      "profile": {
+        "name": "Hannah Quek",
+        "age": 40,
+        "sex": "Female",
+        "occupation": "Sales executive",
+        "product": "Medical",
+        "cover": 481000,
+        "bmi": 23.4,
+        "smoker": false,
+        "condition": "none",
+        "annualIncome": 110000,
+        "existingCover": 500000,
+        "termYears": 10,
+        "systolic": 124,
+        "diastolic": 83,
+        "hba1c": 5.4,
+        "egfr": 101,
+        "ldl": 2.1,
+        "diagnosisYears": 0,
+        "hospitalisations": 0,
+        "reportAgeDays": 59
+      },
+      "documents": [
+        "CASE-030-report.pdf"
+      ],
+      "evidence": {
+        "complete": true,
+        "findings": [
+          {
+            "id": "DOC-1",
+            "source": "Synthetic medical report",
+            "page": 1,
+            "quote": "Declared condition status: none",
+            "text": "Declared condition status recorded as none. Tobacco use: yes."
+          },
+          {
+            "id": "DOC-1",
+            "source": "Synthetic medical report",
+            "page": 1,
+            "quote": "HbA1c: 5.4%",
+            "text": "Report records HbA1c, eGFR, LDL, blood pressure. BMI 23.4."
+          }
+        ],
+        "warnings": [],
+        "values": [
+          {
+            "field": "condition",
+            "value": "none",
+            "quote": "Declared condition status: none",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "smoker",
+            "value": true,
+            "quote": "Tobacco or nicotine use: yes",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "bmi",
+            "value": 23.4,
+            "quote": "Body mass index: 23.4",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "hospitalisations",
+            "value": 0,
+            "quote": "Hospital admissions in the past 12 months: 0",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "systolic",
+            "value": 124,
+            "quote": "Blood pressure: 124/83 mmHg",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "diastolic",
+            "value": 83,
+            "quote": "Blood pressure: 124/83 mmHg",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "hba1c",
+            "value": 5.4,
+            "quote": "HbA1c: 5.4%",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "egfr",
+            "value": 101,
+            "quote": "eGFR: 101 mL/min/1.73m2",
+            "id": "DOC-1",
+            "page": 1
+          },
+          {
+            "field": "ldl",
+            "value": 2.1,
+            "quote": "LDL cholesterol: 2.1 mmol/L",
+            "id": "DOC-1",
+            "page": 1
+          }
+        ]
+      },
+      "evidence_source": "synthetic: written by the sample generator, not extracted from the PDF",
+      "ml": {
+        "model": "mock-underwriting-ml-2026-09",
+        "standard": true,
+        "confidence": 0.9527,
+        "calibrated": true,
+        "ood": false,
+        "available": true,
+        "evidence_complete": true,
+        "source": "ml_training model; evidence_complete asserted by the sample generator"
+      },
+      "human": {
+        "outcome": "refer",
+        "decided_by": "sample generator (fictional underwriter)",
+        "decided_at": "2026-08-01",
+        "cohort": "medical-discrepancy",
+        "notes": "Declared non-smoker; the report records nicotine use. Referred for non-disclosure review.",
+        "rationale": "refer: tobacco use. Declared non-smoker; the report records nicotine use. Referred for non-disclosure review.",
+        "evidence_requested": [
+          "repeat test",
+          "GP report"
+        ],
+        "rules_cited": [
+          "non-disclosure review"
+        ]
+      }
+    }
+  ]
+}

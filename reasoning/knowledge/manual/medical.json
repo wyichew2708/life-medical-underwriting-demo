@@ -1,0 +1,461 @@
+{
+  "collection": "Medical impairments",
+  "status": "illustrative",
+  "note": "Demonstration underwriting stances for common impairments. Bands are demo assumptions. Clinical classifications they refer to are held separately in knowledge/reference/clinical_thresholds.json with their public sources.",
+  "cards": [
+    {
+      "id": "UW-BUILD-01",
+      "type": "internal",
+      "title": "Build: weight for height",
+      "topics": [
+        "build",
+        "bmi"
+      ],
+      "products": [
+        "Life",
+        "Medical"
+      ],
+      "applies_when": {
+        "any": [
+          {
+            "field": "bmi",
+            "operator": "gte",
+            "value": 30
+          },
+          {
+            "field": "bmi",
+            "operator": "lt",
+            "value": 18.5
+          }
+        ]
+      },
+      "excerpt": "Build is assessed against a height-weight table rather than a single index, and it is read together with blood pressure, glycaemia and lipids because those travel with it. Demonstration stance: BMI 30.0-34.9 alone attracts a modest rating; 35.0-39.9 attracts a higher rating and normally requires current blood pressure and metabolic results; 40 or above refers; BMI below 18.5 is not ignored but investigated, since involuntary weight loss, eating disorder or chronic disease can underlie it. Recent unexplained weight loss of more than 10% of body weight refers regardless of the resulting index. In Singapore and Malaysia, lower action points are used for Asian populations for public-health purposes, which is a reason to read build alongside metabolic results rather than to apply a single universal cut-off.",
+      "guidance": {
+        "bands": [
+          {
+            "range": "18.5-29.9",
+            "demo_stance": "no build rating on its own"
+          },
+          {
+            "range": "30.0-34.9",
+            "demo_stance": "modest rating"
+          },
+          {
+            "range": "35.0-39.9",
+            "demo_stance": "higher rating; require current BP and metabolic panel"
+          },
+          {
+            "range": ">=40",
+            "demo_stance": "refer"
+          },
+          {
+            "range": "<18.5",
+            "demo_stance": "investigate cause"
+          }
+        ]
+      },
+      "keywords": [
+        "bmi",
+        "body mass",
+        "obese",
+        "obesity",
+        "weight loss",
+        "overweight"
+      ]
+    },
+    {
+      "id": "UW-BP-01",
+      "type": "internal",
+      "title": "Blood pressure and treated hypertension",
+      "topics": [
+        "cardiovascular",
+        "blood_pressure"
+      ],
+      "products": [
+        "Life",
+        "Medical"
+      ],
+      "applies_when": {
+        "any": [
+          {
+            "field": "systolic",
+            "operator": "gte",
+            "value": 130
+          },
+          {
+            "field": "diastolic",
+            "operator": "gte",
+            "value": 85
+          }
+        ]
+      },
+      "excerpt": "What matters is the level, whether it is treated, how well it is controlled over time, how long it has been present, and what else accompanies it. A single raised office reading is weak evidence; ask for repeat readings or a clinician record. Demonstration stance: readings consistently below 140/90 on or off treatment, with no end-organ damage, are treated as controlled; 140-159 systolic or 90-99 diastolic attracts a rating that reduces with a documented period of good control; 160/100 or above refers; 180/120 or above refers urgently as unassessable until treated and reviewed. Treatment itself is not a debit: well-controlled treated hypertension is generally a better risk than untreated hypertension of the same level. Hypertension with diabetes, renal impairment, left ventricular hypertrophy or established cardiovascular disease is assessed as a combined picture, not as separate additions.",
+      "guidance": {
+        "bands": [
+          {
+            "range": "<140/90 controlled",
+            "demo_stance": "standard or light rating"
+          },
+          {
+            "range": "140-159/90-99",
+            "demo_stance": "rate; reduce with documented control"
+          },
+          {
+            "range": ">=160/100",
+            "demo_stance": "refer"
+          },
+          {
+            "range": ">=180/120",
+            "demo_stance": "refer; unassessable until treated"
+          }
+        ]
+      },
+      "keywords": [
+        "blood pressure",
+        "hypertension",
+        "systolic",
+        "diastolic",
+        "antihypertensive",
+        "amlodipine",
+        "losartan"
+      ]
+    },
+    {
+      "id": "UW-DM-01",
+      "type": "internal",
+      "title": "Diabetes mellitus",
+      "topics": [
+        "metabolic",
+        "diabetes",
+        "hba1c"
+      ],
+      "products": [
+        "Life",
+        "Medical"
+      ],
+      "applies_when": {
+        "any": [
+          {
+            "field": "hba1c",
+            "operator": "gte",
+            "value": 5.7
+          },
+          {
+            "field": "condition",
+            "operator": "ne",
+            "value": "none"
+          }
+        ]
+      },
+      "excerpt": "Diabetes is rated on type, age at diagnosis, duration, control, complications and what accompanies it, not on a single HbA1c value. Later onset, short duration, stable control and no complications point to a moderate rating; early onset, long duration, unstable control or any complication points to a high rating, a postponement or a decline. Required evidence for a declared diagnosis: HbA1c history rather than one reading, renal function including eGFR and urine albumin, blood pressure, lipids, treatment history, and a retinal examination result where available. Demonstration stance: type 2 diagnosed after age 40 with HbA1c at or below 7.0%, no complication and no other significant impairment is ratable; HbA1c above 8.5%, any evidence of nephropathy, retinopathy, neuropathy or ischaemic heart disease, or type 1 diabetes, refers. A single HbA1c in the prediabetic range with no diagnosis is not diabetes: obtain a repeat result and read it with build and blood pressure.",
+      "guidance": {
+        "bands": [
+          {
+            "range": "HbA1c <=7.0, late onset, no complication",
+            "demo_stance": "ratable"
+          },
+          {
+            "range": "HbA1c 7.1-8.5",
+            "demo_stance": "higher rating; require control history"
+          },
+          {
+            "range": "HbA1c >8.5 or any complication or type 1",
+            "demo_stance": "refer"
+          }
+        ],
+        "required_evidence": [
+          "HbA1c history",
+          "eGFR and urine albumin",
+          "blood pressure",
+          "lipids",
+          "treatment history",
+          "retinal examination where available"
+        ]
+      },
+      "keywords": [
+        "diabetes",
+        "diabetic",
+        "hba1c",
+        "glycated",
+        "metformin",
+        "insulin",
+        "glucose"
+      ]
+    },
+    {
+      "id": "UW-RENAL-01",
+      "type": "internal",
+      "title": "Renal function",
+      "topics": [
+        "renal",
+        "egfr"
+      ],
+      "products": [
+        "Life",
+        "Medical"
+      ],
+      "applies_when": {
+        "any": [
+          {
+            "field": "egfr",
+            "operator": "lt",
+            "value": 60
+          }
+        ]
+      },
+      "excerpt": "Estimated GFR is read with albuminuria, blood pressure, glycaemia and the trend over time, because a single value can reflect hydration, muscle mass, laboratory method or an acute illness. Demonstration stance: eGFR at or above 60 with no proteinuria and no known renal disease attracts no renal rating on its own; 45-59 requires a repeat result and the underlying cause before terms are considered; below 45, any dialysis, transplant or nephrotic syndrome refers. A falling trend across reports is more significant than one low reading and should be raised explicitly. Proteinuria with a normal eGFR still matters and is not cancelled by the normal filtration rate.",
+      "guidance": {
+        "bands": [
+          {
+            "range": ">=60 without proteinuria",
+            "demo_stance": "no renal rating alone"
+          },
+          {
+            "range": "45-59",
+            "demo_stance": "repeat result and cause required"
+          },
+          {
+            "range": "<45 or dialysis or transplant",
+            "demo_stance": "refer"
+          }
+        ]
+      },
+      "keywords": [
+        "egfr",
+        "creatinine",
+        "renal",
+        "kidney",
+        "proteinuria",
+        "albuminuria",
+        "nephropathy",
+        "dialysis"
+      ]
+    },
+    {
+      "id": "UW-LIPID-01",
+      "type": "internal",
+      "title": "Lipids",
+      "topics": [
+        "metabolic",
+        "lipids",
+        "ldl"
+      ],
+      "products": [
+        "Life",
+        "Medical"
+      ],
+      "applies_when": {
+        "any": [
+          {
+            "field": "ldl",
+            "operator": "gte",
+            "value": 4.1
+          }
+        ]
+      },
+      "excerpt": "Lipids are a contributing factor rather than a stand-alone impairment for most cases, and the total cholesterol to HDL ratio is commonly more informative than LDL alone. Treated and controlled dyslipidaemia is generally a better risk than untreated. Demonstration stance: isolated LDL below 4.1 mmol/L with no other cardiovascular factor attracts no rating; 4.1-4.9 is read with build, blood pressure, smoking and family history; at or above 4.9, or any suspicion of familial hypercholesterolaemia such as very high untreated levels, early family events or tendon xanthomata, refers. Triglycerides above roughly 5 mmol/L should prompt a repeat fasting sample before any conclusion.",
+      "guidance": {
+        "bands": [
+          {
+            "range": "LDL <4.1",
+            "demo_stance": "no rating alone"
+          },
+          {
+            "range": "LDL 4.1-4.9",
+            "demo_stance": "combine with other cardiovascular factors"
+          },
+          {
+            "range": "LDL >=4.9 or suspected familial",
+            "demo_stance": "refer"
+          }
+        ]
+      },
+      "keywords": [
+        "ldl",
+        "cholesterol",
+        "lipid",
+        "triglyceride",
+        "statin",
+        "hyperlipidaemia",
+        "hyperlipidemia"
+      ]
+    },
+    {
+      "id": "UW-CARDIAC-01",
+      "type": "internal",
+      "title": "Established cardiovascular disease",
+      "topics": [
+        "cardiovascular",
+        "impairment"
+      ],
+      "products": [
+        "Life",
+        "Medical"
+      ],
+      "applies_when": {
+        "any": [
+          {
+            "field": "condition",
+            "operator": "eq",
+            "value": "complex"
+          }
+        ]
+      },
+      "excerpt": "Any history of myocardial infarction, angina, coronary intervention, bypass surgery, stroke, transient ischaemic attack, heart failure, cardiomyopathy or significant arrhythmia is outside automated assessment in this demonstration and refers. The evidence an underwriter will need is the event date, the investigation results including any angiography, ejection fraction, current treatment, whether smoking continues, and the time elapsed since the event. Recent events within twelve months are commonly postponed rather than rated, because the short-term risk is not stable enough to price.",
+      "guidance": {
+        "demo_stance": "refer; postpone where the event is within twelve months"
+      },
+      "keywords": [
+        "myocardial",
+        "infarction",
+        "angina",
+        "stent",
+        "bypass",
+        "stroke",
+        "transient ischaemic",
+        "heart failure",
+        "cardiomyopathy",
+        "arrhythmia",
+        "atrial fibrillation",
+        "ejection fraction"
+      ]
+    },
+    {
+      "id": "UW-CANCER-01",
+      "type": "internal",
+      "title": "Malignancy history",
+      "topics": [
+        "oncology",
+        "impairment"
+      ],
+      "products": [
+        "Life",
+        "Medical"
+      ],
+      "applies_when": {
+        "any": [
+          {
+            "field": "condition",
+            "operator": "eq",
+            "value": "complex"
+          }
+        ]
+      },
+      "excerpt": "A cancer history is assessed on the site, histology, stage and grade, the date treatment finished, the treatment given and the disease-free interval, and it always requires the clinical records rather than a declaration. Active treatment or investigation of a suspected malignancy is postponed, not rated. Some low-grade lesions treated definitively, such as many in-situ cervical or basal cell skin lesions, are commonly available at or near standard rates after a defined interval, while others carry a flat extra that reduces as the disease-free interval lengthens. This demonstration refers every declared malignancy to a human underwriter.",
+      "guidance": {
+        "required_evidence": [
+          "site, histology, stage and grade",
+          "treatment completion date",
+          "disease-free interval",
+          "current surveillance"
+        ],
+        "demo_stance": "refer"
+      },
+      "keywords": [
+        "cancer",
+        "carcinoma",
+        "malignan",
+        "tumour",
+        "tumor",
+        "chemotherapy",
+        "radiotherapy",
+        "oncolog",
+        "biopsy",
+        "in situ",
+        "lymphoma",
+        "leukaemia"
+      ]
+    },
+    {
+      "id": "UW-MENTAL-01",
+      "type": "internal",
+      "title": "Mental health conditions",
+      "topics": [
+        "mental_health",
+        "impairment"
+      ],
+      "products": [
+        "Life",
+        "Medical"
+      ],
+      "applies_when": {
+        "never_by_field": true
+      },
+      "excerpt": "Assess the diagnosis, severity, treatment, stability over time, hospitalisation history, any self-harm or suicide attempt, substance use and current functioning, including whether the applicant is working. A single episode of situational anxiety or depression, treated and resolved, with stable function, is frequently available at standard or near-standard rates for life cover. Recurrent severe episodes, recent hospitalisation, psychosis, bipolar disorder or any recent self-harm refer, and are typically material to disability and critical-illness benefits before they are material to life cover. Base the assessment on documented evidence and functioning, never on the diagnosis label alone, and record the reasoning in clinical terms rather than judgemental ones.",
+      "guidance": {
+        "demo_stance": "single resolved episode may be standard; recurrent, hospitalised, psychotic or recent self-harm refers"
+      },
+      "keywords": [
+        "depression",
+        "anxiety",
+        "bipolar",
+        "psychiatric",
+        "psychosis",
+        "self-harm",
+        "suicide",
+        "antidepressant",
+        "sertraline"
+      ]
+    },
+    {
+      "id": "UW-RESP-01",
+      "type": "internal",
+      "title": "Respiratory conditions",
+      "topics": [
+        "respiratory",
+        "impairment"
+      ],
+      "products": [
+        "Life",
+        "Medical"
+      ],
+      "applies_when": {
+        "never_by_field": true
+      },
+      "excerpt": "For asthma, the relevant facts are frequency of symptoms, medication step, courses of oral steroids, emergency attendances or admissions, time off work, and whether the applicant smokes. Mild intermittent asthma in a non-smoker is commonly standard. Frequent exacerbations, any admission within the last year, or asthma in a current smoker attracts a rating or referral. Chronic obstructive pulmonary disease is rated on lung function, exacerbation history and continued smoking, and refers in this demonstration. Obstructive sleep apnoea is read with build, blood pressure and treatment compliance.",
+      "guidance": {
+        "demo_stance": "mild intermittent asthma in a non-smoker may be standard; admissions, frequent exacerbations or COPD refer"
+      },
+      "keywords": [
+        "asthma",
+        "copd",
+        "inhaler",
+        "salbutamol",
+        "wheeze",
+        "sleep apnoea",
+        "sleep apnea",
+        "spirometry"
+      ]
+    },
+    {
+      "id": "UW-HISTORY-01",
+      "type": "internal",
+      "title": "Family history",
+      "topics": [
+        "family_history"
+      ],
+      "products": [
+        "Life",
+        "Medical"
+      ],
+      "applies_when": {
+        "never_by_field": true
+      },
+      "excerpt": "Family history counts where a first-degree relative had a cardiovascular event, a hereditary cancer or a heritable condition at a young age, conventionally before 60, and it matters most when the applicant is young and shares the modifiable risk factors. Where the applicant's own investigations are current and favourable, family history is normally given less weight; where they are absent, it is a reason to request them. A known heritable condition such as familial hypercholesterolaemia, polycystic kidney disease or a confirmed pathogenic cancer variant is assessed on its own evidence and refers. Predictive genetic test results are subject to local rules and industry moratoria and must not be requested or inferred by an assistant.",
+      "guidance": {
+        "demo_stance": "weigh where a first-degree relative was affected before 60; never infer or request genetic test results"
+      },
+      "keywords": [
+        "family history",
+        "father",
+        "mother",
+        "sibling",
+        "brother",
+        "sister",
+        "hereditary",
+        "familial",
+        "first-degree"
+      ]
+    }
+  ]
+}
