@@ -1,0 +1,5321 @@
+{
+  "meta": {
+    "generated_at": "2026-09-12T14:23:24+00:00",
+    "rows": 20000,
+    "split_rule": "temporal by application_month: train <=17, calibration 18-20, test >=21",
+    "seed": 7,
+    "seeds": [
+      7,
+      8,
+      9
+    ],
+    "repeats": 3,
+    "sample": null,
+    "weights": {
+      "safety": 0.4,
+      "coverage": 0.25,
+      "calibration": 0.2,
+      "discrimination": 0.15
+    },
+    "budget": 0.05,
+    "min_coverage": 0.05,
+    "data_file": "/Users/jimmyc/life-underwriting/ml_training/data/applications.csv",
+    "candidates_run": 14,
+    "failed": {},
+    "oracle": {
+      "threshold": 0.95,
+      "model_pass_rate": 0.3177,
+      "unsafe_acceptance_rate": 0.047,
+      "cases_passed": 787,
+      "auc": 0.8149,
+      "interval_90pct": {
+        "level": 0.9,
+        "samples": 1000,
+        "cleared_cases": 787,
+        "model_pass_rate": [
+          0.302,
+          0.3331
+        ],
+        "unsafe_acceptance_rate": [
+          0.0347,
+          0.0599
+        ],
+        "note": "Bootstrap over test rows. The unsafe interval is undefined when nothing is cleared."
+      },
+      "note": "The generator's own probabilities, which see the hidden labs. This is the ceiling on this data, not a model."
+    },
+    "resolution": {
+      "leader": "logistic-l2",
+      "cleared_cases": 805,
+      "unsafe_interval_90pct": [
+        0.0334,
+        0.0578
+      ],
+      "half_width": 0.0122,
+      "confirmed": [],
+      "tied_with_leader": [
+        "logistic-elasticnet",
+        "hist-gbm-shallow-monotone"
+      ],
+      "cleared_cases_needed_to_confirm_leader": 4114
+    },
+    "score_definition": {
+      "viability": "confirmed = 90% interval of the unsafe rate inside the budget and coverage at or above the floor; provisional = point estimate inside the budget only; not viable = outside the budget or below the floor. Tiers rank in that order.",
+      "safety": "1 - unsafe_acceptance_rate / budget, floored at 0",
+      "coverage": "share of holdout cases the model alone would clear at the STP threshold",
+      "calibration": "1 - ECE / max acceptable ECE, floored at 0",
+      "discrimination": "(AUC - 0.5) * 2, floored at 0",
+      "repeats": "with more than one seed the score is the mean over seeds and a candidate that left the budget on any seed is held at provisional",
+      "ties": "a viable candidate whose unsafe and coverage intervals both overlap the leader's is marked tied; the order among tied candidates is not a finding"
+    }
+  },
+  "candidates": [
+    {
+      "family": "linear",
+      "architecture": "single",
+      "description": "L2-regularised logistic regression on the standardised features.",
+      "why": "Cheap, stable and inspectable. Coefficients can be read by a reviewer.",
+      "name": "logistic-l2",
+      "score": 0.3822,
+      "components": {
+        "safety": 0.106,
+        "coverage": 0.325,
+        "calibration": 0.834,
+        "discrimination": 0.6118
+      },
+      "weights": {
+        "safety": 0.4,
+        "coverage": 0.25,
+        "calibration": 0.2,
+        "discrimination": 0.15
+      },
+      "within_unsafe_budget": true,
+      "viable": true,
+      "viability": "provisional",
+      "not_viable_because": [],
+      "confirmation_note": "inside the budget at the point estimate, but the 90% interval reaches 0.0578; confirming a rate of 0.0447 needs about 4114 cleared cases and this test set cleared 805",
+      "unsafe_acceptance_rate": 0.0447,
+      "unsafe_interval_90pct": [
+        0.0334,
+        0.0578
+      ],
+      "coverage_interval_90pct": [
+        0.31,
+        0.3399
+      ],
+      "cleared_cases": 805,
+      "budget": 0.05,
+      "min_coverage": 0.05,
+      "metrics": {
+        "discrimination": {
+          "auc": 0.8059,
+          "average_precision": 0.9388,
+          "accuracy_at_0.5": 0.8688,
+          "base_rate_standard": 0.8361
+        },
+        "calibration": {
+          "brier": 0.1024,
+          "brier_uncalibrated": 0.1023,
+          "ece": 0.0083,
+          "ece_uncalibrated": 0.0173,
+          "max_acceptable_ece": 0.05,
+          "method": "isotonic on a held-out later period",
+          "reliability": [
+            {
+              "bin": "0.0-0.1",
+              "n": 28,
+              "predicted_standard": 0.0498,
+              "observed_standard": 0.1071
+            },
+            {
+              "bin": "0.1-0.2",
+              "n": 21,
+              "predicted_standard": 0.1471,
+              "observed_standard": 0.2857
+            },
+            {
+              "bin": "0.2-0.3",
+              "n": 30,
+              "predicted_standard": 0.2414,
+              "observed_standard": 0.2333
+            },
+            {
+              "bin": "0.3-0.4",
+              "n": 36,
+              "predicted_standard": 0.3564,
+              "observed_standard": 0.1944
+            },
+            {
+              "bin": "0.4-0.5",
+              "n": 114,
+              "predicted_standard": 0.4509,
+              "observed_standard": 0.4474
+            },
+            {
+              "bin": "0.5-0.6",
+              "n": 9,
+              "predicted_standard": 0.5426,
+              "observed_standard": 0.5556
+            },
+            {
+              "bin": "0.6-0.7",
+              "n": 215,
+              "predicted_standard": 0.6517,
+              "observed_standard": 0.6744
+            },
+            {
+              "bin": "0.7-0.8",
+              "n": 155,
+              "predicted_standard": 0.7689,
+              "observed_standard": 0.7871
+            },
+            {
+              "bin": "0.8-0.9",
+              "n": 319,
+              "predicted_standard": 0.8575,
+              "observed_standard": 0.8589
+            },
+            {
+              "bin": "0.9-1.0",
+              "n": 1550,
+              "predicted_standard": 0.937,
+              "observed_standard": 0.9361
+            }
+          ],
+          "tail": {
+            "cases_in_tail": 1550,
+            "share_in_tail": 0.6258,
+            "tail_ece": 0.0022,
+            "bins": [
+              {
+                "bin": "0.900-0.925",
+                "n": 440,
+                "predicted_standard": 0.9024,
+                "observed_standard": 0.9023,
+                "gap": 0.0001
+              },
+              {
+                "bin": "0.925-0.950",
+                "n": 300,
+                "predicted_standard": 0.9412,
+                "observed_standard": 0.9333,
+                "gap": 0.0078
+              },
+              {
+                "bin": "0.950-0.975",
+                "n": 782,
+                "predicted_standard": 0.9527,
+                "observed_standard": 0.954,
+                "gap": -0.0013
+              },
+              {
+                "bin": "0.975-1.000",
+                "n": 28,
+                "predicted_standard": 0.9997,
+                "observed_standard": 1.0,
+                "gap": -0.0003
+              }
+            ],
+            "note": "Reliability at and above 0.9, where straight-through decisions are made. A positive gap means the model is over-confident in that bin."
+          },
+          "tail_uncalibrated": {
+            "cases_in_tail": 1406,
+            "share_in_tail": 0.5676,
+            "tail_ece": 0.0113,
+            "bins": [
+              {
+                "bin": "0.900-0.925",
+                "n": 253,
+                "predicted_standard": 0.9133,
+                "observed_standard": 0.913,
+                "gap": 0.0002
+              },
+              {
+                "bin": "0.925-0.950",
+                "n": 356,
+                "predicted_standard": 0.9382,
+                "observed_standard": 0.927,
+                "gap": 0.0113
+              },
+              {
+                "bin": "0.950-0.975",
+                "n": 525,
+                "predicted_standard": 0.9631,
+                "observed_standard": 0.9543,
+                "gap": 0.0088
+              },
+              {
+                "bin": "0.975-1.000",
+                "n": 272,
+                "predicted_standard": 0.9825,
+                "observed_standard": 0.9559,
+                "gap": 0.0266
+              }
+            ],
+            "note": "Reliability at and above 0.9, where straight-through decisions are made. A positive gap means the model is over-confident in that bin."
+          },
+          "assertion": true,
+          "assertion_note": "Holdout ECE on synthetic data only. Not evidence of calibration on a real portfolio."
+        },
+        "stp_operating_point": {
+          "threshold": 0.95,
+          "model_pass_rate": 0.325,
+          "cases_passed": 805,
+          "non_standard_passed": 36,
+          "unsafe_acceptance_rate": 0.0447,
+          "note": "Rate among cases the model alone would clear. Downstream gates are not modelled here.",
+          "interval_90pct": {
+            "level": 0.9,
+            "samples": 1000,
+            "cleared_cases": 805,
+            "model_pass_rate": [
+              0.31,
+              0.3399
+            ],
+            "unsafe_acceptance_rate": [
+              0.0334,
+              0.0578
+            ],
+            "note": "Bootstrap over test rows. The unsafe interval is undefined when nothing is cleared."
+          }
+        },
+        "monotone": false,
+        "oracle": {
+          "threshold": 0.95,
+          "model_pass_rate": 0.3177,
+          "unsafe_acceptance_rate": 0.047,
+          "cases_passed": 787,
+          "auc": 0.8149,
+          "interval_90pct": {
+            "level": 0.9,
+            "samples": 1000,
+            "cleared_cases": 787,
+            "model_pass_rate": [
+              0.302,
+              0.3331
+            ],
+            "unsafe_acceptance_rate": [
+              0.0347,
+              0.0599
+            ],
+            "note": "Bootstrap over test rows. The unsafe interval is undefined when nothing is cleared."
+          },
+          "note": "The generator's own probabilities, which see the hidden labs. This is the ceiling on this data, not a model."
+        },
+        "ood": {
+          "detector": "IsolationForest and Mahalanobis distance on preprocessed features",
+          "train_flag_rate_target": 0.01,
+          "isolation_threshold": -0.57734,
+          "distance_threshold": 7.696,
+          "test_flag_rate": 0.0194,
+          "shifted_probe_flag_rate": 1.0,
+          "note": "A flag means unfamiliar input, not high risk. It routes the case away from STP."
+        },
+        "subgroups": {
+          "age 18-35": {
+            "n": 62,
+            "auc": 0.7737,
+            "brier": 0.0693,
+            "standard_rate": 0.9194
+          },
+          "age 36-50": {
+            "n": 845,
+            "auc": 0.7209,
+            "brier": 0.0791,
+            "standard_rate": 0.8947
+          },
+          "age 51-65": {
+            "n": 1075,
+            "auc": 0.8126,
+            "brier": 0.0937,
+            "standard_rate": 0.8567
+          },
+          "age 66+": {
+            "n": 495,
+            "auc": 0.779,
+            "brier": 0.1652,
+            "standard_rate": 0.6808
+          },
+          "product Life": {
+            "n": 1539,
+            "auc": 0.8013,
+            "brier": 0.1039,
+            "standard_rate": 0.8343
+          },
+          "product Medical": {
+            "n": 938,
+            "auc": 0.8145,
+            "brier": 0.0999,
+            "standard_rate": 0.839
+          },
+          "smoker": {
+            "n": 531,
+            "auc": 0.8002,
+            "brier": 0.1391,
+            "standard_rate": 0.7571
+          },
+          "non-smoker": {
+            "n": 1946,
+            "auc": 0.7956,
+            "brier": 0.0924,
+            "standard_rate": 0.8577
+          },
+          "labs missing": {
+            "n": 436,
+            "auc": 0.7722,
+            "brier": 0.0821,
+            "standard_rate": 0.8876
+          },
+          "labs present": {
+            "n": 2041,
+            "auc": 0.8082,
+            "brier": 0.1067,
+            "standard_rate": 0.8251
+          }
+        },
+        "cost": {
+          "fit_seconds": 0.36,
+          "predict_ms_per_1k_cases": 32.41,
+          "serialised_kb": 6.0
+        },
+        "repeats": {
+          "n": 3,
+          "seeds": [
+            7,
+            8,
+            9
+          ],
+          "runs": [
+            {
+              "seed": 7,
+              "auc": 0.8059,
+              "ece": 0.0083,
+              "model_pass_rate": 0.325,
+              "unsafe_acceptance_rate": 0.0447,
+              "fit_seconds": 0.36
+            },
+            {
+              "seed": 8,
+              "auc": 0.8059,
+              "ece": 0.0083,
+              "model_pass_rate": 0.325,
+              "unsafe_acceptance_rate": 0.0447,
+              "fit_seconds": 0.37
+            },
+            {
+              "seed": 9,
+              "auc": 0.8059,
+              "ece": 0.0083,
+              "model_pass_rate": 0.3254,
+              "unsafe_acceptance_rate": 0.0447,
+              "fit_seconds": 0.37
+            }
+          ],
+          "unsafe_acceptance_rate": {
+            "mean": 0.0447,
+            "sd": 0.0,
+            "min": 0.0447,
+            "max": 0.0447,
+            "n": 3
+          },
+          "model_pass_rate": {
+            "mean": 0.3251,
+            "sd": 0.0002,
+            "min": 0.325,
+            "max": 0.3254,
+            "n": 3
+          },
+          "auc": {
+            "mean": 0.8059,
+            "sd": 0.0,
+            "min": 0.8059,
+            "max": 0.8059,
+            "n": 3
+          },
+          "ece": {
+            "mean": 0.0083,
+            "sd": 0.0,
+            "min": 0.0083,
+            "max": 0.0083,
+            "n": 3
+          },
+          "note": "The first seed is the bundle kept. The rest measure seed sensitivity only; the data split is temporal and does not change between seeds."
+        }
+      },
+      "score_first_seed": 0.3822,
+      "score_by_seed": [
+        0.3822,
+        0.3822,
+        0.3823
+      ],
+      "score_sd": 0.0001,
+      "rank": 1
+    },
+    {
+      "family": "linear",
+      "architecture": "single",
+      "description": "Elastic-net logistic regression (saga), which can zero out features.",
+      "why": "Shows whether a sparser feature set performs as well as the full catalogue.",
+      "name": "logistic-elasticnet",
+      "score": 0.3797,
+      "components": {
+        "safety": 0.102,
+        "coverage": 0.3238,
+        "calibration": 0.832,
+        "discrimination": 0.6124
+      },
+      "weights": {
+        "safety": 0.4,
+        "coverage": 0.25,
+        "calibration": 0.2,
+        "discrimination": 0.15
+      },
+      "within_unsafe_budget": true,
+      "viable": true,
+      "viability": "provisional",
+      "not_viable_because": [],
+      "confirmation_note": "inside the budget at the point estimate, but the 90% interval reaches 0.0581; confirming a rate of 0.0449 needs about 4462 cleared cases and this test set cleared 802",
+      "unsafe_acceptance_rate": 0.0449,
+      "unsafe_interval_90pct": [
+        0.0335,
+        0.0581
+      ],
+      "coverage_interval_90pct": [
+        0.3088,
+        0.3387
+      ],
+      "cleared_cases": 802,
+      "budget": 0.05,
+      "min_coverage": 0.05,
+      "metrics": {
+        "discrimination": {
+          "auc": 0.8062,
+          "average_precision": 0.9388,
+          "accuracy_at_0.5": 0.8684,
+          "base_rate_standard": 0.8361
+        },
+        "calibration": {
+          "brier": 0.1025,
+          "brier_uncalibrated": 0.1023,
+          "ece": 0.0084,
+          "ece_uncalibrated": 0.0181,
+          "max_acceptable_ece": 0.05,
+          "method": "isotonic on a held-out later period",
+          "reliability": [
+            {
+              "bin": "0.0-0.1",
+              "n": 28,
+              "predicted_standard": 0.0498,
+              "observed_standard": 0.1071
+            },
+            {
+              "bin": "0.1-0.2",
+              "n": 21,
+              "predicted_standard": 0.1429,
+              "observed_standard": 0.2857
+            },
+            {
+              "bin": "0.2-0.3",
+              "n": 31,
+              "predicted_standard": 0.2516,
+              "observed_standard": 0.2258
+            },
+            {
+              "bin": "0.3-0.4",
+              "n": 15,
+              "predicted_standard": 0.3333,
+              "observed_standard": 0.3333
+            },
+            {
+              "bin": "0.4-0.5",
+              "n": 133,
+              "predicted_standard": 0.439,
+              "observed_standard": 0.3985
+            },
+            {
+              "bin": "0.5-0.6",
+              "n": 10,
+              "predicted_standard": 0.5431,
+              "observed_standard": 0.5
+            },
+            {
+              "bin": "0.6-0.7",
+              "n": 215,
+              "predicted_standard": 0.6534,
+              "observed_standard": 0.6791
+            },
+            {
+              "bin": "0.7-0.8",
+              "n": 152,
+              "predicted_standard": 0.7651,
+              "observed_standard": 0.7829
+            },
+            {
+              "bin": "0.8-0.9",
+              "n": 316,
+              "predicted_standard": 0.856,
+              "observed_standard": 0.8544
+            },
+            {
+              "bin": "0.9-1.0",
+              "n": 1556,
+              "predicted_standard": 0.937,
+              "observed_standard": 0.9364
+            }
+          ],
+          "tail": {
+            "cases_in_tail": 1556,
+            "share_in_tail": 0.6282,
+            "tail_ece": 0.0029,
+            "bins": [
+              {
+                "bin": "0.900-0.925",
+                "n": 452,
+                "predicted_standard": 0.9036,
+                "observed_standard": 0.9049,
+                "gap": -0.0013
+              },
+              {
+                "bin": "0.925-0.950",
+                "n": 297,
+                "predicted_standard": 0.9419,
+                "observed_standard": 0.9327,
+                "gap": 0.0092
+              },
+              {
+                "bin": "0.950-0.975",
+                "n": 779,
+                "predicted_standard": 0.9522,
+                "observed_standard": 0.9538,
+                "gap": -0.0016
+              },
+              {
+                "bin": "0.975-1.000",
+                "n": 28,
+                "predicted_standard": 0.9998,
+                "observed_standard": 1.0,
+                "gap": -0.0002
+              }
+            ],
+            "note": "Reliability at and above 0.9, where straight-through decisions are made. A positive gap means the model is over-confident in that bin."
+          },
+          "tail_uncalibrated": {
+            "cases_in_tail": 1406,
+            "share_in_tail": 0.5676,
+            "tail_ece": 0.0119,
+            "bins": [
+              {
+                "bin": "0.900-0.925",
+                "n": 256,
+                "predicted_standard": 0.9133,
+                "observed_standard": 0.9102,
+                "gap": 0.0031
+              },
+              {
+                "bin": "0.925-0.950",
+                "n": 356,
+                "predicted_standard": 0.9383,
+                "observed_standard": 0.9242,
+                "gap": 0.0141
+              },
+              {
+                "bin": "0.950-0.975",
+                "n": 524,
+                "predicted_standard": 0.9631,
+                "observed_standard": 0.9561,
+                "gap": 0.007
+              },
+              {
+                "bin": "0.975-1.000",
+                "n": 270,
+                "predicted_standard": 0.9825,
+                "observed_standard": 0.9556,
+                "gap": 0.0269
+              }
+            ],
+            "note": "Reliability at and above 0.9, where straight-through decisions are made. A positive gap means the model is over-confident in that bin."
+          },
+          "assertion": true,
+          "assertion_note": "Holdout ECE on synthetic data only. Not evidence of calibration on a real portfolio."
+        },
+        "stp_operating_point": {
+          "threshold": 0.95,
+          "model_pass_rate": 0.3238,
+          "cases_passed": 802,
+          "non_standard_passed": 36,
+          "unsafe_acceptance_rate": 0.0449,
+          "note": "Rate among cases the model alone would clear. Downstream gates are not modelled here.",
+          "interval_90pct": {
+            "level": 0.9,
+            "samples": 1000,
+            "cleared_cases": 802,
+            "model_pass_rate": [
+              0.3088,
+              0.3387
+            ],
+            "unsafe_acceptance_rate": [
+              0.0335,
+              0.0581
+            ],
+            "note": "Bootstrap over test rows. The unsafe interval is undefined when nothing is cleared."
+          }
+        },
+        "monotone": false,
+        "oracle": {
+          "threshold": 0.95,
+          "model_pass_rate": 0.3177,
+          "unsafe_acceptance_rate": 0.047,
+          "cases_passed": 787,
+          "auc": 0.8149,
+          "interval_90pct": {
+            "level": 0.9,
+            "samples": 1000,
+            "cleared_cases": 787,
+            "model_pass_rate": [
+              0.302,
+              0.3331
+            ],
+            "unsafe_acceptance_rate": [
+              0.0347,
+              0.0599
+            ],
+            "note": "Bootstrap over test rows. The unsafe interval is undefined when nothing is cleared."
+          },
+          "note": "The generator's own probabilities, which see the hidden labs. This is the ceiling on this data, not a model."
+        },
+        "ood": {
+          "detector": "IsolationForest and Mahalanobis distance on preprocessed features",
+          "train_flag_rate_target": 0.01,
+          "isolation_threshold": -0.57734,
+          "distance_threshold": 7.696,
+          "test_flag_rate": 0.0194,
+          "shifted_probe_flag_rate": 1.0,
+          "note": "A flag means unfamiliar input, not high risk. It routes the case away from STP."
+        },
+        "subgroups": {
+          "age 18-35": {
+            "n": 62,
+            "auc": 0.7772,
+            "brier": 0.0697,
+            "standard_rate": 0.9194
+          },
+          "age 36-50": {
+            "n": 845,
+            "auc": 0.7214,
+            "brier": 0.0791,
+            "standard_rate": 0.8947
+          },
+          "age 51-65": {
+            "n": 1075,
+            "auc": 0.8133,
+            "brier": 0.0938,
+            "standard_rate": 0.8567
+          },
+          "age 66+": {
+            "n": 495,
+            "auc": 0.7799,
+            "brier": 0.1656,
+            "standard_rate": 0.6808
+          },
+          "product Life": {
+            "n": 1539,
+            "auc": 0.8015,
+            "brier": 0.1039,
+            "standard_rate": 0.8343
+          },
+          "product Medical": {
+            "n": 938,
+            "auc": 0.8149,
+            "brier": 0.1003,
+            "standard_rate": 0.839
+          },
+          "smoker": {
+            "n": 531,
+            "auc": 0.8004,
+            "brier": 0.1391,
+            "standard_rate": 0.7571
+          },
+          "non-smoker": {
+            "n": 1946,
+            "auc": 0.7959,
+            "brier": 0.0926,
+            "standard_rate": 0.8577
+          },
+          "labs missing": {
+            "n": 436,
+            "auc": 0.7733,
+            "brier": 0.0822,
+            "standard_rate": 0.8876
+          },
+          "labs present": {
+            "n": 2041,
+            "auc": 0.8084,
+            "brier": 0.1069,
+            "standard_rate": 0.8251
+          }
+        },
+        "cost": {
+          "fit_seconds": 1.25,
+          "predict_ms_per_1k_cases": 32.39,
+          "serialised_kb": 6.1
+        },
+        "repeats": {
+          "n": 3,
+          "seeds": [
+            7,
+            8,
+            9
+          ],
+          "runs": [
+            {
+              "seed": 7,
+              "auc": 0.8062,
+              "ece": 0.0084,
+              "model_pass_rate": 0.3238,
+              "unsafe_acceptance_rate": 0.0449,
+              "fit_seconds": 1.25
+            },
+            {
+              "seed": 8,
+              "auc": 0.8058,
+              "ece": 0.0088,
+              "model_pass_rate": 0.3238,
+              "unsafe_acceptance_rate": 0.0449,
+              "fit_seconds": 1.03
+            },
+            {
+              "seed": 9,
+              "auc": 0.8062,
+              "ece": 0.0084,
+              "model_pass_rate": 0.3242,
+              "unsafe_acceptance_rate": 0.0448,
+              "fit_seconds": 1.27
+            }
+          ],
+          "unsafe_acceptance_rate": {
+            "mean": 0.0449,
+            "sd": 0.0001,
+            "min": 0.0448,
+            "max": 0.0449,
+            "n": 3
+          },
+          "model_pass_rate": {
+            "mean": 0.3239,
+            "sd": 0.0002,
+            "min": 0.3238,
+            "max": 0.3242,
+            "n": 3
+          },
+          "auc": {
+            "mean": 0.8061,
+            "sd": 0.0002,
+            "min": 0.8058,
+            "max": 0.8062,
+            "n": 3
+          },
+          "ece": {
+            "mean": 0.0085,
+            "sd": 0.0002,
+            "min": 0.0084,
+            "max": 0.0088,
+            "n": 3
+          },
+          "note": "The first seed is the bundle kept. The rest measure seed sensitivity only; the data split is temporal and does not change between seeds."
+        }
+      },
+      "score_first_seed": 0.38,
+      "score_by_seed": [
+        0.38,
+        0.3783,
+        0.3809
+      ],
+      "score_sd": 0.0013,
+      "rank": 2,
+      "near_duplicate_of": "logistic-l2",
+      "tied_with_leader": "logistic-l2"
+    },
+    {
+      "family": "bagged trees",
+      "architecture": "ensemble (bagging)",
+      "description": "400 extremely randomised trees.",
+      "why": "More variance reduction than a random forest, at the cost of sharper probabilities.",
+      "name": "extra-trees",
+      "score": 0.3704,
+      "components": {
+        "safety": 0.164,
+        "coverage": 0.2802,
+        "calibration": 0.854,
+        "discrimination": 0.596
+      },
+      "weights": {
+        "safety": 0.4,
+        "coverage": 0.25,
+        "calibration": 0.2,
+        "discrimination": 0.15
+      },
+      "within_unsafe_budget": true,
+      "viable": true,
+      "viability": "provisional",
+      "not_viable_because": [],
+      "confirmation_note": "inside the budget at the point estimate, but the 90% interval reaches 0.0554; confirming a rate of 0.0418 needs about 1612 cleared cases and this test set cleared 694",
+      "unsafe_acceptance_rate": 0.0418,
+      "unsafe_interval_90pct": [
+        0.0298,
+        0.0554
+      ],
+      "coverage_interval_90pct": [
+        0.2644,
+        0.2943
+      ],
+      "cleared_cases": 694,
+      "budget": 0.05,
+      "min_coverage": 0.05,
+      "metrics": {
+        "discrimination": {
+          "auc": 0.798,
+          "average_precision": 0.9365,
+          "accuracy_at_0.5": 0.8607,
+          "base_rate_standard": 0.8361
+        },
+        "calibration": {
+          "brier": 0.1061,
+          "brier_uncalibrated": 0.1062,
+          "ece": 0.0073,
+          "ece_uncalibrated": 0.0106,
+          "max_acceptable_ece": 0.05,
+          "method": "isotonic on a held-out later period",
+          "reliability": [
+            {
+              "bin": "0.0-0.1",
+              "n": 18,
+              "predicted_standard": 0.0,
+              "observed_standard": 0.1111
+            },
+            {
+              "bin": "0.1-0.2",
+              "n": 9,
+              "predicted_standard": 0.1605,
+              "observed_standard": 0.1111
+            },
+            {
+              "bin": "0.2-0.3",
+              "n": 39,
+              "predicted_standard": 0.2261,
+              "observed_standard": 0.2564
+            },
+            {
+              "bin": "0.3-0.4",
+              "n": 66,
+              "predicted_standard": 0.3876,
+              "observed_standard": 0.4242
+            },
+            {
+              "bin": "0.4-0.5",
+              "n": 133,
+              "predicted_standard": 0.469,
+              "observed_standard": 0.4586
+            },
+            {
+              "bin": "0.6-0.7",
+              "n": 127,
+              "predicted_standard": 0.6661,
+              "observed_standard": 0.7087
+            },
+            {
+              "bin": "0.7-0.8",
+              "n": 106,
+              "predicted_standard": 0.7302,
+              "observed_standard": 0.7264
+            },
+            {
+              "bin": "0.8-0.9",
+              "n": 650,
+              "predicted_standard": 0.8466,
+              "observed_standard": 0.84
+            },
+            {
+              "bin": "0.9-1.0",
+              "n": 1329,
+              "predicted_standard": 0.9454,
+              "observed_standard": 0.9451
+            }
+          ],
+          "tail": {
+            "cases_in_tail": 1329,
+            "share_in_tail": 0.5365,
+            "tail_ece": 0.0131,
+            "bins": [
+              {
+                "bin": "0.900-0.925",
+                "n": 310,
+                "predicted_standard": 0.9246,
+                "observed_standard": 0.9419,
+                "gap": -0.0173
+              },
+              {
+                "bin": "0.925-0.950",
+                "n": 320,
+                "predicted_standard": 0.9435,
+                "observed_standard": 0.9187,
+                "gap": 0.0248
+              },
+              {
+                "bin": "0.950-0.975",
+                "n": 678,
+                "predicted_standard": 0.9541,
+                "observed_standard": 0.9587,
+                "gap": -0.0046
+              },
+              {
+                "bin": "0.975-1.000",
+                "n": 21,
+                "predicted_standard": 0.9999,
+                "observed_standard": 0.9524,
+                "gap": 0.0475
+              }
+            ],
+            "note": "Reliability at and above 0.9, where straight-through decisions are made. A positive gap means the model is over-confident in that bin."
+          },
+          "tail_uncalibrated": {
+            "cases_in_tail": 1246,
+            "share_in_tail": 0.503,
+            "tail_ece": 0.0172,
+            "bins": [
+              {
+                "bin": "0.900-0.925",
+                "n": 276,
+                "predicted_standard": 0.9133,
+                "observed_standard": 0.942,
+                "gap": -0.0288
+              },
+              {
+                "bin": "0.925-0.950",
+                "n": 399,
+                "predicted_standard": 0.9387,
+                "observed_standard": 0.9273,
+                "gap": 0.0114
+              },
+              {
+                "bin": "0.950-0.975",
+                "n": 433,
+                "predicted_standard": 0.9617,
+                "observed_standard": 0.97,
+                "gap": -0.0082
+              },
+              {
+                "bin": "0.975-1.000",
+                "n": 138,
+                "predicted_standard": 0.9811,
+                "observed_standard": 0.942,
+                "gap": 0.0391
+              }
+            ],
+            "note": "Reliability at and above 0.9, where straight-through decisions are made. A positive gap means the model is over-confident in that bin."
+          },
+          "assertion": true,
+          "assertion_note": "Holdout ECE on synthetic data only. Not evidence of calibration on a real portfolio."
+        },
+        "stp_operating_point": {
+          "threshold": 0.95,
+          "model_pass_rate": 0.2802,
+          "cases_passed": 694,
+          "non_standard_passed": 29,
+          "unsafe_acceptance_rate": 0.0418,
+          "note": "Rate among cases the model alone would clear. Downstream gates are not modelled here.",
+          "interval_90pct": {
+            "level": 0.9,
+            "samples": 1000,
+            "cleared_cases": 694,
+            "model_pass_rate": [
+              0.2644,
+              0.2943
+            ],
+            "unsafe_acceptance_rate": [
+              0.0298,
+              0.0554
+            ],
+            "note": "Bootstrap over test rows. The unsafe interval is undefined when nothing is cleared."
+          }
+        },
+        "monotone": false,
+        "oracle": {
+          "threshold": 0.95,
+          "model_pass_rate": 0.3177,
+          "unsafe_acceptance_rate": 0.047,
+          "cases_passed": 787,
+          "auc": 0.8149,
+          "interval_90pct": {
+            "level": 0.9,
+            "samples": 1000,
+            "cleared_cases": 787,
+            "model_pass_rate": [
+              0.302,
+              0.3331
+            ],
+            "unsafe_acceptance_rate": [
+              0.0347,
+              0.0599
+            ],
+            "note": "Bootstrap over test rows. The unsafe interval is undefined when nothing is cleared."
+          },
+          "note": "The generator's own probabilities, which see the hidden labs. This is the ceiling on this data, not a model."
+        },
+        "ood": {
+          "detector": "IsolationForest and Mahalanobis distance on preprocessed features",
+          "train_flag_rate_target": 0.01,
+          "isolation_threshold": -0.57734,
+          "distance_threshold": 7.696,
+          "test_flag_rate": 0.0194,
+          "shifted_probe_flag_rate": 1.0,
+          "note": "A flag means unfamiliar input, not high risk. It routes the case away from STP."
+        },
+        "subgroups": {
+          "age 18-35": {
+            "n": 62,
+            "auc": 0.8158,
+            "brier": 0.0702,
+            "standard_rate": 0.9194
+          },
+          "age 36-50": {
+            "n": 845,
+            "auc": 0.724,
+            "brier": 0.0819,
+            "standard_rate": 0.8947
+          },
+          "age 51-65": {
+            "n": 1075,
+            "auc": 0.804,
+            "brier": 0.0967,
+            "standard_rate": 0.8567
+          },
+          "age 66+": {
+            "n": 495,
+            "auc": 0.7612,
+            "brier": 0.1722,
+            "standard_rate": 0.6808
+          },
+          "product Life": {
+            "n": 1539,
+            "auc": 0.7886,
+            "brier": 0.1089,
+            "standard_rate": 0.8343
+          },
+          "product Medical": {
+            "n": 938,
+            "auc": 0.8147,
+            "brier": 0.1014,
+            "standard_rate": 0.839
+          },
+          "smoker": {
+            "n": 531,
+            "auc": 0.7922,
+            "brier": 0.1382,
+            "standard_rate": 0.7571
+          },
+          "non-smoker": {
+            "n": 1946,
+            "auc": 0.7885,
+            "brier": 0.0973,
+            "standard_rate": 0.8577
+          },
+          "labs missing": {
+            "n": 436,
+            "auc": 0.7564,
+            "brier": 0.0846,
+            "standard_rate": 0.8876
+          },
+          "labs present": {
+            "n": 2041,
+            "auc": 0.8015,
+            "brier": 0.1106,
+            "standard_rate": 0.8251
+          }
+        },
+        "cost": {
+          "fit_seconds": 0.96,
+          "predict_ms_per_1k_cases": 64.27,
+          "serialised_kb": 77351.9
+        },
+        "repeats": {
+          "n": 3,
+          "seeds": [
+            7,
+            8,
+            9
+          ],
+          "runs": [
+            {
+              "seed": 7,
+              "auc": 0.798,
+              "ece": 0.0073,
+              "model_pass_rate": 0.2802,
+              "unsafe_acceptance_rate": 0.0418,
+              "fit_seconds": 0.96
+            },
+            {
+              "seed": 8,
+              "auc": 0.7973,
+              "ece": 0.012,
+              "model_pass_rate": 0.2394,
+              "unsafe_acceptance_rate": 0.0422,
+              "fit_seconds": 0.98
+            },
+            {
+              "seed": 9,
+              "auc": 0.7962,
+              "ece": 0.0158,
+              "model_pass_rate": 0.2814,
+              "unsafe_acceptance_rate": 0.043,
+              "fit_seconds": 0.95
+            }
+          ],
+          "unsafe_acceptance_rate": {
+            "mean": 0.0423,
+            "sd": 0.0006,
+            "min": 0.0418,
+            "max": 0.043,
+            "n": 3
+          },
+          "model_pass_rate": {
+            "mean": 0.267,
+            "sd": 0.0239,
+            "min": 0.2394,
+            "max": 0.2814,
+            "n": 3
+          },
+          "auc": {
+            "mean": 0.7972,
+            "sd": 0.0009,
+            "min": 0.7962,
+            "max": 0.798,
+            "n": 3
+          },
+          "ece": {
+            "mean": 0.0117,
+            "sd": 0.0043,
+            "min": 0.0073,
+            "max": 0.0158,
+            "n": 3
+          },
+          "note": "The first seed is the bundle kept. The rest measure seed sensitivity only; the data split is temporal and does not change between seeds."
+        }
+      },
+      "score_first_seed": 0.3958,
+      "score_by_seed": [
+        0.3958,
+        0.3634,
+        0.352
+      ],
+      "score_sd": 0.0227,
+      "rank": 3
+    },
+    {
+      "family": "boosted trees",
+      "architecture": "ensemble (boosting, monotone)",
+      "description": "The default boosting configuration with the manual's directions as constraints.",
+      "why": "Higher HbA1c, lower eGFR or smoking can never raise P(standard). Tests whether that repairs the over-confident tail that puts unconstrained boosting over budget.",
+      "name": "hist-gbm-monotone",
+      "score": 0.3615,
+      "components": {
+        "safety": 0.07,
+        "coverage": 0.2862,
+        "calibration": 0.662,
+        "discrimination": 0.5928
+      },
+      "weights": {
+        "safety": 0.4,
+        "coverage": 0.25,
+        "calibration": 0.2,
+        "discrimination": 0.15
+      },
+      "within_unsafe_budget": true,
+      "viable": true,
+      "viability": "provisional",
+      "not_viable_because": [],
+      "confirmation_note": "inside the budget at the point estimate, but the 90% interval reaches 0.0595; confirming a rate of 0.0465 needs about 9794 cleared cases and this test set cleared 709",
+      "unsafe_acceptance_rate": 0.0465,
+      "unsafe_interval_90pct": [
+        0.0339,
+        0.0595
+      ],
+      "coverage_interval_90pct": [
+        0.2709,
+        0.3008
+      ],
+      "cleared_cases": 709,
+      "budget": 0.05,
+      "min_coverage": 0.05,
+      "metrics": {
+        "discrimination": {
+          "auc": 0.7964,
+          "average_precision": 0.9353,
+          "accuracy_at_0.5": 0.8664,
+          "base_rate_standard": 0.8361
+        },
+        "calibration": {
+          "brier": 0.1039,
+          "brier_uncalibrated": 0.1033,
+          "ece": 0.0169,
+          "ece_uncalibrated": 0.0184,
+          "max_acceptable_ece": 0.05,
+          "method": "isotonic on a held-out later period",
+          "reliability": [
+            {
+              "bin": "0.0-0.1",
+              "n": 33,
+              "predicted_standard": 0.0359,
+              "observed_standard": 0.0909
+            },
+            {
+              "bin": "0.1-0.2",
+              "n": 28,
+              "predicted_standard": 0.1399,
+              "observed_standard": 0.25
+            },
+            {
+              "bin": "0.2-0.3",
+              "n": 11,
+              "predicted_standard": 0.2695,
+              "observed_standard": 0.0909
+            },
+            {
+              "bin": "0.3-0.4",
+              "n": 32,
+              "predicted_standard": 0.3318,
+              "observed_standard": 0.375
+            },
+            {
+              "bin": "0.4-0.5",
+              "n": 117,
+              "predicted_standard": 0.4681,
+              "observed_standard": 0.4274
+            },
+            {
+              "bin": "0.5-0.6",
+              "n": 69,
+              "predicted_standard": 0.5971,
+              "observed_standard": 0.5507
+            },
+            {
+              "bin": "0.6-0.7",
+              "n": 146,
+              "predicted_standard": 0.6626,
+              "observed_standard": 0.726
+            },
+            {
+              "bin": "0.7-0.8",
+              "n": 95,
+              "predicted_standard": 0.7477,
+              "observed_standard": 0.7684
+            },
+            {
+              "bin": "0.8-0.9",
+              "n": 592,
+              "predicted_standard": 0.8462,
+              "observed_standard": 0.8615
+            },
+            {
+              "bin": "0.9-1.0",
+              "n": 1354,
+              "predicted_standard": 0.9427,
+              "observed_standard": 0.9387
+            }
+          ],
+          "tail": {
+            "cases_in_tail": 1354,
+            "share_in_tail": 0.5466,
+            "tail_ece": 0.0041,
+            "bins": [
+              {
+                "bin": "0.900-0.925",
+                "n": 286,
+                "predicted_standard": 0.9153,
+                "observed_standard": 0.9091,
+                "gap": 0.0062
+              },
+              {
+                "bin": "0.925-0.950",
+                "n": 353,
+                "predicted_standard": 0.942,
+                "observed_standard": 0.932,
+                "gap": 0.01
+              },
+              {
+                "bin": "0.950-0.975",
+                "n": 704,
+                "predicted_standard": 0.9534,
+                "observed_standard": 0.9531,
+                "gap": 0.0002
+              },
+              {
+                "bin": "0.975-1.000",
+                "n": 11,
+                "predicted_standard": 0.9992,
+                "observed_standard": 1.0,
+                "gap": -0.0008
+              }
+            ],
+            "note": "Reliability at and above 0.9, where straight-through decisions are made. A positive gap means the model is over-confident in that bin."
+          },
+          "tail_uncalibrated": {
+            "cases_in_tail": 1382,
+            "share_in_tail": 0.5579,
+            "tail_ece": 0.0163,
+            "bins": [
+              {
+                "bin": "0.900-0.925",
+                "n": 236,
+                "predicted_standard": 0.9129,
+                "observed_standard": 0.9068,
+                "gap": 0.0061
+              },
+              {
+                "bin": "0.925-0.950",
+                "n": 309,
+                "predicted_standard": 0.938,
+                "observed_standard": 0.9288,
+                "gap": 0.0092
+              },
+              {
+                "bin": "0.950-0.975",
+                "n": 506,
+                "predicted_standard": 0.9634,
+                "observed_standard": 0.9466,
+                "gap": 0.0168
+              },
+              {
+                "bin": "0.975-1.000",
+                "n": 331,
+                "predicted_standard": 0.9839,
+                "observed_standard": 0.9547,
+                "gap": 0.0292
+              }
+            ],
+            "note": "Reliability at and above 0.9, where straight-through decisions are made. A positive gap means the model is over-confident in that bin."
+          },
+          "assertion": true,
+          "assertion_note": "Holdout ECE on synthetic data only. Not evidence of calibration on a real portfolio."
+        },
+        "stp_operating_point": {
+          "threshold": 0.95,
+          "model_pass_rate": 0.2862,
+          "cases_passed": 709,
+          "non_standard_passed": 33,
+          "unsafe_acceptance_rate": 0.0465,
+          "note": "Rate among cases the model alone would clear. Downstream gates are not modelled here.",
+          "interval_90pct": {
+            "level": 0.9,
+            "samples": 1000,
+            "cleared_cases": 709,
+            "model_pass_rate": [
+              0.2709,
+              0.3008
+            ],
+            "unsafe_acceptance_rate": [
+              0.0339,
+              0.0595
+            ],
+            "note": "Bootstrap over test rows. The unsafe interval is undefined when nothing is cleared."
+          }
+        },
+        "monotone": true,
+        "oracle": {
+          "threshold": 0.95,
+          "model_pass_rate": 0.3177,
+          "unsafe_acceptance_rate": 0.047,
+          "cases_passed": 787,
+          "auc": 0.8149,
+          "interval_90pct": {
+            "level": 0.9,
+            "samples": 1000,
+            "cleared_cases": 787,
+            "model_pass_rate": [
+              0.302,
+              0.3331
+            ],
+            "unsafe_acceptance_rate": [
+              0.0347,
+              0.0599
+            ],
+            "note": "Bootstrap over test rows. The unsafe interval is undefined when nothing is cleared."
+          },
+          "note": "The generator's own probabilities, which see the hidden labs. This is the ceiling on this data, not a model."
+        },
+        "ood": {
+          "detector": "IsolationForest and Mahalanobis distance on preprocessed features",
+          "train_flag_rate_target": 0.01,
+          "isolation_threshold": -0.57734,
+          "distance_threshold": 7.696,
+          "test_flag_rate": 0.0194,
+          "shifted_probe_flag_rate": 1.0,
+          "note": "A flag means unfamiliar input, not high risk. It routes the case away from STP."
+        },
+        "subgroups": {
+          "age 18-35": {
+            "n": 62,
+            "auc": 0.7123,
+            "brier": 0.0697,
+            "standard_rate": 0.9194
+          },
+          "age 36-50": {
+            "n": 845,
+            "auc": 0.7173,
+            "brier": 0.0812,
+            "standard_rate": 0.8947
+          },
+          "age 51-65": {
+            "n": 1075,
+            "auc": 0.7983,
+            "brier": 0.0962,
+            "standard_rate": 0.8567
+          },
+          "age 66+": {
+            "n": 495,
+            "auc": 0.7798,
+            "brier": 0.1635,
+            "standard_rate": 0.6808
+          },
+          "product Life": {
+            "n": 1539,
+            "auc": 0.7894,
+            "brier": 0.1047,
+            "standard_rate": 0.8343
+          },
+          "product Medical": {
+            "n": 938,
+            "auc": 0.8082,
+            "brier": 0.1026,
+            "standard_rate": 0.839
+          },
+          "smoker": {
+            "n": 531,
+            "auc": 0.7853,
+            "brier": 0.1415,
+            "standard_rate": 0.7571
+          },
+          "non-smoker": {
+            "n": 1946,
+            "auc": 0.7886,
+            "brier": 0.0936,
+            "standard_rate": 0.8577
+          },
+          "labs missing": {
+            "n": 436,
+            "auc": 0.7863,
+            "brier": 0.0811,
+            "standard_rate": 0.8876
+          },
+          "labs present": {
+            "n": 2041,
+            "auc": 0.7956,
+            "brier": 0.1087,
+            "standard_rate": 0.8251
+          }
+        },
+        "cost": {
+          "fit_seconds": 1.59,
+          "predict_ms_per_1k_cases": 40.59,
+          "serialised_kb": 447.7
+        },
+        "repeats": {
+          "n": 3,
+          "seeds": [
+            7,
+            8,
+            9
+          ],
+          "runs": [
+            {
+              "seed": 7,
+              "auc": 0.7964,
+              "ece": 0.0169,
+              "model_pass_rate": 0.2862,
+              "unsafe_acceptance_rate": 0.0465,
+              "fit_seconds": 1.59
+            },
+            {
+              "seed": 8,
+              "auc": 0.794,
+              "ece": 0.0181,
+              "model_pass_rate": 0.3351,
+              "unsafe_acceptance_rate": 0.053,
+              "fit_seconds": 1.82
+            },
+            {
+              "seed": 9,
+              "auc": 0.8021,
+              "ece": 0.0144,
+              "model_pass_rate": 0.0186,
+              "unsafe_acceptance_rate": 0.0217,
+              "fit_seconds": 1.78
+            }
+          ],
+          "unsafe_acceptance_rate": {
+            "mean": 0.0404,
+            "sd": 0.0165,
+            "min": 0.0217,
+            "max": 0.053,
+            "n": 3
+          },
+          "model_pass_rate": {
+            "mean": 0.2133,
+            "sd": 0.1704,
+            "min": 0.0186,
+            "max": 0.3351,
+            "n": 3
+          },
+          "auc": {
+            "mean": 0.7975,
+            "sd": 0.0042,
+            "min": 0.794,
+            "max": 0.8021,
+            "n": 3
+          },
+          "ece": {
+            "mean": 0.0165,
+            "sd": 0.0019,
+            "min": 0.0144,
+            "max": 0.0181,
+            "n": 3
+          },
+          "note": "The first seed is the bundle kept. The rest measure seed sensitivity only; the data split is temporal and does not change between seeds."
+        }
+      },
+      "score_first_seed": 0.3209,
+      "score_by_seed": [
+        0.3209,
+        0.2996,
+        0.4641
+      ],
+      "score_sd": 0.0895,
+      "seed_sensitivity": "exceeded the unsafe budget on 1 of 3 seeds; fell below the coverage floor on 1 of 3 seeds",
+      "rank": 4
+    },
+    {
+      "family": "model ensemble",
+      "architecture": "ensemble (stacking)",
+      "description": "Boosting, forest and linear base models with a logistic meta-learner.",
+      "why": "Lets the meta-learner weight base models instead of averaging them equally.",
+      "name": "stacking-lr",
+      "score": 0.3547,
+      "components": {
+        "safety": 0.006,
+        "coverage": 0.3654,
+        "calibration": 0.884,
+        "discrimination": 0.6068
+      },
+      "weights": {
+        "safety": 0.4,
+        "coverage": 0.25,
+        "calibration": 0.2,
+        "discrimination": 0.15
+      },
+      "within_unsafe_budget": true,
+      "viable": true,
+      "viability": "provisional",
+      "not_viable_because": [],
+      "confirmation_note": "inside the budget at the point estimate, but the 90% interval reaches 0.0620; confirming a rate of 0.0497 needs about 1419887 cleared cases and this test set cleared 905",
+      "unsafe_acceptance_rate": 0.0497,
+      "unsafe_interval_90pct": [
+        0.0377,
+        0.062
+      ],
+      "coverage_interval_90pct": [
+        0.3492,
+        0.3811
+      ],
+      "cleared_cases": 905,
+      "budget": 0.05,
+      "min_coverage": 0.05,
+      "metrics": {
+        "discrimination": {
+          "auc": 0.8034,
+          "average_precision": 0.9368,
+          "accuracy_at_0.5": 0.8652,
+          "base_rate_standard": 0.8361
+        },
+        "calibration": {
+          "brier": 0.1021,
+          "brier_uncalibrated": 0.1022,
+          "ece": 0.0058,
+          "ece_uncalibrated": 0.0173,
+          "max_acceptable_ece": 0.05,
+          "method": "isotonic on a held-out later period",
+          "reliability": [
+            {
+              "bin": "0.0-0.1",
+              "n": 25,
+              "predicted_standard": 0.0557,
+              "observed_standard": 0.12
+            },
+            {
+              "bin": "0.1-0.2",
+              "n": 25,
+              "predicted_standard": 0.1303,
+              "observed_standard": 0.16
+            },
+            {
+              "bin": "0.2-0.3",
+              "n": 9,
+              "predicted_standard": 0.2728,
+              "observed_standard": 0.2222
+            },
+            {
+              "bin": "0.3-0.4",
+              "n": 84,
+              "predicted_standard": 0.3051,
+              "observed_standard": 0.3214
+            },
+            {
+              "bin": "0.4-0.5",
+              "n": 1,
+              "predicted_standard": 0.4913,
+              "observed_standard": 0.0
+            },
+            {
+              "bin": "0.5-0.6",
+              "n": 153,
+              "predicted_standard": 0.5379,
+              "observed_standard": 0.5163
+            },
+            {
+              "bin": "0.6-0.7",
+              "n": 189,
+              "predicted_standard": 0.691,
+              "observed_standard": 0.6984
+            },
+            {
+              "bin": "0.7-0.8",
+              "n": 66,
+              "predicted_standard": 0.7656,
+              "observed_standard": 0.8182
+            },
+            {
+              "bin": "0.8-0.9",
+              "n": 565,
+              "predicted_standard": 0.8641,
+              "observed_standard": 0.8619
+            },
+            {
+              "bin": "0.9-1.0",
+              "n": 1360,
+              "predicted_standard": 0.9431,
+              "observed_standard": 0.9434
+            }
+          ],
+          "tail": {
+            "cases_in_tail": 1360,
+            "share_in_tail": 0.5491,
+            "tail_ece": 0.0065,
+            "bins": [
+              {
+                "bin": "0.900-0.925",
+                "n": 218,
+                "predicted_standard": 0.9105,
+                "observed_standard": 0.9266,
+                "gap": -0.0161
+              },
+              {
+                "bin": "0.925-0.950",
+                "n": 232,
+                "predicted_standard": 0.9265,
+                "observed_standard": 0.931,
+                "gap": -0.0045
+              },
+              {
+                "bin": "0.950-0.975",
+                "n": 872,
+                "predicted_standard": 0.9532,
+                "observed_standard": 0.9484,
+                "gap": 0.0049
+              },
+              {
+                "bin": "0.975-1.000",
+                "n": 38,
+                "predicted_standard": 1.0,
+                "observed_standard": 1.0,
+                "gap": 0.0
+              }
+            ],
+            "note": "Reliability at and above 0.9, where straight-through decisions are made. A positive gap means the model is over-confident in that bin."
+          },
+          "tail_uncalibrated": {
+            "cases_in_tail": 1566,
+            "share_in_tail": 0.6322,
+            "tail_ece": 0.0064,
+            "bins": [
+              {
+                "bin": "0.900-0.925",
+                "n": 429,
+                "predicted_standard": 0.9146,
+                "observed_standard": 0.9114,
+                "gap": 0.0031
+              },
+              {
+                "bin": "0.925-0.950",
+                "n": 1130,
+                "predicted_standard": 0.9386,
+                "observed_standard": 0.946,
+                "gap": -0.0074
+              },
+              {
+                "bin": "0.950-0.975",
+                "n": 7,
+                "predicted_standard": 0.9503,
+                "observed_standard": 1.0,
+                "gap": -0.0497
+              },
+              {
+                "bin": "0.975-1.000",
+                "n": 0,
+                "predicted_standard": null,
+                "observed_standard": null
+              }
+            ],
+            "note": "Reliability at and above 0.9, where straight-through decisions are made. A positive gap means the model is over-confident in that bin."
+          },
+          "assertion": true,
+          "assertion_note": "Holdout ECE on synthetic data only. Not evidence of calibration on a real portfolio."
+        },
+        "stp_operating_point": {
+          "threshold": 0.95,
+          "model_pass_rate": 0.3654,
+          "cases_passed": 905,
+          "non_standard_passed": 45,
+          "unsafe_acceptance_rate": 0.0497,
+          "note": "Rate among cases the model alone would clear. Downstream gates are not modelled here.",
+          "interval_90pct": {
+            "level": 0.9,
+            "samples": 1000,
+            "cleared_cases": 905,
+            "model_pass_rate": [
+              0.3492,
+              0.3811
+            ],
+            "unsafe_acceptance_rate": [
+              0.0377,
+              0.062
+            ],
+            "note": "Bootstrap over test rows. The unsafe interval is undefined when nothing is cleared."
+          }
+        },
+        "monotone": false,
+        "oracle": {
+          "threshold": 0.95,
+          "model_pass_rate": 0.3177,
+          "unsafe_acceptance_rate": 0.047,
+          "cases_passed": 787,
+          "auc": 0.8149,
+          "interval_90pct": {
+            "level": 0.9,
+            "samples": 1000,
+            "cleared_cases": 787,
+            "model_pass_rate": [
+              0.302,
+              0.3331
+            ],
+            "unsafe_acceptance_rate": [
+              0.0347,
+              0.0599
+            ],
+            "note": "Bootstrap over test rows. The unsafe interval is undefined when nothing is cleared."
+          },
+          "note": "The generator's own probabilities, which see the hidden labs. This is the ceiling on this data, not a model."
+        },
+        "ood": {
+          "detector": "IsolationForest and Mahalanobis distance on preprocessed features",
+          "train_flag_rate_target": 0.01,
+          "isolation_threshold": -0.57734,
+          "distance_threshold": 7.696,
+          "test_flag_rate": 0.0194,
+          "shifted_probe_flag_rate": 1.0,
+          "note": "A flag means unfamiliar input, not high risk. It routes the case away from STP."
+        },
+        "subgroups": {
+          "age 18-35": {
+            "n": 62,
+            "auc": 0.7649,
+            "brier": 0.0713,
+            "standard_rate": 0.9194
+          },
+          "age 36-50": {
+            "n": 845,
+            "auc": 0.7196,
+            "brier": 0.079,
+            "standard_rate": 0.8947
+          },
+          "age 51-65": {
+            "n": 1075,
+            "auc": 0.8078,
+            "brier": 0.094,
+            "standard_rate": 0.8567
+          },
+          "age 66+": {
+            "n": 495,
+            "auc": 0.7791,
+            "brier": 0.163,
+            "standard_rate": 0.6808
+          },
+          "product Life": {
+            "n": 1539,
+            "auc": 0.799,
+            "brier": 0.1041,
+            "standard_rate": 0.8343
+          },
+          "product Medical": {
+            "n": 938,
+            "auc": 0.8107,
+            "brier": 0.0988,
+            "standard_rate": 0.839
+          },
+          "smoker": {
+            "n": 531,
+            "auc": 0.7998,
+            "brier": 0.1372,
+            "standard_rate": 0.7571
+          },
+          "non-smoker": {
+            "n": 1946,
+            "auc": 0.7935,
+            "brier": 0.0925,
+            "standard_rate": 0.8577
+          },
+          "labs missing": {
+            "n": 436,
+            "auc": 0.7757,
+            "brier": 0.0822,
+            "standard_rate": 0.8876
+          },
+          "labs present": {
+            "n": 2041,
+            "auc": 0.8051,
+            "brier": 0.1064,
+            "standard_rate": 0.8251
+          }
+        },
+        "cost": {
+          "fit_seconds": 5.73,
+          "predict_ms_per_1k_cases": 65.38,
+          "serialised_kb": 25661.7
+        },
+        "repeats": {
+          "n": 3,
+          "seeds": [
+            7,
+            8,
+            9
+          ],
+          "runs": [
+            {
+              "seed": 7,
+              "auc": 0.8034,
+              "ece": 0.0058,
+              "model_pass_rate": 0.3654,
+              "unsafe_acceptance_rate": 0.0497,
+              "fit_seconds": 5.73
+            },
+            {
+              "seed": 8,
+              "auc": 0.805,
+              "ece": 0.013,
+              "model_pass_rate": 0.3343,
+              "unsafe_acceptance_rate": 0.0459,
+              "fit_seconds": 5.29
+            },
+            {
+              "seed": 9,
+              "auc": 0.8044,
+              "ece": 0.0109,
+              "model_pass_rate": 0.3763,
+              "unsafe_acceptance_rate": 0.0494,
+              "fit_seconds": 5.51
+            }
+          ],
+          "unsafe_acceptance_rate": {
+            "mean": 0.0483,
+            "sd": 0.0021,
+            "min": 0.0459,
+            "max": 0.0497,
+            "n": 3
+          },
+          "model_pass_rate": {
+            "mean": 0.3587,
+            "sd": 0.0218,
+            "min": 0.3343,
+            "max": 0.3763,
+            "n": 3
+          },
+          "auc": {
+            "mean": 0.8043,
+            "sd": 0.0008,
+            "min": 0.8034,
+            "max": 0.805,
+            "n": 3
+          },
+          "ece": {
+            "mean": 0.0099,
+            "sd": 0.0037,
+            "min": 0.0058,
+            "max": 0.013,
+            "n": 3
+          },
+          "note": "The first seed is the bundle kept. The rest measure seed sensitivity only; the data split is temporal and does not change between seeds."
+        }
+      },
+      "score_first_seed": 0.3616,
+      "score_by_seed": [
+        0.3616,
+        0.3559,
+        0.3466
+      ],
+      "score_sd": 0.0076,
+      "rank": 5
+    },
+    {
+      "family": "neural network",
+      "architecture": "single (2 hidden layers)",
+      "description": "Multi-layer perceptron, 64 and 32 units, early stopping.",
+      "why": "A non-tree function class. Often poorly calibrated before correction.",
+      "name": "mlp-64-32",
+      "score": 0.3358,
+      "components": {
+        "safety": 0.06,
+        "coverage": 0.2919,
+        "calibration": 0.592,
+        "discrimination": 0.6028
+      },
+      "weights": {
+        "safety": 0.4,
+        "coverage": 0.25,
+        "calibration": 0.2,
+        "discrimination": 0.15
+      },
+      "within_unsafe_budget": true,
+      "viable": true,
+      "viability": "provisional",
+      "not_viable_because": [],
+      "confirmation_note": "inside the budget at the point estimate, but the 90% interval reaches 0.0604; confirming a rate of 0.0470 needs about 13466 cleared cases and this test set cleared 723",
+      "unsafe_acceptance_rate": 0.047,
+      "unsafe_interval_90pct": [
+        0.0346,
+        0.0604
+      ],
+      "coverage_interval_90pct": [
+        0.2761,
+        0.3064
+      ],
+      "cleared_cases": 723,
+      "budget": 0.05,
+      "min_coverage": 0.05,
+      "metrics": {
+        "discrimination": {
+          "auc": 0.8014,
+          "average_precision": 0.9362,
+          "accuracy_at_0.5": 0.868,
+          "base_rate_standard": 0.8361
+        },
+        "calibration": {
+          "brier": 0.1036,
+          "brier_uncalibrated": 0.1024,
+          "ece": 0.0204,
+          "ece_uncalibrated": 0.0172,
+          "max_acceptable_ece": 0.05,
+          "method": "isotonic on a held-out later period",
+          "reliability": [
+            {
+              "bin": "0.0-0.1",
+              "n": 24,
+              "predicted_standard": 0.0479,
+              "observed_standard": 0.0833
+            },
+            {
+              "bin": "0.1-0.2",
+              "n": 44,
+              "predicted_standard": 0.1602,
+              "observed_standard": 0.2045
+            },
+            {
+              "bin": "0.2-0.3",
+              "n": 12,
+              "predicted_standard": 0.24,
+              "observed_standard": 0.5
+            },
+            {
+              "bin": "0.4-0.5",
+              "n": 101,
+              "predicted_standard": 0.4836,
+              "observed_standard": 0.3366
+            },
+            {
+              "bin": "0.5-0.6",
+              "n": 36,
+              "predicted_standard": 0.5,
+              "observed_standard": 0.4167
+            },
+            {
+              "bin": "0.6-0.7",
+              "n": 282,
+              "predicted_standard": 0.6623,
+              "observed_standard": 0.6809
+            },
+            {
+              "bin": "0.7-0.8",
+              "n": 12,
+              "predicted_standard": 0.73,
+              "observed_standard": 1.0
+            },
+            {
+              "bin": "0.8-0.9",
+              "n": 687,
+              "predicted_standard": 0.8504,
+              "observed_standard": 0.8675
+            },
+            {
+              "bin": "0.9-1.0",
+              "n": 1279,
+              "predicted_standard": 0.9473,
+              "observed_standard": 0.9421
+            }
+          ],
+          "tail": {
+            "cases_in_tail": 1279,
+            "share_in_tail": 0.5164,
+            "tail_ece": 0.0051,
+            "bins": [
+              {
+                "bin": "0.900-0.925",
+                "n": 116,
+                "predicted_standard": 0.9219,
+                "observed_standard": 0.9052,
+                "gap": 0.0167
+              },
+              {
+                "bin": "0.925-0.950",
+                "n": 434,
+                "predicted_standard": 0.9371,
+                "observed_standard": 0.9355,
+                "gap": 0.0016
+              },
+              {
+                "bin": "0.950-0.975",
+                "n": 684,
+                "predicted_standard": 0.9545,
+                "observed_standard": 0.9503,
+                "gap": 0.0043
+              },
+              {
+                "bin": "0.975-1.000",
+                "n": 45,
+                "predicted_standard": 1.0,
+                "observed_standard": 0.9778,
+                "gap": 0.0222
+              }
+            ],
+            "note": "Reliability at and above 0.9, where straight-through decisions are made. A positive gap means the model is over-confident in that bin."
+          },
+          "tail_uncalibrated": {
+            "cases_in_tail": 1406,
+            "share_in_tail": 0.5676,
+            "tail_ece": 0.0123,
+            "bins": [
+              {
+                "bin": "0.900-0.925",
+                "n": 253,
+                "predicted_standard": 0.9133,
+                "observed_standard": 0.9012,
+                "gap": 0.0121
+              },
+              {
+                "bin": "0.925-0.950",
+                "n": 402,
+                "predicted_standard": 0.9387,
+                "observed_standard": 0.9328,
+                "gap": 0.0058
+              },
+              {
+                "bin": "0.950-0.975",
+                "n": 546,
+                "predicted_standard": 0.9632,
+                "observed_standard": 0.9487,
+                "gap": 0.0145
+              },
+              {
+                "bin": "0.975-1.000",
+                "n": 205,
+                "predicted_standard": 0.9802,
+                "observed_standard": 0.961,
+                "gap": 0.0192
+              }
+            ],
+            "note": "Reliability at and above 0.9, where straight-through decisions are made. A positive gap means the model is over-confident in that bin."
+          },
+          "assertion": true,
+          "assertion_note": "Holdout ECE on synthetic data only. Not evidence of calibration on a real portfolio."
+        },
+        "stp_operating_point": {
+          "threshold": 0.95,
+          "model_pass_rate": 0.2919,
+          "cases_passed": 723,
+          "non_standard_passed": 34,
+          "unsafe_acceptance_rate": 0.047,
+          "note": "Rate among cases the model alone would clear. Downstream gates are not modelled here.",
+          "interval_90pct": {
+            "level": 0.9,
+            "samples": 1000,
+            "cleared_cases": 723,
+            "model_pass_rate": [
+              0.2761,
+              0.3064
+            ],
+            "unsafe_acceptance_rate": [
+              0.0346,
+              0.0604
+            ],
+            "note": "Bootstrap over test rows. The unsafe interval is undefined when nothing is cleared."
+          }
+        },
+        "monotone": false,
+        "oracle": {
+          "threshold": 0.95,
+          "model_pass_rate": 0.3177,
+          "unsafe_acceptance_rate": 0.047,
+          "cases_passed": 787,
+          "auc": 0.8149,
+          "interval_90pct": {
+            "level": 0.9,
+            "samples": 1000,
+            "cleared_cases": 787,
+            "model_pass_rate": [
+              0.302,
+              0.3331
+            ],
+            "unsafe_acceptance_rate": [
+              0.0347,
+              0.0599
+            ],
+            "note": "Bootstrap over test rows. The unsafe interval is undefined when nothing is cleared."
+          },
+          "note": "The generator's own probabilities, which see the hidden labs. This is the ceiling on this data, not a model."
+        },
+        "ood": {
+          "detector": "IsolationForest and Mahalanobis distance on preprocessed features",
+          "train_flag_rate_target": 0.01,
+          "isolation_threshold": -0.57734,
+          "distance_threshold": 7.696,
+          "test_flag_rate": 0.0194,
+          "shifted_probe_flag_rate": 1.0,
+          "note": "A flag means unfamiliar input, not high risk. It routes the case away from STP."
+        },
+        "subgroups": {
+          "age 18-35": {
+            "n": 62,
+            "auc": 0.7807,
+            "brier": 0.0625,
+            "standard_rate": 0.9194
+          },
+          "age 36-50": {
+            "n": 845,
+            "auc": 0.7256,
+            "brier": 0.0798,
+            "standard_rate": 0.8947
+          },
+          "age 51-65": {
+            "n": 1075,
+            "auc": 0.8062,
+            "brier": 0.095,
+            "standard_rate": 0.8567
+          },
+          "age 66+": {
+            "n": 495,
+            "auc": 0.7705,
+            "brier": 0.1679,
+            "standard_rate": 0.6808
+          },
+          "product Life": {
+            "n": 1539,
+            "auc": 0.7929,
+            "brier": 0.1054,
+            "standard_rate": 0.8343
+          },
+          "product Medical": {
+            "n": 938,
+            "auc": 0.8163,
+            "brier": 0.1006,
+            "standard_rate": 0.839
+          },
+          "smoker": {
+            "n": 531,
+            "auc": 0.8016,
+            "brier": 0.1386,
+            "standard_rate": 0.7571
+          },
+          "non-smoker": {
+            "n": 1946,
+            "auc": 0.7874,
+            "brier": 0.094,
+            "standard_rate": 0.8577
+          },
+          "labs missing": {
+            "n": 436,
+            "auc": 0.7798,
+            "brier": 0.0828,
+            "standard_rate": 0.8876
+          },
+          "labs present": {
+            "n": 2041,
+            "auc": 0.8022,
+            "brier": 0.108,
+            "standard_rate": 0.8251
+          }
+        },
+        "cost": {
+          "fit_seconds": 0.79,
+          "predict_ms_per_1k_cases": 32.19,
+          "serialised_kb": 125.2
+        },
+        "repeats": {
+          "n": 3,
+          "seeds": [
+            7,
+            8,
+            9
+          ],
+          "runs": [
+            {
+              "seed": 7,
+              "auc": 0.8014,
+              "ece": 0.0204,
+              "model_pass_rate": 0.2919,
+              "unsafe_acceptance_rate": 0.047,
+              "fit_seconds": 0.79
+            },
+            {
+              "seed": 8,
+              "auc": 0.7953,
+              "ece": 0.0127,
+              "model_pass_rate": 0.2519,
+              "unsafe_acceptance_rate": 0.0449,
+              "fit_seconds": 0.99
+            },
+            {
+              "seed": 9,
+              "auc": 0.8036,
+              "ece": 0.0095,
+              "model_pass_rate": 0.0824,
+              "unsafe_acceptance_rate": 0.0392,
+              "fit_seconds": 0.77
+            }
+          ],
+          "unsafe_acceptance_rate": {
+            "mean": 0.0437,
+            "sd": 0.004,
+            "min": 0.0392,
+            "max": 0.047,
+            "n": 3
+          },
+          "model_pass_rate": {
+            "mean": 0.2087,
+            "sd": 0.1112,
+            "min": 0.0824,
+            "max": 0.2919,
+            "n": 3
+          },
+          "auc": {
+            "mean": 0.8001,
+            "sd": 0.0043,
+            "min": 0.7953,
+            "max": 0.8036,
+            "n": 3
+          },
+          "ece": {
+            "mean": 0.0142,
+            "sd": 0.0056,
+            "min": 0.0095,
+            "max": 0.0204,
+            "n": 3
+          },
+          "note": "The first seed is the bundle kept. The rest measure seed sensitivity only; the data split is temporal and does not change between seeds."
+        }
+      },
+      "score_first_seed": 0.3058,
+      "score_by_seed": [
+        0.3058,
+        0.3416,
+        0.3601
+      ],
+      "score_sd": 0.0276,
+      "rank": 6
+    },
+    {
+      "family": "boosted trees",
+      "architecture": "ensemble (boosting, monotone)",
+      "description": "Shallow boosting under the same monotone constraints.",
+      "why": "The low-variance boosting configuration, constrained. If constraints help, they should help here too.",
+      "name": "hist-gbm-shallow-monotone",
+      "score": 0.329,
+      "components": {
+        "safety": 0.122,
+        "coverage": 0.3222,
+        "calibration": 0.658,
+        "discrimination": 0.598
+      },
+      "weights": {
+        "safety": 0.4,
+        "coverage": 0.25,
+        "calibration": 0.2,
+        "discrimination": 0.15
+      },
+      "within_unsafe_budget": true,
+      "viable": true,
+      "viability": "provisional",
+      "not_viable_because": [],
+      "confirmation_note": "inside the budget at the point estimate, but the 90% interval reaches 0.0562; confirming a rate of 0.0439 needs about 3053 cleared cases and this test set cleared 798",
+      "unsafe_acceptance_rate": 0.0439,
+      "unsafe_interval_90pct": [
+        0.0325,
+        0.0562
+      ],
+      "coverage_interval_90pct": [
+        0.3064,
+        0.3371
+      ],
+      "cleared_cases": 798,
+      "budget": 0.05,
+      "min_coverage": 0.05,
+      "metrics": {
+        "discrimination": {
+          "auc": 0.799,
+          "average_precision": 0.9368,
+          "accuracy_at_0.5": 0.868,
+          "base_rate_standard": 0.8361
+        },
+        "calibration": {
+          "brier": 0.1034,
+          "brier_uncalibrated": 0.103,
+          "ece": 0.0171,
+          "ece_uncalibrated": 0.0201,
+          "max_acceptable_ece": 0.05,
+          "method": "isotonic on a held-out later period",
+          "reliability": [
+            {
+              "bin": "0.0-0.1",
+              "n": 32,
+              "predicted_standard": 0.0376,
+              "observed_standard": 0.125
+            },
+            {
+              "bin": "0.1-0.2",
+              "n": 30,
+              "predicted_standard": 0.1703,
+              "observed_standard": 0.2667
+            },
+            {
+              "bin": "0.2-0.3",
+              "n": 4,
+              "predicted_standard": 0.2879,
+              "observed_standard": 0.0
+            },
+            {
+              "bin": "0.3-0.4",
+              "n": 32,
+              "predicted_standard": 0.3849,
+              "observed_standard": 0.2812
+            },
+            {
+              "bin": "0.4-0.5",
+              "n": 109,
+              "predicted_standard": 0.4435,
+              "observed_standard": 0.3945
+            },
+            {
+              "bin": "0.5-0.6",
+              "n": 64,
+              "predicted_standard": 0.527,
+              "observed_standard": 0.5156
+            },
+            {
+              "bin": "0.6-0.7",
+              "n": 104,
+              "predicted_standard": 0.6595,
+              "observed_standard": 0.7019
+            },
+            {
+              "bin": "0.7-0.8",
+              "n": 333,
+              "predicted_standard": 0.7716,
+              "observed_standard": 0.7988
+            },
+            {
+              "bin": "0.8-0.9",
+              "n": 349,
+              "predicted_standard": 0.8587,
+              "observed_standard": 0.8739
+            },
+            {
+              "bin": "0.9-1.0",
+              "n": 1420,
+              "predicted_standard": 0.9418,
+              "observed_standard": 0.9366
+            }
+          ],
+          "tail": {
+            "cases_in_tail": 1420,
+            "share_in_tail": 0.5733,
+            "tail_ece": 0.008,
+            "bins": [
+              {
+                "bin": "0.900-0.925",
+                "n": 364,
+                "predicted_standard": 0.9119,
+                "observed_standard": 0.9066,
+                "gap": 0.0053
+              },
+              {
+                "bin": "0.925-0.950",
+                "n": 250,
+                "predicted_standard": 0.9498,
+                "observed_standard": 0.92,
+                "gap": 0.0298
+              },
+              {
+                "bin": "0.950-0.975",
+                "n": 791,
+                "predicted_standard": 0.9519,
+                "observed_standard": 0.9545,
+                "gap": -0.0026
+              },
+              {
+                "bin": "0.975-1.000",
+                "n": 15,
+                "predicted_standard": 1.0,
+                "observed_standard": 1.0,
+                "gap": 0.0
+              }
+            ],
+            "note": "Reliability at and above 0.9, where straight-through decisions are made. A positive gap means the model is over-confident in that bin."
+          },
+          "tail_uncalibrated": {
+            "cases_in_tail": 1393,
+            "share_in_tail": 0.5624,
+            "tail_ece": 0.015,
+            "bins": [
+              {
+                "bin": "0.900-0.925",
+                "n": 239,
+                "predicted_standard": 0.9124,
+                "observed_standard": 0.8996,
+                "gap": 0.0129
+              },
+              {
+                "bin": "0.925-0.950",
+                "n": 319,
+                "predicted_standard": 0.9385,
+                "observed_standard": 0.9279,
+                "gap": 0.0106
+              },
+              {
+                "bin": "0.950-0.975",
+                "n": 522,
+                "predicted_standard": 0.9634,
+                "observed_standard": 0.9502,
+                "gap": 0.0132
+              },
+              {
+                "bin": "0.975-1.000",
+                "n": 313,
+                "predicted_standard": 0.9826,
+                "observed_standard": 0.9585,
+                "gap": 0.0241
+              }
+            ],
+            "note": "Reliability at and above 0.9, where straight-through decisions are made. A positive gap means the model is over-confident in that bin."
+          },
+          "assertion": true,
+          "assertion_note": "Holdout ECE on synthetic data only. Not evidence of calibration on a real portfolio."
+        },
+        "stp_operating_point": {
+          "threshold": 0.95,
+          "model_pass_rate": 0.3222,
+          "cases_passed": 798,
+          "non_standard_passed": 35,
+          "unsafe_acceptance_rate": 0.0439,
+          "note": "Rate among cases the model alone would clear. Downstream gates are not modelled here.",
+          "interval_90pct": {
+            "level": 0.9,
+            "samples": 1000,
+            "cleared_cases": 798,
+            "model_pass_rate": [
+              0.3064,
+              0.3371
+            ],
+            "unsafe_acceptance_rate": [
+              0.0325,
+              0.0562
+            ],
+            "note": "Bootstrap over test rows. The unsafe interval is undefined when nothing is cleared."
+          }
+        },
+        "monotone": true,
+        "oracle": {
+          "threshold": 0.95,
+          "model_pass_rate": 0.3177,
+          "unsafe_acceptance_rate": 0.047,
+          "cases_passed": 787,
+          "auc": 0.8149,
+          "interval_90pct": {
+            "level": 0.9,
+            "samples": 1000,
+            "cleared_cases": 787,
+            "model_pass_rate": [
+              0.302,
+              0.3331
+            ],
+            "unsafe_acceptance_rate": [
+              0.0347,
+              0.0599
+            ],
+            "note": "Bootstrap over test rows. The unsafe interval is undefined when nothing is cleared."
+          },
+          "note": "The generator's own probabilities, which see the hidden labs. This is the ceiling on this data, not a model."
+        },
+        "ood": {
+          "detector": "IsolationForest and Mahalanobis distance on preprocessed features",
+          "train_flag_rate_target": 0.01,
+          "isolation_threshold": -0.57734,
+          "distance_threshold": 7.696,
+          "test_flag_rate": 0.0194,
+          "shifted_probe_flag_rate": 1.0,
+          "note": "A flag means unfamiliar input, not high risk. It routes the case away from STP."
+        },
+        "subgroups": {
+          "age 18-35": {
+            "n": 62,
+            "auc": 0.6842,
+            "brier": 0.0692,
+            "standard_rate": 0.9194
+          },
+          "age 36-50": {
+            "n": 845,
+            "auc": 0.715,
+            "brier": 0.0808,
+            "standard_rate": 0.8947
+          },
+          "age 51-65": {
+            "n": 1075,
+            "auc": 0.8042,
+            "brier": 0.0953,
+            "standard_rate": 0.8567
+          },
+          "age 66+": {
+            "n": 495,
+            "auc": 0.7816,
+            "brier": 0.1642,
+            "standard_rate": 0.6808
+          },
+          "product Life": {
+            "n": 1539,
+            "auc": 0.7898,
+            "brier": 0.1052,
+            "standard_rate": 0.8343
+          },
+          "product Medical": {
+            "n": 938,
+            "auc": 0.8146,
+            "brier": 0.1005,
+            "standard_rate": 0.839
+          },
+          "smoker": {
+            "n": 531,
+            "auc": 0.782,
+            "brier": 0.14,
+            "standard_rate": 0.7571
+          },
+          "non-smoker": {
+            "n": 1946,
+            "auc": 0.7924,
+            "brier": 0.0935,
+            "standard_rate": 0.8577
+          },
+          "labs missing": {
+            "n": 436,
+            "auc": 0.7713,
+            "brier": 0.0807,
+            "standard_rate": 0.8876
+          },
+          "labs present": {
+            "n": 2041,
+            "auc": 0.8003,
+            "brier": 0.1083,
+            "standard_rate": 0.8251
+          }
+        },
+        "cost": {
+          "fit_seconds": 0.96,
+          "predict_ms_per_1k_cases": 38.41,
+          "serialised_kb": 197.6
+        },
+        "repeats": {
+          "n": 3,
+          "seeds": [
+            7,
+            8,
+            9
+          ],
+          "runs": [
+            {
+              "seed": 7,
+              "auc": 0.799,
+              "ece": 0.0171,
+              "model_pass_rate": 0.3222,
+              "unsafe_acceptance_rate": 0.0439,
+              "fit_seconds": 0.96
+            },
+            {
+              "seed": 8,
+              "auc": 0.7966,
+              "ece": 0.019,
+              "model_pass_rate": 0.3565,
+              "unsafe_acceptance_rate": 0.0521,
+              "fit_seconds": 1.03
+            },
+            {
+              "seed": 9,
+              "auc": 0.7984,
+              "ece": 0.0176,
+              "model_pass_rate": 0.2584,
+              "unsafe_acceptance_rate": 0.0437,
+              "fit_seconds": 0.92
+            }
+          ],
+          "unsafe_acceptance_rate": {
+            "mean": 0.0466,
+            "sd": 0.0048,
+            "min": 0.0437,
+            "max": 0.0521,
+            "n": 3
+          },
+          "model_pass_rate": {
+            "mean": 0.3124,
+            "sd": 0.0498,
+            "min": 0.2584,
+            "max": 0.3565,
+            "n": 3
+          },
+          "auc": {
+            "mean": 0.798,
+            "sd": 0.0012,
+            "min": 0.7966,
+            "max": 0.799,
+            "n": 3
+          },
+          "ece": {
+            "mean": 0.0179,
+            "sd": 0.001,
+            "min": 0.0171,
+            "max": 0.019,
+            "n": 3
+          },
+          "note": "The first seed is the bundle kept. The rest measure seed sensitivity only; the data split is temporal and does not change between seeds."
+        }
+      },
+      "score_first_seed": 0.3507,
+      "score_by_seed": [
+        0.3507,
+        0.3021,
+        0.3341
+      ],
+      "score_sd": 0.0247,
+      "seed_sensitivity": "exceeded the unsafe budget on 1 of 3 seeds",
+      "rank": 7,
+      "tied_with_leader": "logistic-l2"
+    },
+    {
+      "family": "baseline",
+      "architecture": "single",
+      "description": "Predicts the training base rate for every case.",
+      "why": "Anchors the leaderboard. Any candidate that cannot beat this is not a model.",
+      "name": "baseline-prior",
+      "score": 0.5828,
+      "components": {
+        "safety": 1.0,
+        "coverage": 0.0,
+        "calibration": 0.914,
+        "discrimination": 0.0
+      },
+      "weights": {
+        "safety": 0.4,
+        "coverage": 0.25,
+        "calibration": 0.2,
+        "discrimination": 0.15
+      },
+      "within_unsafe_budget": true,
+      "viable": false,
+      "viability": "not viable",
+      "not_viable_because": [
+        "clears 0.0% of cases, below the 5% floor (safety is undefined when nothing is cleared)"
+      ],
+      "confirmation_note": null,
+      "unsafe_acceptance_rate": null,
+      "unsafe_interval_90pct": null,
+      "coverage_interval_90pct": [
+        0.0,
+        0.0
+      ],
+      "cleared_cases": 0,
+      "budget": 0.05,
+      "min_coverage": 0.05,
+      "metrics": {
+        "discrimination": {
+          "auc": 0.5,
+          "average_precision": 0.8361,
+          "accuracy_at_0.5": 0.8361,
+          "base_rate_standard": 0.8361
+        },
+        "calibration": {
+          "brier": 0.1371,
+          "brier_uncalibrated": 0.137,
+          "ece": 0.0043,
+          "ece_uncalibrated": 0.0024,
+          "max_acceptable_ece": 0.05,
+          "method": "isotonic on a held-out later period",
+          "reliability": [
+            {
+              "bin": "0.8-0.9",
+              "n": 2477,
+              "predicted_standard": 0.8318,
+              "observed_standard": 0.8361
+            }
+          ],
+          "tail": {
+            "cases_in_tail": 0,
+            "share_in_tail": 0.0,
+            "tail_ece": null,
+            "bins": [
+              {
+                "bin": "0.900-0.925",
+                "n": 0,
+                "predicted_standard": null,
+                "observed_standard": null
+              },
+              {
+                "bin": "0.925-0.950",
+                "n": 0,
+                "predicted_standard": null,
+                "observed_standard": null
+              },
+              {
+                "bin": "0.950-0.975",
+                "n": 0,
+                "predicted_standard": null,
+                "observed_standard": null
+              },
+              {
+                "bin": "0.975-1.000",
+                "n": 0,
+                "predicted_standard": null,
+                "observed_standard": null
+              }
+            ],
+            "note": "Reliability at and above 0.9, where straight-through decisions are made. A positive gap means the model is over-confident in that bin."
+          },
+          "tail_uncalibrated": {
+            "cases_in_tail": 0,
+            "share_in_tail": 0.0,
+            "tail_ece": null,
+            "bins": [
+              {
+                "bin": "0.900-0.925",
+                "n": 0,
+                "predicted_standard": null,
+                "observed_standard": null
+              },
+              {
+                "bin": "0.925-0.950",
+                "n": 0,
+                "predicted_standard": null,
+                "observed_standard": null
+              },
+              {
+                "bin": "0.950-0.975",
+                "n": 0,
+                "predicted_standard": null,
+                "observed_standard": null
+              },
+              {
+                "bin": "0.975-1.000",
+                "n": 0,
+                "predicted_standard": null,
+                "observed_standard": null
+              }
+            ],
+            "note": "Reliability at and above 0.9, where straight-through decisions are made. A positive gap means the model is over-confident in that bin."
+          },
+          "assertion": true,
+          "assertion_note": "Holdout ECE on synthetic data only. Not evidence of calibration on a real portfolio."
+        },
+        "stp_operating_point": {
+          "threshold": 0.95,
+          "model_pass_rate": 0.0,
+          "cases_passed": 0,
+          "non_standard_passed": 0,
+          "unsafe_acceptance_rate": null,
+          "note": "Rate among cases the model alone would clear. Downstream gates are not modelled here.",
+          "interval_90pct": {
+            "level": 0.9,
+            "samples": 1000,
+            "cleared_cases": 0,
+            "model_pass_rate": [
+              0.0,
+              0.0
+            ],
+            "unsafe_acceptance_rate": null,
+            "note": "Bootstrap over test rows. The unsafe interval is undefined when nothing is cleared."
+          }
+        },
+        "monotone": false,
+        "oracle": {
+          "threshold": 0.95,
+          "model_pass_rate": 0.3177,
+          "unsafe_acceptance_rate": 0.047,
+          "cases_passed": 787,
+          "auc": 0.8149,
+          "interval_90pct": {
+            "level": 0.9,
+            "samples": 1000,
+            "cleared_cases": 787,
+            "model_pass_rate": [
+              0.302,
+              0.3331
+            ],
+            "unsafe_acceptance_rate": [
+              0.0347,
+              0.0599
+            ],
+            "note": "Bootstrap over test rows. The unsafe interval is undefined when nothing is cleared."
+          },
+          "note": "The generator's own probabilities, which see the hidden labs. This is the ceiling on this data, not a model."
+        },
+        "ood": {
+          "detector": "IsolationForest and Mahalanobis distance on preprocessed features",
+          "train_flag_rate_target": 0.01,
+          "isolation_threshold": -0.57734,
+          "distance_threshold": 7.696,
+          "test_flag_rate": 0.0194,
+          "shifted_probe_flag_rate": 1.0,
+          "note": "A flag means unfamiliar input, not high risk. It routes the case away from STP."
+        },
+        "subgroups": {
+          "age 18-35": {
+            "n": 62,
+            "auc": 0.5,
+            "brier": 0.0818,
+            "standard_rate": 0.9194
+          },
+          "age 36-50": {
+            "n": 845,
+            "auc": 0.5,
+            "brier": 0.0982,
+            "standard_rate": 0.8947
+          },
+          "age 51-65": {
+            "n": 1075,
+            "auc": 0.5,
+            "brier": 0.1234,
+            "standard_rate": 0.8567
+          },
+          "age 66+": {
+            "n": 495,
+            "auc": 0.5,
+            "brier": 0.2401,
+            "standard_rate": 0.6808
+          },
+          "product Life": {
+            "n": 1539,
+            "auc": 0.5,
+            "brier": 0.1382,
+            "standard_rate": 0.8343
+          },
+          "product Medical": {
+            "n": 938,
+            "auc": 0.5,
+            "brier": 0.1351,
+            "standard_rate": 0.839
+          },
+          "smoker": {
+            "n": 531,
+            "auc": 0.5,
+            "brier": 0.1895,
+            "standard_rate": 0.7571
+          },
+          "non-smoker": {
+            "n": 1946,
+            "auc": 0.5,
+            "brier": 0.1228,
+            "standard_rate": 0.8577
+          },
+          "labs missing": {
+            "n": 436,
+            "auc": 0.5,
+            "brier": 0.1029,
+            "standard_rate": 0.8876
+          },
+          "labs present": {
+            "n": 2041,
+            "auc": 0.5,
+            "brier": 0.1444,
+            "standard_rate": 0.8251
+          }
+        },
+        "cost": {
+          "fit_seconds": 0.35,
+          "predict_ms_per_1k_cases": 30.38,
+          "serialised_kb": 4.7
+        },
+        "repeats": {
+          "n": 3,
+          "seeds": [
+            7,
+            8,
+            9
+          ],
+          "runs": [
+            {
+              "seed": 7,
+              "auc": 0.5,
+              "ece": 0.0043,
+              "model_pass_rate": 0.0,
+              "unsafe_acceptance_rate": null,
+              "fit_seconds": 0.35
+            },
+            {
+              "seed": 8,
+              "auc": 0.5,
+              "ece": 0.0043,
+              "model_pass_rate": 0.0,
+              "unsafe_acceptance_rate": null,
+              "fit_seconds": 0.35
+            },
+            {
+              "seed": 9,
+              "auc": 0.5,
+              "ece": 0.0043,
+              "model_pass_rate": 0.0,
+              "unsafe_acceptance_rate": null,
+              "fit_seconds": 0.36
+            }
+          ],
+          "unsafe_acceptance_rate": null,
+          "model_pass_rate": {
+            "mean": 0.0,
+            "sd": 0.0,
+            "min": 0.0,
+            "max": 0.0,
+            "n": 3
+          },
+          "auc": {
+            "mean": 0.5,
+            "sd": 0.0,
+            "min": 0.5,
+            "max": 0.5,
+            "n": 3
+          },
+          "ece": {
+            "mean": 0.0043,
+            "sd": 0.0,
+            "min": 0.0043,
+            "max": 0.0043,
+            "n": 3
+          },
+          "note": "The first seed is the bundle kept. The rest measure seed sensitivity only; the data split is temporal and does not change between seeds."
+        }
+      },
+      "score_first_seed": 0.5828,
+      "score_by_seed": [
+        0.5828,
+        0.5828,
+        0.5828
+      ],
+      "score_sd": 0.0,
+      "rank": 8
+    },
+    {
+      "family": "boosted trees",
+      "architecture": "ensemble (boosting)",
+      "description": "Deeper boosting: 63 leaves, learning rate 0.03, up to 600 rounds.",
+      "why": "Tests whether more capacity buys anything on this feature set.",
+      "name": "hist-gbm-deep",
+      "score": 0.3982,
+      "components": {
+        "safety": 0.174,
+        "coverage": 0.0488,
+        "calibration": 0.702,
+        "discrimination": 0.5754
+      },
+      "weights": {
+        "safety": 0.4,
+        "coverage": 0.25,
+        "calibration": 0.2,
+        "discrimination": 0.15
+      },
+      "within_unsafe_budget": true,
+      "viable": false,
+      "viability": "not viable",
+      "not_viable_because": [
+        "clears 4.9% of cases, below the 5% floor"
+      ],
+      "confirmation_note": null,
+      "unsafe_acceptance_rate": 0.0413,
+      "unsafe_interval_90pct": [
+        0.0108,
+        0.0763
+      ],
+      "coverage_interval_90pct": [
+        0.042,
+        0.0561
+      ],
+      "cleared_cases": 121,
+      "budget": 0.05,
+      "min_coverage": 0.05,
+      "metrics": {
+        "discrimination": {
+          "auc": 0.7877,
+          "average_precision": 0.9298,
+          "accuracy_at_0.5": 0.8644,
+          "base_rate_standard": 0.8361
+        },
+        "calibration": {
+          "brier": 0.1053,
+          "brier_uncalibrated": 0.1044,
+          "ece": 0.0149,
+          "ece_uncalibrated": 0.0144,
+          "max_acceptable_ece": 0.05,
+          "method": "isotonic on a held-out later period",
+          "reliability": [
+            {
+              "bin": "0.0-0.1",
+              "n": 33,
+              "predicted_standard": 0.0588,
+              "observed_standard": 0.1818
+            },
+            {
+              "bin": "0.1-0.2",
+              "n": 21,
+              "predicted_standard": 0.1769,
+              "observed_standard": 0.2857
+            },
+            {
+              "bin": "0.2-0.3",
+              "n": 34,
+              "predicted_standard": 0.2349,
+              "observed_standard": 0.2059
+            },
+            {
+              "bin": "0.3-0.4",
+              "n": 68,
+              "predicted_standard": 0.3548,
+              "observed_standard": 0.3824
+            },
+            {
+              "bin": "0.4-0.5",
+              "n": 4,
+              "predicted_standard": 0.4496,
+              "observed_standard": 0.0
+            },
+            {
+              "bin": "0.5-0.6",
+              "n": 99,
+              "predicted_standard": 0.5426,
+              "observed_standard": 0.4949
+            },
+            {
+              "bin": "0.7-0.8",
+              "n": 348,
+              "predicted_standard": 0.7574,
+              "observed_standard": 0.7414
+            },
+            {
+              "bin": "0.8-0.9",
+              "n": 673,
+              "predicted_standard": 0.8593,
+              "observed_standard": 0.8767
+            },
+            {
+              "bin": "0.9-1.0",
+              "n": 1197,
+              "predicted_standard": 0.9465,
+              "observed_standard": 0.9432
+            }
+          ],
+          "tail": {
+            "cases_in_tail": 1197,
+            "share_in_tail": 0.4832,
+            "tail_ece": 0.0164,
+            "bins": [
+              {
+                "bin": "0.900-0.925",
+                "n": 113,
+                "predicted_standard": 0.9044,
+                "observed_standard": 0.9735,
+                "gap": -0.069
+              },
+              {
+                "bin": "0.925-0.950",
+                "n": 962,
+                "predicted_standard": 0.9492,
+                "observed_standard": 0.9376,
+                "gap": 0.0116
+              },
+              {
+                "bin": "0.950-0.975",
+                "n": 119,
+                "predicted_standard": 0.9635,
+                "observed_standard": 0.958,
+                "gap": 0.0055
+              },
+              {
+                "bin": "0.975-1.000",
+                "n": 3,
+                "predicted_standard": 1.0,
+                "observed_standard": 1.0,
+                "gap": 0.0
+              }
+            ],
+            "note": "Reliability at and above 0.9, where straight-through decisions are made. A positive gap means the model is over-confident in that bin."
+          },
+          "tail_uncalibrated": {
+            "cases_in_tail": 1454,
+            "share_in_tail": 0.587,
+            "tail_ece": 0.0169,
+            "bins": [
+              {
+                "bin": "0.900-0.925",
+                "n": 228,
+                "predicted_standard": 0.9129,
+                "observed_standard": 0.9254,
+                "gap": -0.0125
+              },
+              {
+                "bin": "0.925-0.950",
+                "n": 395,
+                "predicted_standard": 0.9386,
+                "observed_standard": 0.9342,
+                "gap": 0.0044
+              },
+              {
+                "bin": "0.950-0.975",
+                "n": 679,
+                "predicted_standard": 0.963,
+                "observed_standard": 0.9381,
+                "gap": 0.0248
+              },
+              {
+                "bin": "0.975-1.000",
+                "n": 152,
+                "predicted_standard": 0.9808,
+                "observed_standard": 0.9605,
+                "gap": 0.0202
+              }
+            ],
+            "note": "Reliability at and above 0.9, where straight-through decisions are made. A positive gap means the model is over-confident in that bin."
+          },
+          "assertion": true,
+          "assertion_note": "Holdout ECE on synthetic data only. Not evidence of calibration on a real portfolio."
+        },
+        "stp_operating_point": {
+          "threshold": 0.95,
+          "model_pass_rate": 0.0488,
+          "cases_passed": 121,
+          "non_standard_passed": 5,
+          "unsafe_acceptance_rate": 0.0413,
+          "note": "Rate among cases the model alone would clear. Downstream gates are not modelled here.",
+          "interval_90pct": {
+            "level": 0.9,
+            "samples": 1000,
+            "cleared_cases": 121,
+            "model_pass_rate": [
+              0.042,
+              0.0561
+            ],
+            "unsafe_acceptance_rate": [
+              0.0108,
+              0.0763
+            ],
+            "note": "Bootstrap over test rows. The unsafe interval is undefined when nothing is cleared."
+          }
+        },
+        "monotone": false,
+        "oracle": {
+          "threshold": 0.95,
+          "model_pass_rate": 0.3177,
+          "unsafe_acceptance_rate": 0.047,
+          "cases_passed": 787,
+          "auc": 0.8149,
+          "interval_90pct": {
+            "level": 0.9,
+            "samples": 1000,
+            "cleared_cases": 787,
+            "model_pass_rate": [
+              0.302,
+              0.3331
+            ],
+            "unsafe_acceptance_rate": [
+              0.0347,
+              0.0599
+            ],
+            "note": "Bootstrap over test rows. The unsafe interval is undefined when nothing is cleared."
+          },
+          "note": "The generator's own probabilities, which see the hidden labs. This is the ceiling on this data, not a model."
+        },
+        "ood": {
+          "detector": "IsolationForest and Mahalanobis distance on preprocessed features",
+          "train_flag_rate_target": 0.01,
+          "isolation_threshold": -0.57734,
+          "distance_threshold": 7.696,
+          "test_flag_rate": 0.0194,
+          "shifted_probe_flag_rate": 1.0,
+          "note": "A flag means unfamiliar input, not high risk. It routes the case away from STP."
+        },
+        "subgroups": {
+          "age 18-35": {
+            "n": 62,
+            "auc": 0.6825,
+            "brier": 0.0706,
+            "standard_rate": 0.9194
+          },
+          "age 36-50": {
+            "n": 845,
+            "auc": 0.6973,
+            "brier": 0.0809,
+            "standard_rate": 0.8947
+          },
+          "age 51-65": {
+            "n": 1075,
+            "auc": 0.7891,
+            "brier": 0.0981,
+            "standard_rate": 0.8567
+          },
+          "age 66+": {
+            "n": 495,
+            "auc": 0.7668,
+            "brier": 0.1668,
+            "standard_rate": 0.6808
+          },
+          "product Life": {
+            "n": 1539,
+            "auc": 0.7783,
+            "brier": 0.1074,
+            "standard_rate": 0.8343
+          },
+          "product Medical": {
+            "n": 938,
+            "auc": 0.8043,
+            "brier": 0.1018,
+            "standard_rate": 0.839
+          },
+          "smoker": {
+            "n": 531,
+            "auc": 0.7723,
+            "brier": 0.1448,
+            "standard_rate": 0.7571
+          },
+          "non-smoker": {
+            "n": 1946,
+            "auc": 0.7815,
+            "brier": 0.0945,
+            "standard_rate": 0.8577
+          },
+          "labs missing": {
+            "n": 436,
+            "auc": 0.7568,
+            "brier": 0.0812,
+            "standard_rate": 0.8876
+          },
+          "labs present": {
+            "n": 2041,
+            "auc": 0.7894,
+            "brier": 0.1104,
+            "standard_rate": 0.8251
+          }
+        },
+        "cost": {
+          "fit_seconds": 2.99,
+          "predict_ms_per_1k_cases": 41.76,
+          "serialised_kb": 1021.2
+        },
+        "repeats": {
+          "n": 3,
+          "seeds": [
+            7,
+            8,
+            9
+          ],
+          "runs": [
+            {
+              "seed": 7,
+              "auc": 0.7877,
+              "ece": 0.0149,
+              "model_pass_rate": 0.0488,
+              "unsafe_acceptance_rate": 0.0413,
+              "fit_seconds": 2.99
+            },
+            {
+              "seed": 8,
+              "auc": 0.7859,
+              "ece": 0.0177,
+              "model_pass_rate": 0.0444,
+              "unsafe_acceptance_rate": 0.0273,
+              "fit_seconds": 3.41
+            },
+            {
+              "seed": 9,
+              "auc": 0.7929,
+              "ece": 0.0121,
+              "model_pass_rate": 0.0379,
+              "unsafe_acceptance_rate": 0.0213,
+              "fit_seconds": 3.17
+            }
+          ],
+          "unsafe_acceptance_rate": {
+            "mean": 0.03,
+            "sd": 0.0103,
+            "min": 0.0213,
+            "max": 0.0413,
+            "n": 3
+          },
+          "model_pass_rate": {
+            "mean": 0.0437,
+            "sd": 0.0055,
+            "min": 0.0379,
+            "max": 0.0488,
+            "n": 3
+          },
+          "auc": {
+            "mean": 0.7888,
+            "sd": 0.0036,
+            "min": 0.7859,
+            "max": 0.7929,
+            "n": 3
+          },
+          "ece": {
+            "mean": 0.0149,
+            "sd": 0.0028,
+            "min": 0.0121,
+            "max": 0.0177,
+            "n": 3
+          },
+          "note": "The first seed is the bundle kept. The rest measure seed sensitivity only; the data split is temporal and does not change between seeds."
+        }
+      },
+      "score_first_seed": 0.3085,
+      "score_by_seed": [
+        0.3085,
+        0.4077,
+        0.4785
+      ],
+      "score_sd": 0.0854,
+      "rank": 9
+    },
+    {
+      "family": "boosted trees",
+      "architecture": "ensemble (boosting)",
+      "description": "Shallow boosting: 15 leaves, learning rate 0.1, up to 250 rounds.",
+      "why": "The fast, low-variance end of the boosting range.",
+      "name": "hist-gbm-shallow",
+      "score": 0.3778,
+      "components": {
+        "safety": 0.0,
+        "coverage": 0.3843,
+        "calibration": 0.822,
+        "discrimination": 0.5934
+      },
+      "weights": {
+        "safety": 0.4,
+        "coverage": 0.25,
+        "calibration": 0.2,
+        "discrimination": 0.15
+      },
+      "within_unsafe_budget": false,
+      "viable": false,
+      "viability": "not viable",
+      "not_viable_because": [
+        "unsafe acceptance 0.0515 exceeds the budget of 0.05"
+      ],
+      "confirmation_note": null,
+      "unsafe_acceptance_rate": 0.0515,
+      "unsafe_interval_90pct": [
+        0.0402,
+        0.0635
+      ],
+      "coverage_interval_90pct": [
+        0.3678,
+        0.4013
+      ],
+      "cleared_cases": 952,
+      "budget": 0.05,
+      "min_coverage": 0.05,
+      "metrics": {
+        "discrimination": {
+          "auc": 0.7967,
+          "average_precision": 0.9342,
+          "accuracy_at_0.5": 0.8688,
+          "base_rate_standard": 0.8361
+        },
+        "calibration": {
+          "brier": 0.1034,
+          "brier_uncalibrated": 0.1032,
+          "ece": 0.0089,
+          "ece_uncalibrated": 0.0178,
+          "max_acceptable_ece": 0.05,
+          "method": "isotonic on a held-out later period",
+          "reliability": [
+            {
+              "bin": "0.0-0.1",
+              "n": 34,
+              "predicted_standard": 0.0363,
+              "observed_standard": 0.0882
+            },
+            {
+              "bin": "0.1-0.2",
+              "n": 10,
+              "predicted_standard": 0.1405,
+              "observed_standard": 0.3
+            },
+            {
+              "bin": "0.2-0.3",
+              "n": 44,
+              "predicted_standard": 0.203,
+              "observed_standard": 0.2727
+            },
+            {
+              "bin": "0.3-0.4",
+              "n": 52,
+              "predicted_standard": 0.3837,
+              "observed_standard": 0.3654
+            },
+            {
+              "bin": "0.4-0.5",
+              "n": 65,
+              "predicted_standard": 0.4585,
+              "observed_standard": 0.3846
+            },
+            {
+              "bin": "0.5-0.6",
+              "n": 39,
+              "predicted_standard": 0.5313,
+              "observed_standard": 0.5128
+            },
+            {
+              "bin": "0.6-0.7",
+              "n": 139,
+              "predicted_standard": 0.6649,
+              "observed_standard": 0.6835
+            },
+            {
+              "bin": "0.7-0.8",
+              "n": 128,
+              "predicted_standard": 0.7237,
+              "observed_standard": 0.75
+            },
+            {
+              "bin": "0.8-0.9",
+              "n": 627,
+              "predicted_standard": 0.8521,
+              "observed_standard": 0.8565
+            },
+            {
+              "bin": "0.9-1.0",
+              "n": 1339,
+              "predicted_standard": 0.942,
+              "observed_standard": 0.9417
+            }
+          ],
+          "tail": {
+            "cases_in_tail": 1339,
+            "share_in_tail": 0.5406,
+            "tail_ece": 0.0102,
+            "bins": [
+              {
+                "bin": "0.900-0.925",
+                "n": 380,
+                "predicted_standard": 0.9089,
+                "observed_standard": 0.9263,
+                "gap": -0.0175
+              },
+              {
+                "bin": "0.925-0.950",
+                "n": 0,
+                "predicted_standard": null,
+                "observed_standard": null
+              },
+              {
+                "bin": "0.950-0.975",
+                "n": 959,
+                "predicted_standard": 0.9552,
+                "observed_standard": 0.9479,
+                "gap": 0.0073
+              },
+              {
+                "bin": "0.975-1.000",
+                "n": 0,
+                "predicted_standard": null,
+                "observed_standard": null
+              }
+            ],
+            "note": "Reliability at and above 0.9, where straight-through decisions are made. A positive gap means the model is over-confident in that bin."
+          },
+          "tail_uncalibrated": {
+            "cases_in_tail": 1446,
+            "share_in_tail": 0.5838,
+            "tail_ece": 0.0135,
+            "bins": [
+              {
+                "bin": "0.900-0.925",
+                "n": 245,
+                "predicted_standard": 0.9125,
+                "observed_standard": 0.9102,
+                "gap": 0.0023
+              },
+              {
+                "bin": "0.925-0.950",
+                "n": 384,
+                "predicted_standard": 0.9386,
+                "observed_standard": 0.9219,
+                "gap": 0.0168
+              },
+              {
+                "bin": "0.950-0.975",
+                "n": 646,
+                "predicted_standard": 0.9627,
+                "observed_standard": 0.9458,
+                "gap": 0.0169
+              },
+              {
+                "bin": "0.975-1.000",
+                "n": 171,
+                "predicted_standard": 0.9801,
+                "observed_standard": 0.9708,
+                "gap": 0.0093
+              }
+            ],
+            "note": "Reliability at and above 0.9, where straight-through decisions are made. A positive gap means the model is over-confident in that bin."
+          },
+          "assertion": true,
+          "assertion_note": "Holdout ECE on synthetic data only. Not evidence of calibration on a real portfolio."
+        },
+        "stp_operating_point": {
+          "threshold": 0.95,
+          "model_pass_rate": 0.3843,
+          "cases_passed": 952,
+          "non_standard_passed": 49,
+          "unsafe_acceptance_rate": 0.0515,
+          "note": "Rate among cases the model alone would clear. Downstream gates are not modelled here.",
+          "interval_90pct": {
+            "level": 0.9,
+            "samples": 1000,
+            "cleared_cases": 952,
+            "model_pass_rate": [
+              0.3678,
+              0.4013
+            ],
+            "unsafe_acceptance_rate": [
+              0.0402,
+              0.0635
+            ],
+            "note": "Bootstrap over test rows. The unsafe interval is undefined when nothing is cleared."
+          }
+        },
+        "monotone": false,
+        "oracle": {
+          "threshold": 0.95,
+          "model_pass_rate": 0.3177,
+          "unsafe_acceptance_rate": 0.047,
+          "cases_passed": 787,
+          "auc": 0.8149,
+          "interval_90pct": {
+            "level": 0.9,
+            "samples": 1000,
+            "cleared_cases": 787,
+            "model_pass_rate": [
+              0.302,
+              0.3331
+            ],
+            "unsafe_acceptance_rate": [
+              0.0347,
+              0.0599
+            ],
+            "note": "Bootstrap over test rows. The unsafe interval is undefined when nothing is cleared."
+          },
+          "note": "The generator's own probabilities, which see the hidden labs. This is the ceiling on this data, not a model."
+        },
+        "ood": {
+          "detector": "IsolationForest and Mahalanobis distance on preprocessed features",
+          "train_flag_rate_target": 0.01,
+          "isolation_threshold": -0.57734,
+          "distance_threshold": 7.696,
+          "test_flag_rate": 0.0194,
+          "shifted_probe_flag_rate": 1.0,
+          "note": "A flag means unfamiliar input, not high risk. It routes the case away from STP."
+        },
+        "subgroups": {
+          "age 18-35": {
+            "n": 62,
+            "auc": 0.6298,
+            "brier": 0.0694,
+            "standard_rate": 0.9194
+          },
+          "age 36-50": {
+            "n": 845,
+            "auc": 0.7085,
+            "brier": 0.0811,
+            "standard_rate": 0.8947
+          },
+          "age 51-65": {
+            "n": 1075,
+            "auc": 0.7972,
+            "brier": 0.0953,
+            "standard_rate": 0.8567
+          },
+          "age 66+": {
+            "n": 495,
+            "auc": 0.7802,
+            "brier": 0.1634,
+            "standard_rate": 0.6808
+          },
+          "product Life": {
+            "n": 1539,
+            "auc": 0.7884,
+            "brier": 0.1056,
+            "standard_rate": 0.8343
+          },
+          "product Medical": {
+            "n": 938,
+            "auc": 0.811,
+            "brier": 0.0997,
+            "standard_rate": 0.839
+          },
+          "smoker": {
+            "n": 531,
+            "auc": 0.7826,
+            "brier": 0.1397,
+            "standard_rate": 0.7571
+          },
+          "non-smoker": {
+            "n": 1946,
+            "auc": 0.7917,
+            "brier": 0.0935,
+            "standard_rate": 0.8577
+          },
+          "labs missing": {
+            "n": 436,
+            "auc": 0.7687,
+            "brier": 0.0808,
+            "standard_rate": 0.8876
+          },
+          "labs present": {
+            "n": 2041,
+            "auc": 0.798,
+            "brier": 0.1082,
+            "standard_rate": 0.8251
+          }
+        },
+        "cost": {
+          "fit_seconds": 0.85,
+          "predict_ms_per_1k_cases": 39.77,
+          "serialised_kb": 185.3
+        },
+        "repeats": {
+          "n": 3,
+          "seeds": [
+            7,
+            8,
+            9
+          ],
+          "runs": [
+            {
+              "seed": 7,
+              "auc": 0.7967,
+              "ece": 0.0089,
+              "model_pass_rate": 0.3843,
+              "unsafe_acceptance_rate": 0.0515,
+              "fit_seconds": 0.85
+            },
+            {
+              "seed": 8,
+              "auc": 0.7945,
+              "ece": 0.0117,
+              "model_pass_rate": 0.3524,
+              "unsafe_acceptance_rate": 0.0527,
+              "fit_seconds": 0.93
+            },
+            {
+              "seed": 9,
+              "auc": 0.8002,
+              "ece": 0.0104,
+              "model_pass_rate": 0.1159,
+              "unsafe_acceptance_rate": 0.0279,
+              "fit_seconds": 0.83
+            }
+          ],
+          "unsafe_acceptance_rate": {
+            "mean": 0.044,
+            "sd": 0.014,
+            "min": 0.0279,
+            "max": 0.0527,
+            "n": 3
+          },
+          "model_pass_rate": {
+            "mean": 0.2842,
+            "sd": 0.1466,
+            "min": 0.1159,
+            "max": 0.3843,
+            "n": 3
+          },
+          "auc": {
+            "mean": 0.7971,
+            "sd": 0.0029,
+            "min": 0.7945,
+            "max": 0.8002,
+            "n": 3
+          },
+          "ece": {
+            "mean": 0.0103,
+            "sd": 0.0014,
+            "min": 0.0089,
+            "max": 0.0117,
+            "n": 3
+          },
+          "note": "The first seed is the bundle kept. The rest measure seed sensitivity only; the data split is temporal and does not change between seeds."
+        }
+      },
+      "score_first_seed": 0.3495,
+      "score_by_seed": [
+        0.3495,
+        0.3296,
+        0.4542
+      ],
+      "score_sd": 0.0669,
+      "rank": 10
+    },
+    {
+      "family": "model ensemble",
+      "architecture": "ensemble (soft voting)",
+      "description": "Averages the probabilities of logistic regression, boosting and a forest.",
+      "why": "Blending different function classes usually helps calibration more than ranking.",
+      "name": "voting-soft",
+      "score": 0.3473,
+      "components": {
+        "safety": 0.0,
+        "coverage": 0.3537,
+        "calibration": 0.882,
+        "discrimination": 0.6054
+      },
+      "weights": {
+        "safety": 0.4,
+        "coverage": 0.25,
+        "calibration": 0.2,
+        "discrimination": 0.15
+      },
+      "within_unsafe_budget": false,
+      "viable": false,
+      "viability": "not viable",
+      "not_viable_because": [
+        "unsafe acceptance 0.0502 exceeds the budget of 0.05"
+      ],
+      "confirmation_note": null,
+      "unsafe_acceptance_rate": 0.0502,
+      "unsafe_interval_90pct": [
+        0.038,
+        0.0632
+      ],
+      "coverage_interval_90pct": [
+        0.3375,
+        0.3694
+      ],
+      "cleared_cases": 876,
+      "budget": 0.05,
+      "min_coverage": 0.05,
+      "metrics": {
+        "discrimination": {
+          "auc": 0.8027,
+          "average_precision": 0.9363,
+          "accuracy_at_0.5": 0.8648,
+          "base_rate_standard": 0.8361
+        },
+        "calibration": {
+          "brier": 0.1025,
+          "brier_uncalibrated": 0.1026,
+          "ece": 0.0059,
+          "ece_uncalibrated": 0.0128,
+          "max_acceptable_ece": 0.05,
+          "method": "isotonic on a held-out later period",
+          "reliability": [
+            {
+              "bin": "0.0-0.1",
+              "n": 35,
+              "predicted_standard": 0.0583,
+              "observed_standard": 0.1143
+            },
+            {
+              "bin": "0.1-0.2",
+              "n": 25,
+              "predicted_standard": 0.1608,
+              "observed_standard": 0.24
+            },
+            {
+              "bin": "0.3-0.4",
+              "n": 79,
+              "predicted_standard": 0.3134,
+              "observed_standard": 0.3038
+            },
+            {
+              "bin": "0.4-0.5",
+              "n": 4,
+              "predicted_standard": 0.4531,
+              "observed_standard": 0.5
+            },
+            {
+              "bin": "0.5-0.6",
+              "n": 111,
+              "predicted_standard": 0.5334,
+              "observed_standard": 0.4865
+            },
+            {
+              "bin": "0.6-0.7",
+              "n": 281,
+              "predicted_standard": 0.6919,
+              "observed_standard": 0.694
+            },
+            {
+              "bin": "0.7-0.8",
+              "n": 1,
+              "predicted_standard": 0.7201,
+              "observed_standard": 1.0
+            },
+            {
+              "bin": "0.8-0.9",
+              "n": 574,
+              "predicted_standard": 0.858,
+              "observed_standard": 0.8624
+            },
+            {
+              "bin": "0.9-1.0",
+              "n": 1367,
+              "predicted_standard": 0.9428,
+              "observed_standard": 0.9437
+            }
+          ],
+          "tail": {
+            "cases_in_tail": 1367,
+            "share_in_tail": 0.5519,
+            "tail_ece": 0.0087,
+            "bins": [
+              {
+                "bin": "0.900-0.925",
+                "n": 331,
+                "predicted_standard": 0.9107,
+                "observed_standard": 0.9305,
+                "gap": -0.0198
+              },
+              {
+                "bin": "0.925-0.950",
+                "n": 154,
+                "predicted_standard": 0.9461,
+                "observed_standard": 0.9416,
+                "gap": 0.0045
+              },
+              {
+                "bin": "0.950-0.975",
+                "n": 837,
+                "predicted_standard": 0.9518,
+                "observed_standard": 0.9474,
+                "gap": 0.0044
+              },
+              {
+                "bin": "0.975-1.000",
+                "n": 45,
+                "predicted_standard": 1.0,
+                "observed_standard": 0.9778,
+                "gap": 0.0222
+              }
+            ],
+            "note": "Reliability at and above 0.9, where straight-through decisions are made. A positive gap means the model is over-confident in that bin."
+          },
+          "tail_uncalibrated": {
+            "cases_in_tail": 1376,
+            "share_in_tail": 0.5555,
+            "tail_ece": 0.0157,
+            "bins": [
+              {
+                "bin": "0.900-0.925",
+                "n": 274,
+                "predicted_standard": 0.9133,
+                "observed_standard": 0.9307,
+                "gap": -0.0174
+              },
+              {
+                "bin": "0.925-0.950",
+                "n": 379,
+                "predicted_standard": 0.9383,
+                "observed_standard": 0.9446,
+                "gap": -0.0063
+              },
+              {
+                "bin": "0.950-0.975",
+                "n": 547,
+                "predicted_standard": 0.9631,
+                "observed_standard": 0.9415,
+                "gap": 0.0216
+              },
+              {
+                "bin": "0.975-1.000",
+                "n": 176,
+                "predicted_standard": 0.9807,
+                "observed_standard": 0.9659,
+                "gap": 0.0148
+              }
+            ],
+            "note": "Reliability at and above 0.9, where straight-through decisions are made. A positive gap means the model is over-confident in that bin."
+          },
+          "assertion": true,
+          "assertion_note": "Holdout ECE on synthetic data only. Not evidence of calibration on a real portfolio."
+        },
+        "stp_operating_point": {
+          "threshold": 0.95,
+          "model_pass_rate": 0.3537,
+          "cases_passed": 876,
+          "non_standard_passed": 44,
+          "unsafe_acceptance_rate": 0.0502,
+          "note": "Rate among cases the model alone would clear. Downstream gates are not modelled here.",
+          "interval_90pct": {
+            "level": 0.9,
+            "samples": 1000,
+            "cleared_cases": 876,
+            "model_pass_rate": [
+              0.3375,
+              0.3694
+            ],
+            "unsafe_acceptance_rate": [
+              0.038,
+              0.0632
+            ],
+            "note": "Bootstrap over test rows. The unsafe interval is undefined when nothing is cleared."
+          }
+        },
+        "monotone": false,
+        "oracle": {
+          "threshold": 0.95,
+          "model_pass_rate": 0.3177,
+          "unsafe_acceptance_rate": 0.047,
+          "cases_passed": 787,
+          "auc": 0.8149,
+          "interval_90pct": {
+            "level": 0.9,
+            "samples": 1000,
+            "cleared_cases": 787,
+            "model_pass_rate": [
+              0.302,
+              0.3331
+            ],
+            "unsafe_acceptance_rate": [
+              0.0347,
+              0.0599
+            ],
+            "note": "Bootstrap over test rows. The unsafe interval is undefined when nothing is cleared."
+          },
+          "note": "The generator's own probabilities, which see the hidden labs. This is the ceiling on this data, not a model."
+        },
+        "ood": {
+          "detector": "IsolationForest and Mahalanobis distance on preprocessed features",
+          "train_flag_rate_target": 0.01,
+          "isolation_threshold": -0.57734,
+          "distance_threshold": 7.696,
+          "test_flag_rate": 0.0194,
+          "shifted_probe_flag_rate": 1.0,
+          "note": "A flag means unfamiliar input, not high risk. It routes the case away from STP."
+        },
+        "subgroups": {
+          "age 18-35": {
+            "n": 62,
+            "auc": 0.6772,
+            "brier": 0.069,
+            "standard_rate": 0.9194
+          },
+          "age 36-50": {
+            "n": 845,
+            "auc": 0.7184,
+            "brier": 0.0795,
+            "standard_rate": 0.8947
+          },
+          "age 51-65": {
+            "n": 1075,
+            "auc": 0.8084,
+            "brier": 0.0948,
+            "standard_rate": 0.8567
+          },
+          "age 66+": {
+            "n": 495,
+            "auc": 0.7816,
+            "brier": 0.1626,
+            "standard_rate": 0.6808
+          },
+          "product Life": {
+            "n": 1539,
+            "auc": 0.7953,
+            "brier": 0.1046,
+            "standard_rate": 0.8343
+          },
+          "product Medical": {
+            "n": 938,
+            "auc": 0.8154,
+            "brier": 0.099,
+            "standard_rate": 0.839
+          },
+          "smoker": {
+            "n": 531,
+            "auc": 0.8014,
+            "brier": 0.1369,
+            "standard_rate": 0.7571
+          },
+          "non-smoker": {
+            "n": 1946,
+            "auc": 0.7917,
+            "brier": 0.0931,
+            "standard_rate": 0.8577
+          },
+          "labs missing": {
+            "n": 436,
+            "auc": 0.7731,
+            "brier": 0.0832,
+            "standard_rate": 0.8876
+          },
+          "labs present": {
+            "n": 2041,
+            "auc": 0.8048,
+            "brier": 0.1066,
+            "standard_rate": 0.8251
+          }
+        },
+        "cost": {
+          "fit_seconds": 1.83,
+          "predict_ms_per_1k_cases": 60.02,
+          "serialised_kb": 25661.1
+        },
+        "repeats": {
+          "n": 3,
+          "seeds": [
+            7,
+            8,
+            9
+          ],
+          "runs": [
+            {
+              "seed": 7,
+              "auc": 0.8027,
+              "ece": 0.0059,
+              "model_pass_rate": 0.3537,
+              "unsafe_acceptance_rate": 0.0502,
+              "fit_seconds": 1.83
+            },
+            {
+              "seed": 8,
+              "auc": 0.8024,
+              "ece": 0.0087,
+              "model_pass_rate": 0.3165,
+              "unsafe_acceptance_rate": 0.0472,
+              "fit_seconds": 2.33
+            },
+            {
+              "seed": 9,
+              "auc": 0.8031,
+              "ece": 0.011,
+              "model_pass_rate": 0.3282,
+              "unsafe_acceptance_rate": 0.0529,
+              "fit_seconds": 2.15
+            }
+          ],
+          "unsafe_acceptance_rate": {
+            "mean": 0.0501,
+            "sd": 0.0029,
+            "min": 0.0472,
+            "max": 0.0529,
+            "n": 3
+          },
+          "model_pass_rate": {
+            "mean": 0.3328,
+            "sd": 0.019,
+            "min": 0.3165,
+            "max": 0.3537,
+            "n": 3
+          },
+          "auc": {
+            "mean": 0.8027,
+            "sd": 0.0004,
+            "min": 0.8024,
+            "max": 0.8031,
+            "n": 3
+          },
+          "ece": {
+            "mean": 0.0085,
+            "sd": 0.0026,
+            "min": 0.0059,
+            "max": 0.011,
+            "n": 3
+          },
+          "note": "The first seed is the bundle kept. The rest measure seed sensitivity only; the data split is temporal and does not change between seeds."
+        }
+      },
+      "score_first_seed": 0.3556,
+      "score_by_seed": [
+        0.3556,
+        0.3574,
+        0.329
+      ],
+      "score_sd": 0.0159,
+      "rank": 11
+    },
+    {
+      "family": "model ensemble",
+      "architecture": "ensemble (stacking)",
+      "description": "Two boosting configurations and extra trees under a logistic meta-learner.",
+      "why": "Tests whether stacking similar learners adds anything over one good one.",
+      "name": "stacking-trees",
+      "score": 0.3322,
+      "components": {
+        "safety": 0.0,
+        "coverage": 0.35,
+        "calibration": 0.774,
+        "discrimination": 0.596
+      },
+      "weights": {
+        "safety": 0.4,
+        "coverage": 0.25,
+        "calibration": 0.2,
+        "discrimination": 0.15
+      },
+      "within_unsafe_budget": false,
+      "viable": false,
+      "viability": "not viable",
+      "not_viable_because": [
+        "unsafe acceptance 0.0519 exceeds the budget of 0.05"
+      ],
+      "confirmation_note": null,
+      "unsafe_acceptance_rate": 0.0519,
+      "unsafe_interval_90pct": [
+        0.0396,
+        0.0645
+      ],
+      "coverage_interval_90pct": [
+        0.3335,
+        0.3658
+      ],
+      "cleared_cases": 867,
+      "budget": 0.05,
+      "min_coverage": 0.05,
+      "metrics": {
+        "discrimination": {
+          "auc": 0.798,
+          "average_precision": 0.9345,
+          "accuracy_at_0.5": 0.8652,
+          "base_rate_standard": 0.8361
+        },
+        "calibration": {
+          "brier": 0.1038,
+          "brier_uncalibrated": 0.1035,
+          "ece": 0.0113,
+          "ece_uncalibrated": 0.0172,
+          "max_acceptable_ece": 0.05,
+          "method": "isotonic on a held-out later period",
+          "reliability": [
+            {
+              "bin": "0.0-0.1",
+              "n": 18,
+              "predicted_standard": 0.0018,
+              "observed_standard": 0.0556
+            },
+            {
+              "bin": "0.1-0.2",
+              "n": 18,
+              "predicted_standard": 0.1143,
+              "observed_standard": 0.1667
+            },
+            {
+              "bin": "0.2-0.3",
+              "n": 27,
+              "predicted_standard": 0.2333,
+              "observed_standard": 0.2963
+            },
+            {
+              "bin": "0.3-0.4",
+              "n": 70,
+              "predicted_standard": 0.3472,
+              "observed_standard": 0.3286
+            },
+            {
+              "bin": "0.4-0.5",
+              "n": 63,
+              "predicted_standard": 0.4,
+              "observed_standard": 0.4286
+            },
+            {
+              "bin": "0.5-0.6",
+              "n": 56,
+              "predicted_standard": 0.5591,
+              "observed_standard": 0.4643
+            },
+            {
+              "bin": "0.6-0.7",
+              "n": 137,
+              "predicted_standard": 0.6776,
+              "observed_standard": 0.6788
+            },
+            {
+              "bin": "0.7-0.8",
+              "n": 139,
+              "predicted_standard": 0.713,
+              "observed_standard": 0.7626
+            },
+            {
+              "bin": "0.8-0.9",
+              "n": 727,
+              "predicted_standard": 0.8605,
+              "observed_standard": 0.8652
+            },
+            {
+              "bin": "0.9-1.0",
+              "n": 1222,
+              "predicted_standard": 0.9496,
+              "observed_standard": 0.9452
+            }
+          ],
+          "tail": {
+            "cases_in_tail": 1222,
+            "share_in_tail": 0.4933,
+            "tail_ece": 0.0078,
+            "bins": [
+              {
+                "bin": "0.900-0.925",
+                "n": 0,
+                "predicted_standard": null,
+                "observed_standard": null
+              },
+              {
+                "bin": "0.925-0.950",
+                "n": 346,
+                "predicted_standard": 0.9335,
+                "observed_standard": 0.9393,
+                "gap": -0.0059
+              },
+              {
+                "bin": "0.950-0.975",
+                "n": 873,
+                "predicted_standard": 0.9559,
+                "observed_standard": 0.9473,
+                "gap": 0.0085
+              },
+              {
+                "bin": "0.975-1.000",
+                "n": 3,
+                "predicted_standard": 0.9923,
+                "observed_standard": 1.0,
+                "gap": -0.0077
+              }
+            ],
+            "note": "Reliability at and above 0.9, where straight-through decisions are made. A positive gap means the model is over-confident in that bin."
+          },
+          "tail_uncalibrated": {
+            "cases_in_tail": 1551,
+            "share_in_tail": 0.6262,
+            "tail_ece": 0.008,
+            "bins": [
+              {
+                "bin": "0.900-0.925",
+                "n": 468,
+                "predicted_standard": 0.9139,
+                "observed_standard": 0.9103,
+                "gap": 0.0036
+              },
+              {
+                "bin": "0.925-0.950",
+                "n": 1083,
+                "predicted_standard": 0.9375,
+                "observed_standard": 0.9474,
+                "gap": -0.0098
+              },
+              {
+                "bin": "0.950-0.975",
+                "n": 0,
+                "predicted_standard": null,
+                "observed_standard": null
+              },
+              {
+                "bin": "0.975-1.000",
+                "n": 0,
+                "predicted_standard": null,
+                "observed_standard": null
+              }
+            ],
+            "note": "Reliability at and above 0.9, where straight-through decisions are made. A positive gap means the model is over-confident in that bin."
+          },
+          "assertion": true,
+          "assertion_note": "Holdout ECE on synthetic data only. Not evidence of calibration on a real portfolio."
+        },
+        "stp_operating_point": {
+          "threshold": 0.95,
+          "model_pass_rate": 0.35,
+          "cases_passed": 867,
+          "non_standard_passed": 45,
+          "unsafe_acceptance_rate": 0.0519,
+          "note": "Rate among cases the model alone would clear. Downstream gates are not modelled here.",
+          "interval_90pct": {
+            "level": 0.9,
+            "samples": 1000,
+            "cleared_cases": 867,
+            "model_pass_rate": [
+              0.3335,
+              0.3658
+            ],
+            "unsafe_acceptance_rate": [
+              0.0396,
+              0.0645
+            ],
+            "note": "Bootstrap over test rows. The unsafe interval is undefined when nothing is cleared."
+          }
+        },
+        "monotone": false,
+        "oracle": {
+          "threshold": 0.95,
+          "model_pass_rate": 0.3177,
+          "unsafe_acceptance_rate": 0.047,
+          "cases_passed": 787,
+          "auc": 0.8149,
+          "interval_90pct": {
+            "level": 0.9,
+            "samples": 1000,
+            "cleared_cases": 787,
+            "model_pass_rate": [
+              0.302,
+              0.3331
+            ],
+            "unsafe_acceptance_rate": [
+              0.0347,
+              0.0599
+            ],
+            "note": "Bootstrap over test rows. The unsafe interval is undefined when nothing is cleared."
+          },
+          "note": "The generator's own probabilities, which see the hidden labs. This is the ceiling on this data, not a model."
+        },
+        "ood": {
+          "detector": "IsolationForest and Mahalanobis distance on preprocessed features",
+          "train_flag_rate_target": 0.01,
+          "isolation_threshold": -0.57734,
+          "distance_threshold": 7.696,
+          "test_flag_rate": 0.0194,
+          "shifted_probe_flag_rate": 1.0,
+          "note": "A flag means unfamiliar input, not high risk. It routes the case away from STP."
+        },
+        "subgroups": {
+          "age 18-35": {
+            "n": 62,
+            "auc": 0.6912,
+            "brier": 0.0708,
+            "standard_rate": 0.9194
+          },
+          "age 36-50": {
+            "n": 845,
+            "auc": 0.7084,
+            "brier": 0.0806,
+            "standard_rate": 0.8947
+          },
+          "age 51-65": {
+            "n": 1075,
+            "auc": 0.8066,
+            "brier": 0.0955,
+            "standard_rate": 0.8567
+          },
+          "age 66+": {
+            "n": 495,
+            "auc": 0.7723,
+            "brier": 0.1656,
+            "standard_rate": 0.6808
+          },
+          "product Life": {
+            "n": 1539,
+            "auc": 0.7897,
+            "brier": 0.1066,
+            "standard_rate": 0.8343
+          },
+          "product Medical": {
+            "n": 938,
+            "auc": 0.8124,
+            "brier": 0.0992,
+            "standard_rate": 0.839
+          },
+          "smoker": {
+            "n": 531,
+            "auc": 0.7979,
+            "brier": 0.1387,
+            "standard_rate": 0.7571
+          },
+          "non-smoker": {
+            "n": 1946,
+            "auc": 0.786,
+            "brier": 0.0943,
+            "standard_rate": 0.8577
+          },
+          "labs missing": {
+            "n": 436,
+            "auc": 0.7524,
+            "brier": 0.0827,
+            "standard_rate": 0.8876
+          },
+          "labs present": {
+            "n": 2041,
+            "auc": 0.8017,
+            "brier": 0.1083,
+            "standard_rate": 0.8251
+          }
+        },
+        "cost": {
+          "fit_seconds": 12.33,
+          "predict_ms_per_1k_cases": 66.83,
+          "serialised_kb": 39746.2
+        },
+        "repeats": {
+          "n": 3,
+          "seeds": [
+            7,
+            8,
+            9
+          ],
+          "runs": [
+            {
+              "seed": 7,
+              "auc": 0.798,
+              "ece": 0.0113,
+              "model_pass_rate": 0.35,
+              "unsafe_acceptance_rate": 0.0519,
+              "fit_seconds": 12.33
+            },
+            {
+              "seed": 8,
+              "auc": 0.7957,
+              "ece": 0.01,
+              "model_pass_rate": 0.3646,
+              "unsafe_acceptance_rate": 0.0543,
+              "fit_seconds": 12.29
+            },
+            {
+              "seed": 9,
+              "auc": 0.8002,
+              "ece": 0.0126,
+              "model_pass_rate": 0.3419,
+              "unsafe_acceptance_rate": 0.0508,
+              "fit_seconds": 11.82
+            }
+          ],
+          "unsafe_acceptance_rate": {
+            "mean": 0.0523,
+            "sd": 0.0018,
+            "min": 0.0508,
+            "max": 0.0543,
+            "n": 3
+          },
+          "model_pass_rate": {
+            "mean": 0.3522,
+            "sd": 0.0115,
+            "min": 0.3419,
+            "max": 0.3646,
+            "n": 3
+          },
+          "auc": {
+            "mean": 0.798,
+            "sd": 0.0023,
+            "min": 0.7957,
+            "max": 0.8002,
+            "n": 3
+          },
+          "ece": {
+            "mean": 0.0113,
+            "sd": 0.0013,
+            "min": 0.01,
+            "max": 0.0126,
+            "n": 3
+          },
+          "note": "The first seed is the bundle kept. The rest measure seed sensitivity only; the data split is temporal and does not change between seeds."
+        }
+      },
+      "score_first_seed": 0.3317,
+      "score_by_seed": [
+        0.3317,
+        0.3399,
+        0.3251
+      ],
+      "score_sd": 0.0074,
+      "rank": 12
+    },
+    {
+      "family": "boosted trees",
+      "architecture": "ensemble (boosting)",
+      "description": "Histogram gradient boosting, 31 leaves, learning rate 0.06.",
+      "why": "The usual strong default for tabular underwriting features.",
+      "name": "hist-gbm-default",
+      "score": 0.3212,
+      "components": {
+        "safety": 0.0,
+        "coverage": 0.3997,
+        "calibration": 0.65,
+        "discrimination": 0.5846
+      },
+      "weights": {
+        "safety": 0.4,
+        "coverage": 0.25,
+        "calibration": 0.2,
+        "discrimination": 0.15
+      },
+      "within_unsafe_budget": false,
+      "viable": false,
+      "viability": "not viable",
+      "not_viable_because": [
+        "unsafe acceptance 0.0586 exceeds the budget of 0.05"
+      ],
+      "confirmation_note": null,
+      "unsafe_acceptance_rate": 0.0586,
+      "unsafe_interval_90pct": [
+        0.0463,
+        0.0715
+      ],
+      "coverage_interval_90pct": [
+        0.3827,
+        0.415
+      ],
+      "cleared_cases": 990,
+      "budget": 0.05,
+      "min_coverage": 0.05,
+      "metrics": {
+        "discrimination": {
+          "auc": 0.7923,
+          "average_precision": 0.931,
+          "accuracy_at_0.5": 0.866,
+          "base_rate_standard": 0.8361
+        },
+        "calibration": {
+          "brier": 0.1047,
+          "brier_uncalibrated": 0.1036,
+          "ece": 0.0175,
+          "ece_uncalibrated": 0.0178,
+          "max_acceptable_ece": 0.05,
+          "method": "isotonic on a held-out later period",
+          "reliability": [
+            {
+              "bin": "0.0-0.1",
+              "n": 27,
+              "predicted_standard": 0.0265,
+              "observed_standard": 0.0741
+            },
+            {
+              "bin": "0.1-0.2",
+              "n": 46,
+              "predicted_standard": 0.1458,
+              "observed_standard": 0.3261
+            },
+            {
+              "bin": "0.3-0.4",
+              "n": 63,
+              "predicted_standard": 0.3559,
+              "observed_standard": 0.2698
+            },
+            {
+              "bin": "0.4-0.5",
+              "n": 50,
+              "predicted_standard": 0.4361,
+              "observed_standard": 0.44
+            },
+            {
+              "bin": "0.5-0.6",
+              "n": 1,
+              "predicted_standard": 0.6,
+              "observed_standard": 0.0
+            },
+            {
+              "bin": "0.6-0.7",
+              "n": 119,
+              "predicted_standard": 0.6389,
+              "observed_standard": 0.5546
+            },
+            {
+              "bin": "0.7-0.8",
+              "n": 301,
+              "predicted_standard": 0.7412,
+              "observed_standard": 0.7575
+            },
+            {
+              "bin": "0.8-0.9",
+              "n": 600,
+              "predicted_standard": 0.855,
+              "observed_standard": 0.87
+            },
+            {
+              "bin": "0.9-1.0",
+              "n": 1270,
+              "predicted_standard": 0.947,
+              "observed_standard": 0.9441
+            }
+          ],
+          "tail": {
+            "cases_in_tail": 1270,
+            "share_in_tail": 0.5127,
+            "tail_ece": 0.0174,
+            "bins": [
+              {
+                "bin": "0.900-0.925",
+                "n": 151,
+                "predicted_standard": 0.9128,
+                "observed_standard": 0.9404,
+                "gap": -0.0276
+              },
+              {
+                "bin": "0.925-0.950",
+                "n": 118,
+                "predicted_standard": 0.9318,
+                "observed_standard": 0.9746,
+                "gap": -0.0428
+              },
+              {
+                "bin": "0.950-0.975",
+                "n": 986,
+                "predicted_standard": 0.9532,
+                "observed_standard": 0.9402,
+                "gap": 0.0131
+              },
+              {
+                "bin": "0.975-1.000",
+                "n": 15,
+                "predicted_standard": 1.0,
+                "observed_standard": 1.0,
+                "gap": 0.0
+              }
+            ],
+            "note": "Reliability at and above 0.9, where straight-through decisions are made. A positive gap means the model is over-confident in that bin."
+          },
+          "tail_uncalibrated": {
+            "cases_in_tail": 1437,
+            "share_in_tail": 0.5801,
+            "tail_ece": 0.0125,
+            "bins": [
+              {
+                "bin": "0.900-0.925",
+                "n": 243,
+                "predicted_standard": 0.9128,
+                "observed_standard": 0.9053,
+                "gap": 0.0075
+              },
+              {
+                "bin": "0.925-0.950",
+                "n": 414,
+                "predicted_standard": 0.9382,
+                "observed_standard": 0.9396,
+                "gap": -0.0015
+              },
+              {
+                "bin": "0.950-0.975",
+                "n": 627,
+                "predicted_standard": 0.9627,
+                "observed_standard": 0.9458,
+                "gap": 0.017
+              },
+              {
+                "bin": "0.975-1.000",
+                "n": 153,
+                "predicted_standard": 0.9801,
+                "observed_standard": 0.9477,
+                "gap": 0.0324
+              }
+            ],
+            "note": "Reliability at and above 0.9, where straight-through decisions are made. A positive gap means the model is over-confident in that bin."
+          },
+          "assertion": true,
+          "assertion_note": "Holdout ECE on synthetic data only. Not evidence of calibration on a real portfolio."
+        },
+        "stp_operating_point": {
+          "threshold": 0.95,
+          "model_pass_rate": 0.3997,
+          "cases_passed": 990,
+          "non_standard_passed": 58,
+          "unsafe_acceptance_rate": 0.0586,
+          "note": "Rate among cases the model alone would clear. Downstream gates are not modelled here.",
+          "interval_90pct": {
+            "level": 0.9,
+            "samples": 1000,
+            "cleared_cases": 990,
+            "model_pass_rate": [
+              0.3827,
+              0.415
+            ],
+            "unsafe_acceptance_rate": [
+              0.0463,
+              0.0715
+            ],
+            "note": "Bootstrap over test rows. The unsafe interval is undefined when nothing is cleared."
+          }
+        },
+        "monotone": false,
+        "oracle": {
+          "threshold": 0.95,
+          "model_pass_rate": 0.3177,
+          "unsafe_acceptance_rate": 0.047,
+          "cases_passed": 787,
+          "auc": 0.8149,
+          "interval_90pct": {
+            "level": 0.9,
+            "samples": 1000,
+            "cleared_cases": 787,
+            "model_pass_rate": [
+              0.302,
+              0.3331
+            ],
+            "unsafe_acceptance_rate": [
+              0.0347,
+              0.0599
+            ],
+            "note": "Bootstrap over test rows. The unsafe interval is undefined when nothing is cleared."
+          },
+          "note": "The generator's own probabilities, which see the hidden labs. This is the ceiling on this data, not a model."
+        },
+        "ood": {
+          "detector": "IsolationForest and Mahalanobis distance on preprocessed features",
+          "train_flag_rate_target": 0.01,
+          "isolation_threshold": -0.57734,
+          "distance_threshold": 7.696,
+          "test_flag_rate": 0.0194,
+          "shifted_probe_flag_rate": 1.0,
+          "note": "A flag means unfamiliar input, not high risk. It routes the case away from STP."
+        },
+        "subgroups": {
+          "age 18-35": {
+            "n": 62,
+            "auc": 0.6772,
+            "brier": 0.0654,
+            "standard_rate": 0.9194
+          },
+          "age 36-50": {
+            "n": 845,
+            "auc": 0.6943,
+            "brier": 0.0808,
+            "standard_rate": 0.8947
+          },
+          "age 51-65": {
+            "n": 1075,
+            "auc": 0.7968,
+            "brier": 0.0974,
+            "standard_rate": 0.8567
+          },
+          "age 66+": {
+            "n": 495,
+            "auc": 0.7751,
+            "brier": 0.1664,
+            "standard_rate": 0.6808
+          },
+          "product Life": {
+            "n": 1539,
+            "auc": 0.7868,
+            "brier": 0.1073,
+            "standard_rate": 0.8343
+          },
+          "product Medical": {
+            "n": 938,
+            "auc": 0.8014,
+            "brier": 0.1005,
+            "standard_rate": 0.839
+          },
+          "smoker": {
+            "n": 531,
+            "auc": 0.7898,
+            "brier": 0.1413,
+            "standard_rate": 0.7571
+          },
+          "non-smoker": {
+            "n": 1946,
+            "auc": 0.7838,
+            "brier": 0.0948,
+            "standard_rate": 0.8577
+          },
+          "labs missing": {
+            "n": 436,
+            "auc": 0.7676,
+            "brier": 0.0797,
+            "standard_rate": 0.8876
+          },
+          "labs present": {
+            "n": 2041,
+            "auc": 0.7935,
+            "brier": 0.1101,
+            "standard_rate": 0.8251
+          }
+        },
+        "cost": {
+          "fit_seconds": 1.24,
+          "predict_ms_per_1k_cases": 37.37,
+          "serialised_kb": 325.3
+        },
+        "repeats": {
+          "n": 3,
+          "seeds": [
+            7,
+            8,
+            9
+          ],
+          "runs": [
+            {
+              "seed": 7,
+              "auc": 0.7923,
+              "ece": 0.0175,
+              "model_pass_rate": 0.3997,
+              "unsafe_acceptance_rate": 0.0586,
+              "fit_seconds": 1.24
+            },
+            {
+              "seed": 8,
+              "auc": 0.7896,
+              "ece": 0.012,
+              "model_pass_rate": 0.1982,
+              "unsafe_acceptance_rate": 0.0509,
+              "fit_seconds": 1.56
+            },
+            {
+              "seed": 9,
+              "auc": 0.7929,
+              "ece": 0.0119,
+              "model_pass_rate": 0.0113,
+              "unsafe_acceptance_rate": 0.0357,
+              "fit_seconds": 1.38
+            }
+          ],
+          "unsafe_acceptance_rate": {
+            "mean": 0.0484,
+            "sd": 0.0117,
+            "min": 0.0357,
+            "max": 0.0586,
+            "n": 3
+          },
+          "model_pass_rate": {
+            "mean": 0.2031,
+            "sd": 0.1942,
+            "min": 0.0113,
+            "max": 0.3997,
+            "n": 3
+          },
+          "auc": {
+            "mean": 0.7916,
+            "sd": 0.0018,
+            "min": 0.7896,
+            "max": 0.7929,
+            "n": 3
+          },
+          "ece": {
+            "mean": 0.0138,
+            "sd": 0.0032,
+            "min": 0.0119,
+            "max": 0.0175,
+            "n": 3
+          },
+          "note": "The first seed is the bundle kept. The rest measure seed sensitivity only; the data split is temporal and does not change between seeds."
+        }
+      },
+      "score_first_seed": 0.3176,
+      "score_by_seed": [
+        0.3176,
+        0.2884,
+        0.3575
+      ],
+      "score_sd": 0.0347,
+      "rank": 13
+    },
+    {
+      "family": "bagged trees",
+      "architecture": "ensemble (bagging)",
+      "description": "400 bootstrapped decision trees, majority vote.",
+      "why": "Robust to feature scaling and interactions; tends to be conservative at the extremes.",
+      "name": "random-forest",
+      "score": 0.3177,
+      "components": {
+        "safety": 0.02,
+        "coverage": 0.0412,
+        "calibration": 0.81,
+        "discrimination": 0.5938
+      },
+      "weights": {
+        "safety": 0.4,
+        "coverage": 0.25,
+        "calibration": 0.2,
+        "discrimination": 0.15
+      },
+      "within_unsafe_budget": true,
+      "viable": false,
+      "viability": "not viable",
+      "not_viable_because": [
+        "clears 4.1% of cases, below the 5% floor"
+      ],
+      "confirmation_note": null,
+      "unsafe_acceptance_rate": 0.049,
+      "unsafe_interval_90pct": [
+        0.018,
+        0.0909
+      ],
+      "coverage_interval_90pct": [
+        0.0347,
+        0.0476
+      ],
+      "cleared_cases": 102,
+      "budget": 0.05,
+      "min_coverage": 0.05,
+      "metrics": {
+        "discrimination": {
+          "auc": 0.7969,
+          "average_precision": 0.9342,
+          "accuracy_at_0.5": 0.8631,
+          "base_rate_standard": 0.8361
+        },
+        "calibration": {
+          "brier": 0.1047,
+          "brier_uncalibrated": 0.1049,
+          "ece": 0.0095,
+          "ece_uncalibrated": 0.0164,
+          "max_acceptable_ece": 0.05,
+          "method": "isotonic on a held-out later period",
+          "reliability": [
+            {
+              "bin": "0.0-0.1",
+              "n": 34,
+              "predicted_standard": 0.0524,
+              "observed_standard": 0.1176
+            },
+            {
+              "bin": "0.1-0.2",
+              "n": 5,
+              "predicted_standard": 0.1485,
+              "observed_standard": 0.2
+            },
+            {
+              "bin": "0.2-0.3",
+              "n": 9,
+              "predicted_standard": 0.25,
+              "observed_standard": 0.2222
+            },
+            {
+              "bin": "0.3-0.4",
+              "n": 111,
+              "predicted_standard": 0.3518,
+              "observed_standard": 0.3604
+            },
+            {
+              "bin": "0.4-0.5",
+              "n": 68,
+              "predicted_standard": 0.498,
+              "observed_standard": 0.4853
+            },
+            {
+              "bin": "0.5-0.6",
+              "n": 8,
+              "predicted_standard": 0.5,
+              "observed_standard": 0.625
+            },
+            {
+              "bin": "0.6-0.7",
+              "n": 164,
+              "predicted_standard": 0.6688,
+              "observed_standard": 0.6463
+            },
+            {
+              "bin": "0.7-0.8",
+              "n": 151,
+              "predicted_standard": 0.7444,
+              "observed_standard": 0.7351
+            },
+            {
+              "bin": "0.8-0.9",
+              "n": 701,
+              "predicted_standard": 0.8611,
+              "observed_standard": 0.873
+            },
+            {
+              "bin": "0.9-1.0",
+              "n": 1226,
+              "predicted_standard": 0.9474,
+              "observed_standard": 0.9437
+            }
+          ],
+          "tail": {
+            "cases_in_tail": 1226,
+            "share_in_tail": 0.495,
+            "tail_ece": 0.0037,
+            "bins": [
+              {
+                "bin": "0.900-0.925",
+                "n": 0,
+                "predicted_standard": null,
+                "observed_standard": null
+              },
+              {
+                "bin": "0.925-0.950",
+                "n": 1124,
+                "predicted_standard": 0.9444,
+                "observed_standard": 0.9431,
+                "gap": 0.0014
+              },
+              {
+                "bin": "0.950-0.975",
+                "n": 79,
+                "predicted_standard": 0.9747,
+                "observed_standard": 0.9494,
+                "gap": 0.0253
+              },
+              {
+                "bin": "0.975-1.000",
+                "n": 23,
+                "predicted_standard": 1.0,
+                "observed_standard": 0.9565,
+                "gap": 0.0435
+              }
+            ],
+            "note": "Reliability at and above 0.9, where straight-through decisions are made. A positive gap means the model is over-confident in that bin."
+          },
+          "tail_uncalibrated": {
+            "cases_in_tail": 1276,
+            "share_in_tail": 0.5151,
+            "tail_ece": 0.0157,
+            "bins": [
+              {
+                "bin": "0.900-0.925",
+                "n": 243,
+                "predicted_standard": 0.9128,
+                "observed_standard": 0.9259,
+                "gap": -0.0131
+              },
+              {
+                "bin": "0.925-0.950",
+                "n": 366,
+                "predicted_standard": 0.9385,
+                "observed_standard": 0.9426,
+                "gap": -0.0042
+              },
+              {
+                "bin": "0.950-0.975",
+                "n": 427,
+                "predicted_standard": 0.963,
+                "observed_standard": 0.9438,
+                "gap": 0.0192
+              },
+              {
+                "bin": "0.975-1.000",
+                "n": 240,
+                "predicted_standard": 0.9838,
+                "observed_standard": 0.9542,
+                "gap": 0.0296
+              }
+            ],
+            "note": "Reliability at and above 0.9, where straight-through decisions are made. A positive gap means the model is over-confident in that bin."
+          },
+          "assertion": true,
+          "assertion_note": "Holdout ECE on synthetic data only. Not evidence of calibration on a real portfolio."
+        },
+        "stp_operating_point": {
+          "threshold": 0.95,
+          "model_pass_rate": 0.0412,
+          "cases_passed": 102,
+          "non_standard_passed": 5,
+          "unsafe_acceptance_rate": 0.049,
+          "note": "Rate among cases the model alone would clear. Downstream gates are not modelled here.",
+          "interval_90pct": {
+            "level": 0.9,
+            "samples": 1000,
+            "cleared_cases": 102,
+            "model_pass_rate": [
+              0.0347,
+              0.0476
+            ],
+            "unsafe_acceptance_rate": [
+              0.018,
+              0.0909
+            ],
+            "note": "Bootstrap over test rows. The unsafe interval is undefined when nothing is cleared."
+          }
+        },
+        "monotone": false,
+        "oracle": {
+          "threshold": 0.95,
+          "model_pass_rate": 0.3177,
+          "unsafe_acceptance_rate": 0.047,
+          "cases_passed": 787,
+          "auc": 0.8149,
+          "interval_90pct": {
+            "level": 0.9,
+            "samples": 1000,
+            "cleared_cases": 787,
+            "model_pass_rate": [
+              0.302,
+              0.3331
+            ],
+            "unsafe_acceptance_rate": [
+              0.0347,
+              0.0599
+            ],
+            "note": "Bootstrap over test rows. The unsafe interval is undefined when nothing is cleared."
+          },
+          "note": "The generator's own probabilities, which see the hidden labs. This is the ceiling on this data, not a model."
+        },
+        "ood": {
+          "detector": "IsolationForest and Mahalanobis distance on preprocessed features",
+          "train_flag_rate_target": 0.01,
+          "isolation_threshold": -0.57734,
+          "distance_threshold": 7.696,
+          "test_flag_rate": 0.0194,
+          "shifted_probe_flag_rate": 1.0,
+          "note": "A flag means unfamiliar input, not high risk. It routes the case away from STP."
+        },
+        "subgroups": {
+          "age 18-35": {
+            "n": 62,
+            "auc": 0.6579,
+            "brier": 0.0699,
+            "standard_rate": 0.9194
+          },
+          "age 36-50": {
+            "n": 845,
+            "auc": 0.7102,
+            "brier": 0.0818,
+            "standard_rate": 0.8947
+          },
+          "age 51-65": {
+            "n": 1075,
+            "auc": 0.8043,
+            "brier": 0.0965,
+            "standard_rate": 0.8567
+          },
+          "age 66+": {
+            "n": 495,
+            "auc": 0.7732,
+            "brier": 0.1662,
+            "standard_rate": 0.6808
+          },
+          "product Life": {
+            "n": 1539,
+            "auc": 0.787,
+            "brier": 0.1076,
+            "standard_rate": 0.8343
+          },
+          "product Medical": {
+            "n": 938,
+            "auc": 0.814,
+            "brier": 0.1,
+            "standard_rate": 0.839
+          },
+          "smoker": {
+            "n": 531,
+            "auc": 0.7989,
+            "brier": 0.1408,
+            "standard_rate": 0.7571
+          },
+          "non-smoker": {
+            "n": 1946,
+            "auc": 0.7856,
+            "brier": 0.0949,
+            "standard_rate": 0.8577
+          },
+          "labs missing": {
+            "n": 436,
+            "auc": 0.7597,
+            "brier": 0.0823,
+            "standard_rate": 0.8876
+          },
+          "labs present": {
+            "n": 2041,
+            "auc": 0.799,
+            "brier": 0.1095,
+            "standard_rate": 0.8251
+          }
+        },
+        "cost": {
+          "fit_seconds": 1.31,
+          "predict_ms_per_1k_cases": 65.97,
+          "serialised_kb": 50809.8
+        },
+        "repeats": {
+          "n": 3,
+          "seeds": [
+            7,
+            8,
+            9
+          ],
+          "runs": [
+            {
+              "seed": 7,
+              "auc": 0.7969,
+              "ece": 0.0095,
+              "model_pass_rate": 0.0412,
+              "unsafe_acceptance_rate": 0.049,
+              "fit_seconds": 1.31
+            },
+            {
+              "seed": 8,
+              "auc": 0.7993,
+              "ece": 0.0065,
+              "model_pass_rate": 0.1663,
+              "unsafe_acceptance_rate": 0.0364,
+              "fit_seconds": 1.27
+            },
+            {
+              "seed": 9,
+              "auc": 0.7971,
+              "ece": 0.0084,
+              "model_pass_rate": 0.0557,
+              "unsafe_acceptance_rate": 0.0652,
+              "fit_seconds": 1.29
+            }
+          ],
+          "unsafe_acceptance_rate": {
+            "mean": 0.0502,
+            "sd": 0.0144,
+            "min": 0.0364,
+            "max": 0.0652,
+            "n": 3
+          },
+          "model_pass_rate": {
+            "mean": 0.0877,
+            "sd": 0.0684,
+            "min": 0.0412,
+            "max": 0.1663,
+            "n": 3
+          },
+          "auc": {
+            "mean": 0.7978,
+            "sd": 0.0013,
+            "min": 0.7969,
+            "max": 0.7993,
+            "n": 3
+          },
+          "ece": {
+            "mean": 0.0081,
+            "sd": 0.0015,
+            "min": 0.0065,
+            "max": 0.0095,
+            "n": 3
+          },
+          "note": "The first seed is the bundle kept. The rest measure seed sensitivity only; the data split is temporal and does not change between seeds."
+        }
+      },
+      "score_first_seed": 0.2694,
+      "score_by_seed": [
+        0.2694,
+        0.4142,
+        0.2695
+      ],
+      "score_sd": 0.0836,
+      "rank": 14
+    }
+  ],
+  "top_3": [
+    "logistic-l2",
+    "logistic-elasticnet",
+    "extra-trees"
+  ]
+}

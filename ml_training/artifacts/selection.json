@@ -1,0 +1,102 @@
+{
+  "candidate": "logistic-l2",
+  "selected_by": "demo setup (placeholder selection)",
+  "reason": "Leads the three-seed sweep, tied with logistic-elasticnet and hist-gbm-shallow-monotone within what the test set resolves, 6 KB to serve and its coefficients can be reviewed. Replace this with your own selection.",
+  "selected_at": "2026-09-12T14:23:46+00:00",
+  "candidates_compared": 14,
+  "rank_in_sweep": 1,
+  "score": 0.3822,
+  "components": {
+    "safety": 0.106,
+    "coverage": 0.325,
+    "calibration": 0.834,
+    "discrimination": 0.6118
+  },
+  "viable": true,
+  "viability": "provisional",
+  "not_viable_because": [],
+  "confirmation_note": "inside the budget at the point estimate, but the 90% interval reaches 0.0578; confirming a rate of 0.0447 needs about 4114 cleared cases and this test set cleared 805",
+  "unsafe_interval_90pct": [
+    0.0334,
+    0.0578
+  ],
+  "coverage_interval_90pct": [
+    0.31,
+    0.3399
+  ],
+  "tied_with_leader": null,
+  "score_sd_over_seeds": 0.0001,
+  "risk_accepted": null,
+  "leaderboard": {
+    "generated_at": "2026-09-12T14:23:24+00:00",
+    "rows": 20000,
+    "split_rule": "temporal by application_month: train <=17, calibration 18-20, test >=21",
+    "seed": 7,
+    "seeds": [
+      7,
+      8,
+      9
+    ],
+    "repeats": 3,
+    "sample": null,
+    "weights": {
+      "safety": 0.4,
+      "coverage": 0.25,
+      "calibration": 0.2,
+      "discrimination": 0.15
+    },
+    "budget": 0.05,
+    "min_coverage": 0.05,
+    "data_file": "/Users/jimmyc/life-underwriting/ml_training/data/applications.csv",
+    "candidates_run": 14,
+    "failed": {},
+    "oracle": {
+      "threshold": 0.95,
+      "model_pass_rate": 0.3177,
+      "unsafe_acceptance_rate": 0.047,
+      "cases_passed": 787,
+      "auc": 0.8149,
+      "interval_90pct": {
+        "level": 0.9,
+        "samples": 1000,
+        "cleared_cases": 787,
+        "model_pass_rate": [
+          0.302,
+          0.3331
+        ],
+        "unsafe_acceptance_rate": [
+          0.0347,
+          0.0599
+        ],
+        "note": "Bootstrap over test rows. The unsafe interval is undefined when nothing is cleared."
+      },
+      "note": "The generator's own probabilities, which see the hidden labs. This is the ceiling on this data, not a model."
+    },
+    "resolution": {
+      "leader": "logistic-l2",
+      "cleared_cases": 805,
+      "unsafe_interval_90pct": [
+        0.0334,
+        0.0578
+      ],
+      "half_width": 0.0122,
+      "confirmed": [],
+      "tied_with_leader": [
+        "logistic-elasticnet",
+        "hist-gbm-shallow-monotone"
+      ],
+      "cleared_cases_needed_to_confirm_leader": 4114
+    },
+    "score_definition": {
+      "viability": "confirmed = 90% interval of the unsafe rate inside the budget and coverage at or above the floor; provisional = point estimate inside the budget only; not viable = outside the budget or below the floor. Tiers rank in that order.",
+      "safety": "1 - unsafe_acceptance_rate / budget, floored at 0",
+      "coverage": "share of holdout cases the model alone would clear at the STP threshold",
+      "calibration": "1 - ECE / max acceptable ECE, floored at 0",
+      "discrimination": "(AUC - 0.5) * 2, floored at 0",
+      "repeats": "with more than one seed the score is the mean over seeds and a candidate that left the budget on any seed is held at provisional",
+      "ties": "a viable candidate whose unsafe and coverage intervals both overlap the leader's is marked tied; the order among tied candidates is not a finding"
+    }
+  },
+  "artifact_provenance": "bundle kept by the sweep",
+  "reproduction_drift": []
+}

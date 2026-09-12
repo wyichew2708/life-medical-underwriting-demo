@@ -1,0 +1,20 @@
+{
+  "generator_seed": 20260911,
+  "rows": 20000,
+  "ood_rows": 600,
+  "standard_rate": 0.8374,
+  "months": 24,
+  "missing_rate": {
+    "annualIncome": 0.123,
+    "existingCover": 0.18,
+    "termYears": 0.083,
+    "systolic": 0.182,
+    "diastolic": 0.182,
+    "hba1c": 0.182,
+    "egfr": 0.182,
+    "ldl": 0.182,
+    "hospitalisations": 0.152,
+    "reportAgeDays": 0.263
+  },
+  "warning": "Synthetic data. No real applicants, no mortality experience, no claims."
+}
