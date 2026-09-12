@@ -4,3 +4,16 @@ __pycache__/
 .env
 node_modules/
 
+
+# Workspace additions
+.venv*/
+ml_training/artifacts/*.joblib
+ml_training/data/*.csv
+reasoning/out/
+.DS_Store
+ml_training/artifacts/experiments/runs/
+reasoning/config.json
+reasoning/cases/bank/*/extracted.json
+ml_training/artifacts/scoring_log.jsonl
+ml_training/artifacts/drift_report.*
+reasoning/cases/bank/FB-*/
