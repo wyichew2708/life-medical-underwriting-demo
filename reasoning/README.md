@@ -271,6 +271,32 @@ Run any case with `--json` to see all of it: per-stage timings, which rules fire
 they cite, why each source was retrieved, what the guardrails changed, and which
 configuration and product were in force.
 
+### Reading documents: images in, one page per call
+
+Every page reaches the model as pixels. A scanned PDF, a born-digital PDF and a photograph
+are all rasterised by PyMuPDF and sent as `image_url` entries in an OpenAI-compatible chat
+request, one page per request by default, and a finding may only cite a page that was in
+its own request. Results are merged across pages. vLLM is the reference setup:
+
+```bash
+vllm serve Qwen/Qwen2.5-VL-7B-Instruct --max-model-len 16384        # image=1 per prompt is the default
+export UW_LLM_BASE_URL=http://127.0.0.1:8000/v1 UW_LLM_MODEL=Qwen/Qwen2.5-VL-7B-Instruct
+```
+
+| Setting | Default | Meaning |
+|---|---|---|
+| `UW_DOC_PAGES_PER_CALL` | 1 | page images per request; raise only with `--limit-mm-per-prompt image=N` and the context to match |
+| `UW_DOC_TEXT` | auto | what a quote is checked against: the PDF text layer where a page has one, the model's transcription otherwise; `vision` ignores the layer, `layer` never transcribes |
+| `UW_DOC_RENDER_EDGE` | 1600 | long edge of the rendered page in pixels |
+| `UW_LLM_TIMEOUT` | 180 | seconds per model call |
+
+Vision transcription is a second read of the same page under a transcribe-only prompt; a
+value's quote has to appear in a read that was not asked to find it. It is not independent
+of the model, but it is independent of the extraction, and it is what makes a scanned page
+checkable at all. A value whose quote is found is `verified` with `verified_by` recording
+which text was used; one that is not is unverified and may only make the case more
+cautious.
+
 ### Declared versus documented
 
 The model's productive work is reading documents into checkable facts; deciding what to do
@@ -372,10 +398,11 @@ later be compared against the exact configuration that disagreed with it.
 
 - A citation proves a source was supplied, not that it supports the claim. Entailment is
   not checked. Original evidence still needs review.
-- Quote verification reads the page's text layer. A scanned image has none, so nothing a
-  model reads from a scan can be verified here; such values can only make a case more
-  cautious. The per-field tolerances that separate measurement noise from a discrepancy are
-  demonstration settings.
+- Quote verification uses the page's text layer where there is one and the model's own
+  transcription otherwise. A transcription is a second read by the same model, not an
+  independent witness; a model that misreads a digit consistently will verify its own
+  misreading. The per-field tolerances that separate measurement noise from a discrepancy
+  are demonstration settings.
 - The injection scan is pattern matching over a short list. It raises the cost of the
   obvious attempt; it is not a defence against a determined one.
 - Keyword retrieval misses paraphrase. A finding written as "MI in 2019" reaches the
@@ -422,7 +449,7 @@ later be compared against the exact configuration that disagreed with it.
 | `ingest_spec.py` | Spec-sheet ingestion, comparison, activation |
 | `import_cases.py` | Case-bank import from a manifest and a document folder |
 | `tune.py` | Evaluation report, cross-validated configuration search, proposal, apply |
-| `pipeline/extraction.py` | Page rendering, the extraction contract with typed values, quote verification against the text layer |
+| `pipeline/extraction.py` | Page rendering, per-page extraction requests, the typed-value contract, quote verification against the text layer or a vision transcription |
 | `pipeline/reconcile.py` | Declared-versus-documented reconciliation: confirmed, filled, discrepancy; adverse-value routing |
 | `pipeline/precedents.py` | Nearest prior decisions from the case bank as de-identified `rag` sources |
 | `pipeline/judge.py` | Model-graded rubric for explanations, with the recorded rationale as the reference |
@@ -430,4 +457,4 @@ later be compared against the exact configuration that disagreed with it.
 | `studio.py`, `studio/index.html` | The training and tuning page: add cases with documents and decisions, evaluate, propose, auto-tune, apply, revert |
 | `cases/` | Four worked cases, the sample intake generator, and the imported bank |
 | `specs/` | A fictional product specification sheet, in Markdown and PDF |
-| `tests/` | 163 tests over the base, rules, retrieval, validators, harness, products, config, bank, documents, extraction, reconciliation, precedents, quality, feedback, guidance, the studio and the tuner |
+| `tests/` | 169 tests over the base, rules, retrieval, validators, harness, products, config, bank, documents, extraction, document reading, reconciliation, precedents, quality, feedback, guidance, the studio and the tuner |

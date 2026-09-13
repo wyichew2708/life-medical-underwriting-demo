@@ -26,12 +26,15 @@ class NoRedirect(urllib.request.HTTPRedirectHandler):
 
 
 class Client:
-    def __init__(self, base_url=None, model=None, api_key=None, timeout=90, temperature=0,
+    def __init__(self, base_url=None, model=None, api_key=None, timeout=None, temperature=0,
                  max_tokens=2500):
         self.base_url = (base_url or os.environ.get('UW_LLM_BASE_URL', '')).rstrip('/')
         self.model = model or os.environ.get('UW_LLM_MODEL', '')
         self.api_key = api_key if api_key is not None else os.environ.get('UW_LLM_API_KEY', '')
-        self.timeout = timeout
+        try:
+            self.timeout = timeout if timeout is not None else float(os.environ.get('UW_LLM_TIMEOUT', '180'))
+        except ValueError:
+            self.timeout = 180.0
         self.temperature = temperature
         self.max_tokens = max_tokens
 

@@ -57,21 +57,26 @@ class Studio:
                 pass
         return {}
 
+    ENV_KEYS = (('llm_base_url', 'UW_LLM_BASE_URL'), ('llm_model', 'UW_LLM_MODEL'),
+                ('doc_pages_per_call', 'UW_DOC_PAGES_PER_CALL'), ('doc_text_mode', 'UW_DOC_TEXT'),
+                ('doc_render_edge', 'UW_DOC_RENDER_EDGE'))
+
     def _apply_settings_to_env(self):
         # The UI can point the studio at a local model; environment variables already set win.
-        for key, env in (('llm_base_url', 'UW_LLM_BASE_URL'), ('llm_model', 'UW_LLM_MODEL')):
+        for key, env in self.ENV_KEYS:
             if self.settings.get(key) and not os.environ.get(env):
-                os.environ[env] = self.settings[key]
+                os.environ[env] = str(self.settings[key])
 
     def save_settings(self, body):
-        for key in ('llm_base_url', 'llm_model', 'operator'):
+        for key in ('llm_base_url', 'llm_model', 'operator', 'doc_pages_per_call', 'doc_text_mode', 'doc_render_edge'):
             if key in body:
                 value = str(body[key] or '').strip()
+                if key == 'doc_text_mode' and value not in extraction.TEXT_MODES:
+                    value = 'auto'
                 self.settings[key] = value
-                if key == 'llm_base_url':
-                    os.environ['UW_LLM_BASE_URL'] = value
-                if key == 'llm_model':
-                    os.environ['UW_LLM_MODEL'] = value
+                for setting, env in self.ENV_KEYS:
+                    if setting == key:
+                        os.environ[env] = value
         SETTINGS.write_text(json.dumps(self.settings, indent=2) + '\n')
         return self.settings
 
@@ -161,6 +166,8 @@ class Studio:
         core, extra = extraction.catalogue()
         client = Client()
         return {'llm': client.describe(), 'settings': {k: v for k, v in self.settings.items()},
+                'reading': {'pages_per_call': extraction.pages_per_call(), 'text_mode': extraction.text_mode(),
+                            'render_edge': extraction.render_edge()},
                 'bank': self.bank_summary(), 'products': product_module.available(),
                 'catalogue': {'core': core, 'extra': extra},
                 'outcomes': {k: v['description'] for k, v in HUMAN_OUTCOMES.items()},
