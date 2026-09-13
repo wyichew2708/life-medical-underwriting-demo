@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reasoning Studio</title>
+<style>
+:root{--teal:#087f70;--ink:#1c3434;--muted:#728381;--line:#e2eae7;--bg:#f4f7f6;--card:#fff;--green:#27835a;--amber:#9b6c25;--red:#ae5454;--blue:#507c96}
+*{box-sizing:border-box}body{margin:0;font-family:"DM Sans",system-ui,-apple-system,Segoe UI,sans-serif;color:var(--ink);background:var(--bg);font-size:13px;line-height:1.5}
+h1,h2,h3{margin:0;font-family:Manrope,system-ui,sans-serif;letter-spacing:-.3px}h1{font-size:24px}h2{font-size:16px}h3{font-size:12px;color:#4c6b5f;text-transform:uppercase;letter-spacing:1px}
+header{background:#fff;border-bottom:1px solid var(--line);padding:14px 28px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+header .status{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--muted)}header .status b{color:#284740;font-weight:600}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#c9d4cf;margin-right:5px}.dot.on{background:#5cb78d}.dot.off{background:#d99a4a}
+main{max-width:1500px;margin:auto;padding:22px 28px 60px;display:grid;grid-template-columns:minmax(360px,1fr) minmax(520px,1.4fr);gap:22px;align-items:start}
+.col{display:grid;gap:22px}.panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:20px}
+.panel h2{margin-bottom:6px}.panel>p.lead{color:var(--muted);font-size:12px;margin:0 0 16px}
+label{display:block;font-size:11px;color:#698575;margin-top:10px}input,select,textarea{width:100%;border:1px solid #dbe5de;padding:8px 10px;border-radius:6px;background:#fff;color:#29483e;font:inherit;font-size:12px}
+textarea{resize:vertical;min-height:70px}input[type=checkbox]{width:auto;margin-right:6px}.check{display:flex;align-items:center;gap:6px;margin-top:10px;font-size:12px;color:#4c6b5f}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px 12px}.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px 12px}
+button{font:inherit;cursor:pointer;border-radius:7px;padding:9px 14px;font-size:12px;font-weight:600;border:1px solid var(--teal);background:var(--teal);color:#fff}
+button.secondary{background:#fff;color:#33584d;border-color:#cfddd6}button.danger{background:#fff;color:var(--red);border-color:#e6c7c7}button:disabled{opacity:.5;cursor:not-allowed}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:14px}
+.badge{display:inline-block;font-size:10px;font-weight:700;padding:3px 7px;border-radius:4px;white-space:nowrap}
+.badge.green{color:var(--green);background:#e9f6ee}.badge.amber{color:var(--amber);background:#fff3db}.badge.red{color:var(--red);background:#fbeaea}.badge.blue{color:var(--blue);background:#edf4f9}.badge.grey{color:#5c6f66;background:#eef2f0}
+table{width:100%;border-collapse:collapse;font-size:11px}th{text-align:left;font-size:10px;color:#82988a;padding:8px 6px;border-bottom:1px solid var(--line);white-space:nowrap}td{padding:8px 6px;border-bottom:1px solid #eef2f0;vertical-align:top}
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:12px 0}.metric{background:#f7faf8;border:1px solid var(--line);border-radius:8px;padding:12px}.metric span{display:block;font-size:10px;color:#61776e}.metric strong{display:block;font-size:22px;font-family:Manrope,system-ui,sans-serif}.metric small{display:block;color:#95a29c;font-size:10px;margin-top:4px}
+.bar{display:flex;height:12px;border-radius:6px;overflow:hidden;background:#edf2ef;margin:6px 0}.bar span{display:block;height:100%}.bar .m{background:#3aa876}.bar .a{background:#8fd0b0}.bar .c{background:#e8c36a}.bar .u{background:#d96b6b}
+.legend{display:flex;gap:12px;font-size:10px;color:var(--muted);flex-wrap:wrap}.legend i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:4px;vertical-align:middle}
+pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#f5f8f4;border:1px solid #e2ebe0;border-radius:7px;padding:12px;font-size:11px;line-height:1.6;color:#577552;max-height:300px;overflow:auto;margin:10px 0}
+.log{background:#0e302e;color:#d7e5df;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;padding:12px;border-radius:7px;max-height:260px;overflow:auto;white-space:pre-wrap;margin-top:10px}
+.note{background:#f1f7f3;border:1px solid #e0ece3;border-radius:7px;padding:10px 12px;font-size:11px;color:#4c6b5f;margin-top:12px}.warn{background:#fff8ea;border-color:#f0dfb6;color:#7a5a1f}
+.file-list div{display:flex;justify-content:space-between;font-size:11px;padding:4px 0;border-bottom:1px solid #eef2f0}
+.diff li{font-family:ui-monospace,Menlo,monospace;font-size:11px}details{margin-top:8px}summary{cursor:pointer;font-size:11px;color:#4c7a61}
+.recon td:nth-child(3){font-weight:600}.hidden{display:none}
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:#153f32;color:#e7f6eb;padding:12px 18px;border-radius:8px;font-size:12px;opacity:0;transition:.2s;pointer-events:none;z-index:9}.toast.show{opacity:1}
+@media(max-width:1000px){main{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+  <div><h1>Reasoning Studio</h1><div style="font-size:11px;color:var(--muted)">Grow the case bank one case at a time; tune the reasoning against your decisions. Nothing here can accept a case.</div></div>
+  <div class="status" id="status"></div>
+</header>
+<main>
+  <div class="col">
+    <section class="panel" id="settings-panel">
+      <h2>1 · Model and product</h2>
+      <p class="lead">A local OpenAI-compatible endpoint (Ollama, LM Studio, vLLM). Without one the studio still stores cases and runs the deterministic rules; document reading, live reasoning and prompt tuning need the model.</p>
+      <div class="grid2">
+        <label>Model endpoint (base URL)<input id="llm_base_url" placeholder="http://127.0.0.1:11434/v1"></label>
+        <label>Model name<input id="llm_model" placeholder="e.g. qwen2.5-vl:7b"></label>
+      </div>
+      <label>Your name (recorded on every decision and every applied change)<input id="operator" placeholder="A. Underwriter"></label>
+      <div class="row"><button class="secondary" onclick="saveSettings(true)">Save and test the model</button><button class="secondary" onclick="saveSettings(false)">Save</button><span id="llm-test" style="font-size:11px;color:var(--muted)"></span></div>
+      <label>Product<select id="product_id"></select></label>
+      <div class="note" id="product-note"></div>
+    </section>
+
+    <section class="panel" id="case-panel">
+      <h2>2 · Add a case</h2>
+      <p class="lead">What the applicant declared, the documents, and what the underwriter decided. The documents are read by the model, checked against the page text, and reconciled with the declaration before any rule runs.</p>
+      <div class="grid3" id="core-fields"></div>
+      <details><summary>Optional attributes (labs, income, cover in force)</summary><div class="grid3" id="extra-fields"></div></details>
+      <label>Case id (optional)<input id="case_id" placeholder="left blank: S-date-time"></label>
+      <label>Documents (PDF, PNG, JPEG, WebP; up to 5, 10 MB each)<input type="file" id="files" multiple accept=".pdf,.png,.jpg,.jpeg,.webp,application/pdf,image/*"></label>
+      <div class="file-list" id="file-list"></div>
+      <h3 style="margin-top:16px">Human assessment</h3>
+      <div class="grid2">
+        <label>Outcome<select id="outcome"></select></label>
+        <label>Decided by<input id="decided_by" placeholder="defaults to your name"></label>
+        <label>Rating or terms (if any)<input id="rating" placeholder="+25%, exclusion, standard"></label>
+        <label>Evidence requested (semicolon-separated)<input id="evidence_requested" placeholder="repeat HbA1c; GP report"></label>
+      </div>
+      <label>Rationale, in the underwriter's words<textarea id="rationale"></textarea></label>
+      <div class="check"><input type="checkbox" id="assess_now" checked><label for="assess_now" style="margin:0">Assess immediately and show how the pipeline compares</label></div>
+      <div class="row"><button id="add-case" onclick="addCase()">Add case to the bank</button><span id="add-status" style="font-size:11px;color:var(--muted)"></span></div>
+      <div id="case-result"></div>
+    </section>
+  </div>
+
+  <div class="col">
+    <section class="panel">
+      <h2>3 · Case bank</h2>
+      <p class="lead" id="bank-lead"></p>
+      <div style="overflow-x:auto"><table id="bank-table"><thead><tr><th>Case</th><th>Product</th><th>Human</th><th>Evidence</th><th>Pipeline (last run)</th><th>Verdict</th><th></th></tr></thead><tbody></tbody></table></div>
+    </section>
+
+    <section class="panel">
+      <h2>4 · Evaluate and tune</h2>
+      <p class="lead">Evaluation compares every case with its recorded decision. Tuning searches the bounded surface — rule thresholds inside declared bounds, retrieval, the prompt's presentation variant, and with a model configured, guidance lines the model proposes from its own misses — cross-validated, and applies a round only when held-out cases confirm it and less-cautious disagreements do not rise.</p>
+      <div class="grid3">
+        <label>Mode<select id="live"><option value="1">Live (use the model)</option><option value="0">Offline (rules only)</option></select></label>
+        <label>Objective<select id="objective"><option value="severity">Routing agreement</option><option value="combined">Agreement + reasoning quality</option></select></label>
+        <label>Folds<input id="folds" type="number" value="5" min="2" max="10"></label>
+      </div>
+      <div class="grid3">
+        <div class="check"><input type="checkbox" id="prompt_search" checked><label for="prompt_search" style="margin:0">Prompt search (guidance lines)</label></div>
+        <div class="check"><input type="checkbox" id="judge"><label for="judge" style="margin:0">Model judge for explanations</label></div>
+        <div class="check"><input type="checkbox" id="allow_disable"><label for="allow_disable" style="margin:0">Allow switching rules off</label></div>
+      </div>
+      <div class="row">
+        <button class="secondary" onclick="startJob('evaluate')">Evaluate now</button>
+        <button class="secondary" onclick="startJob('tune')">Propose one round</button>
+        <button onclick="startJob('autotune')">Auto-tune until no further gain</button>
+        <label style="margin:0;width:auto">Max rounds <input id="max_rounds" type="number" value="6" min="1" max="12" style="width:64px;display:inline-block"></label>
+      </div>
+      <div id="job"></div>
+    </section>
+
+    <section class="panel">
+      <h2>5 · Where the reasoning stands</h2>
+      <div id="evaluation"></div>
+      <div id="config"></div>
+      <div id="proposal"></div>
+      <details><summary>History of rounds</summary><div id="history"></div></details>
+    </section>
+  </div>
+</main>
+<div class="toast" id="toast"></div>
+<script>
+const $ = (id) => document.getElementById(id);
+let STATE = null, FILES = [], POLL = null;
+const CORE_ORDER = ['product', 'age', 'cover', 'bmi', 'smoker', 'condition', 'name', 'sex', 'occupation'];
+
+function toast(msg) { const t = $('toast'); t.textContent = msg; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 3200); }
+async function api(path, body, method) {
+  const res = await fetch(path, { method: method || (body ? 'POST' : 'GET'), headers: { 'Content-Type': 'application/json' }, body: body ? JSON.stringify(body) : undefined });
+  const data = await res.json().catch(() => ({ error: 'Bad response' }));
+  if (!res.ok) throw new Error(data.error || res.statusText);
+  return data;
+}
+function badge(verdict) {
+  const map = { match: 'green', acceptable: 'blue', conservative: 'amber', unsafe: 'red' };
+  return verdict ? `<span class="badge ${map[verdict] || 'grey'}">${verdict}</span>` : '<span class="badge grey">not run</span>';
+}
+function pct(x) { return x == null ? '—' : (100 * x).toFixed(0) + '%'; }
+function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c])); }
+
+async function load() {
+  STATE = await api('/api/state');
+  renderStatus(); renderSettings(); renderForm(); renderBank(); renderEvaluation(); renderConfig(); renderProposal(); renderHistory();
+  if (STATE.job && STATE.job.status === 'running') watchJob(STATE.job.id);
+  else renderJob(STATE.job);
+}
+function renderStatus() {
+  const llm = STATE.llm, cfg = STATE.config;
+  $('status').innerHTML = `<span><i class="dot ${llm.configured ? 'on' : 'off'}"></i>model: <b>${llm.configured ? esc(llm.model) : 'not configured'}</b></span>
+    <span>bank: <b>${STATE.bank.count}</b> case(s)</span>
+    <span>configuration: <b>${cfg.tuned ? 'tuned ' + esc(cfg.hash) : 'defaults'}</b></span>`;
+}
+function renderSettings() {
+  $('llm_base_url').value = STATE.settings.llm_base_url || ''; $('llm_model').value = STATE.settings.llm_model || (STATE.llm.model || '');
+  $('operator').value = STATE.settings.operator || '';
+  const sel = $('product_id'); const current = sel.value;
+  sel.innerHTML = '<option value="">Base rules only (Life or Medical from the profile)</option>' + STATE.products.map(p => `<option value="${esc(p.product_id)}">${esc(p.name || p.product_id)} — ${esc(p.type || '')} [${esc(p.status)}]</option>`).join('');
+  sel.value = current || '';
+  sel.onchange = productNote; productNote();
+}
+function productNote() {
+  const p = STATE.products.find(x => x.product_id === $('product_id').value);
+  $('product-note').textContent = p ? `${p.rules} product rule(s), ${p.gaps} gap(s), status ${p.status}. Cases you add are tagged with this product and tuned under it. A draft product's rules do not route until it is activated (ingest_spec.py activate).` : 'No product spec: the base knowledge and rules apply, on the product line the profile declares. Ingest a spec sheet with ingest_spec.py to add one.';
+}
+async function saveSettings(test) {
+  try {
+    const r = await api('/api/settings', { llm_base_url: $('llm_base_url').value, llm_model: $('llm_model').value, operator: $('operator').value, test });
+    if (test) $('llm-test').textContent = r.test.ok ? `model answered (${r.test.model})` : `model call failed: ${r.test.error}`;
+    toast('Settings saved'); await load();
+  } catch (e) { toast(e.message); }
+}
+function field(name, spec, required) {
+  const label = name + (required ? '' : '') + (spec.unit ? ` (${spec.unit})` : '');
+  if (spec.type === 'boolean') return `<label>${esc(label)}<select id="f_${name}"><option value="false">no</option><option value="true">yes</option></select></label>`;
+  if (spec.type === 'enum') return `<label>${esc(label)}<select id="f_${name}">${spec.values.map(v => `<option>${esc(v)}</option>`).join('')}</select></label>`;
+  return `<label>${esc(label)}<input id="f_${name}" type="number" step="any" min="${spec.min}" max="${spec.max}" placeholder="${required ? 'required' : 'optional'}"></label>`;
+}
+function renderForm() {
+  const core = STATE.catalogue.core, extra = STATE.catalogue.extra;
+  let html = '<label>product<select id="f_product"><option>Life</option><option>Medical</option></select></label>';
+  for (const name of CORE_ORDER) { if (core[name]) html += field(name, core[name], true); }
+  html += '<label>name (optional)<input id="f_name"></label><label>sex (optional)<select id="f_sex"><option value=""></option><option>Female</option><option>Male</option></select></label><label>occupation (optional)<input id="f_occupation"></label>';
+  $('core-fields').innerHTML = html;
+  $('extra-fields').innerHTML = Object.keys(extra).map(n => field(n, extra[n], false)).join('');
+  $('outcome').innerHTML = Object.entries(STATE.outcomes).map(([k, v]) => `<option value="${k}">${k} — ${esc(v)}</option>`).join('');
+  $('files').onchange = async () => {
+    FILES = [];
+    for (const f of $('files').files) FILES.push({ name: f.name, size: f.size, data: await new Promise(r => { const fr = new FileReader(); fr.onload = () => r(fr.result); fr.readAsDataURL(f); }) });
+    $('file-list').innerHTML = FILES.map(f => `<div><span>${esc(f.name)}</span><span>${(f.size / 1024).toFixed(0)} KB</span></div>`).join('');
+  };
+}
+function readProfile() {
+  const p = { product: $('f_product').value };
+  for (const [name, spec] of Object.entries({ ...STATE.catalogue.core, ...STATE.catalogue.extra })) {
+    const el = $('f_' + name); if (!el) continue;
+    if (spec.type === 'boolean') p[name] = el.value === 'true';
+    else if (spec.type === 'enum') p[name] = el.value;
+    else if (el.value !== '') p[name] = Number(el.value);
+  }
+  for (const s of ['name', 'sex', 'occupation']) { const v = $('f_' + s).value.trim(); if (v) p[s] = v; }
+  return p;
+}
+async function addCase() {
+  const btn = $('add-case'); btn.disabled = true; $('add-status').textContent = 'Storing the case' + (FILES.length ? ', reading the documents' : '') + '…';
+  try {
+    const body = { case_id: $('case_id').value.trim() || undefined, product_id: $('product_id').value || undefined, profile: readProfile(), documents: FILES,
+      human: { outcome: $('outcome').value, decided_by: $('decided_by').value.trim() || $('operator').value.trim() || undefined, rationale: $('rationale').value.trim() || undefined, rating: $('rating').value.trim() || undefined, evidence_requested: $('evidence_requested').value.trim() || undefined },
+      extract: true, assess: $('assess_now').checked };
+    const r = await api('/api/cases', body);
+    $('add-status').textContent = `Added ${r.case_id}.`;
+    renderCaseResult(r); $('case_id').value = ''; $('files').value = ''; FILES = []; $('file-list').innerHTML = '';
+    await load();
+  } catch (e) { $('add-status').textContent = ''; toast(e.message); }
+  btn.disabled = false;
+}
+function renderCaseResult(r) {
+  let html = `<div class="note"><b>${esc(r.case_id)}</b> stored with ${r.documents} document(s).`;
+  if (r.extraction) {
+    if (r.extraction.error) html += ` Extraction failed: ${esc(r.extraction.error)}.`;
+    else if (r.extraction.skipped) html += ` ${esc(r.extraction.skipped)}`;
+    else html += ` Read ${r.extraction.pages} page(s): ${r.extraction.findings} finding(s), ${r.extraction.values.length} typed value(s)${r.extraction.complete ? '' : ', evidence incomplete'}.`;
+    if (r.extraction.warnings && r.extraction.warnings.length) html += ` Warnings: ${esc(r.extraction.warnings.join(' | '))}`;
+  }
+  html += '</div>';
+  const a = r.assessment;
+  if (a) {
+    if (a.error) html += `<div class="note warn">Assessment: ${esc(a.error)}</div>`;
+    else {
+      html += `<div class="note">Pipeline said <b>${esc(a.recommendation)}</b> (${esc(a.produced_by)}${a.offline ? ', no model' : ''}${a.rules_only ? ', documents not read: rules on the declared profile only' : ''}); the underwriter's decision implies <b>${esc(a.ideal)}</b> → ${badge(a.verdict)}`;
+      if (a.rules_fired.length) html += `<br>Rules fired: ${esc(a.rules_fired.join(', '))}`;
+      if (a.quality && a.quality.score != null) html += `<br>Reasoning quality ${a.quality.score}`;
+      html += '</div>';
+      const rec = a.reconciliation && a.reconciliation.records;
+      if (rec && rec.length) {
+        html += '<details open><summary>Declared versus documented</summary><table class="recon"><thead><tr><th>Field</th><th>Declared</th><th>Document</th><th>Status</th><th>Verified</th></tr></thead><tbody>' +
+          rec.map(x => `<tr><td>${esc(x.field)}</td><td>${esc(x.declared)}</td><td>${esc(x.extracted)}</td><td>${esc(x.status)}</td><td>${x.verified === true ? 'yes' : x.verified === false ? 'no' : '—'}</td></tr>`).join('') + '</tbody></table></details>';
+      }
+      if (a.explanation) html += `<details><summary>Explanation</summary><pre>${esc(a.explanation)}\n\n${(a.reasons || []).map(x => '- ' + x).join('\n')}${a.missing_information && a.missing_information.length ? '\n\nMissing: ' + a.missing_information.join('; ') : ''}</pre></details>`;
+    }
+  }
+  $('case-result').innerHTML = html;
+}
+function renderBank() {
+  const b = STATE.bank;
+  $('bank-lead').textContent = `${b.count} case(s): ${Object.entries(b.outcomes).map(([k, v]) => `${k} ${v}`).join(', ') || 'none yet'}. ${b.needing_extraction ? b.needing_extraction + ' still need their documents read (set a model, then evaluate live).' : ''}${b.count < 50 ? ' Under 50 cases, every figure below is a hypothesis; the tuner will refuse changes that rest on too few cases.' : ''}`;
+  const evidenceLabel = (e) => { const t = String(e || ''); if (t.startsWith('synthetic')) return 'supplied (synthetic)'; if (t.startsWith('cache')) return 'read ' + t.replace(/^cache \((.*)\)$/, '($1)'); if (t.startsWith('rules-only')) return 'not read'; if (t.startsWith('not')) return 'not read yet'; return t.length > 26 ? t.slice(0, 24) + '…' : t; };
+  $('bank-table').querySelector('tbody').innerHTML = b.cases.slice().reverse().map(c => `<tr><td style="white-space:nowrap"><b>${esc(c.case_id)}</b></td><td>${esc(c.product)}${c.product_id ? '<br><small>' + esc(c.product_id) + '</small>' : ''}</td><td>${esc(c.outcome)}${c.human.rating ? '<br><small>' + esc(c.human.rating) + '</small>' : ''}</td><td><small title="${esc(c.evidence)}">${esc(evidenceLabel(c.evidence))}</small></td><td>${c.last ? esc(c.last.predicted) : '—'}</td><td>${badge(c.last && c.last.verdict)}</td><td><button class="danger" style="padding:4px 8px;font-size:10px" onclick="deleteCase('${esc(c.case_id)}')">remove</button></td></tr>`).join('') || '<tr><td colspan="7" style="color:var(--muted)">No cases yet.</td></tr>';
+}
+async function deleteCase(id) { if (!confirm(`Remove ${id} from the bank?`)) return; try { await api('/api/cases/delete', { case_id: id }); toast('Removed'); await load(); } catch (e) { toast(e.message); } }
+function options() {
+  return { product_id: $('product_id').value || null, live: $('live').value === '1', objective: $('objective').value, folds: Number($('folds').value), prompt_search: $('prompt_search').checked, judge: $('judge').checked, allow_disable: $('allow_disable').checked, max_rounds: Number($('max_rounds').value), by: $('operator').value.trim() };
+}
+async function startJob(kind) {
+  if (kind === 'autotune' && !$('operator').value.trim()) { toast('Enter your name in settings first: applied changes are recorded against a person.'); return; }
+  try { const r = await api('/api/jobs', { kind, options: options() }); watchJob(r.job_id); } catch (e) { toast(e.message); }
+}
+function watchJob(id) {
+  clearInterval(POLL);
+  POLL = setInterval(async () => {
+    try { const job = await api('/api/jobs/' + id); renderJob(job); if (job.status !== 'running') { clearInterval(POLL); await load(); } }
+    catch (e) { clearInterval(POLL); }
+  }, 1500);
+}
+function renderJob(job) {
+  if (!job) { $('job').innerHTML = ''; return; }
+  let html = `<div class="note">${esc(job.kind)} — <b>${esc(job.status)}</b>${job.error ? ': ' + esc(job.error) : ''}</div>`;
+  html += `<div class="log">${esc(job.log.slice(-60).join('\n'))}</div>`;
+  const r = job.result;
+  if (job.status === 'done' && r && job.kind === 'autotune') {
+    html += `<div class="note">${r.applied_rounds} of ${r.rounds.length} round(s) applied. ` + r.rounds.map(x => `round ${x.round}: holdout ${x.gate.holdout_delta >= 0 ? '+' : ''}${x.gate.holdout_delta}, less-cautious ${x.gate.unsafe_delta >= 0 ? '+' : ''}${x.gate.unsafe_delta}${x.applied ? ' → applied' : ' → not applied'}`).join('; ') + '</div>';
+  }
+  if (job.status === 'done' && r && job.kind === 'tune') {
+    html += `<div class="note">Proposal ${r.gate.confirmed ? 'is confirmed by held-out cases' : 'is NOT confirmed by held-out cases'}: holdout ${r.gate.holdout_delta}, less-cautious ${r.gate.unsafe_delta}. ${Object.keys(r.diff || {}).length ? 'Review it below and apply with a reason.' : 'No change proposed.'}</div>`;
+  }
+  $('job').innerHTML = html;
+}
+function renderEvaluation() {
+  const e = STATE.last_evaluation; const box = $('evaluation');
+  if (!e) { box.innerHTML = '<p class="lead">No evaluation yet. Add cases, then Evaluate now.</p>'; return; }
+  const v = e.verdicts, n = e.cases;
+  box.innerHTML = `<p class="lead">Last evaluation ${esc(e.at)} over ${n} case(s), ${e.live ? 'live' : 'offline (rules only)'}, configuration ${esc(e.config_hash)}${e.product_id ? ', product ' + esc(e.product_id) : ''}.</p>
+    <div class="metrics"><div class="metric"><span>Agreement</span><strong>${pct(e.agreement)}</strong><small>90% interval ${e.agreement_interval_90pct ? e.agreement_interval_90pct.map(pct).join('–') : '—'}</small></div>
+    <div class="metric"><span>Severity score</span><strong>${e.severity_score}</strong><small>match 1 · acceptable .8 · cautious .5 · unsafe 0</small></div>
+    <div class="metric"><span>Less cautious than the underwriter</span><strong style="color:${e.unsafe_disagreements ? 'var(--red)' : 'var(--green)'}">${e.unsafe_disagreements}</strong><small>never traded against the score</small></div>
+    <div class="metric"><span>Reasoning quality</span><strong>${e.quality && e.quality.score != null ? e.quality.score : '—'}</strong><small>${e.quality ? 'evidence-request F1 ' + (e.quality.evidence_request_f1 ?? '—') : ''}</small></div></div>
+    <div class="bar"><span class="m" style="width:${100 * v.match / n}%"></span><span class="a" style="width:${100 * v.acceptable / n}%"></span><span class="c" style="width:${100 * v.conservative / n}%"></span><span class="u" style="width:${100 * v.unsafe / n}%"></span></div>
+    <div class="legend"><span><i style="background:#3aa876"></i>match ${v.match}</span><span><i style="background:#8fd0b0"></i>acceptable ${v.acceptable}</span><span><i style="background:#e8c36a"></i>more cautious ${v.conservative}</span><span><i style="background:#d96b6b"></i>less cautious ${v.unsafe}</span></div>
+    ${n < 50 ? '<div class="note warn">Fewer than 50 cases: agreement here is a hypothesis with a wide interval, not a measurement. Keep adding cases; the tuner refuses changes that rest on fewer than three improved cases or that fewer than half the folds found.</div>' : ''}`;
+}
+function renderConfig() {
+  const c = STATE.config; let html = `<h3 style="margin-top:14px">Configuration in force</h3><p class="lead">${c.tuned ? 'Tuned (' + esc(c.hash) + '), applied by ' + esc((c.provenance || {}).applied_by || '?') + ' — ' + esc((c.provenance || {}).reason || '') : 'Defaults from pipeline/config.py. Nothing has been applied.'}</p>`;
+  if (c.guidance && c.guidance.length) html += '<b style="font-size:11px">Guidance lines in the prompt</b><ul>' + c.guidance.map(g => `<li style="font-size:11px">${esc(g)}</li>`).join('') + '</ul>';
+  if (c.rule_overrides && Object.keys(c.rule_overrides).length) html += '<b style="font-size:11px">Rule overrides</b><ul class="diff">' + Object.entries(c.rule_overrides).map(([k, v]) => `<li>${esc(k)}: ${esc(JSON.stringify(v))}</li>`).join('') + '</ul>';
+  html += `<div style="font-size:11px;color:var(--muted)">prompt variant ${esc(c.prompt_variant)} · sources ${c.retrieval_source_limit} · prior decisions attached ${c.precedent_limit}</div>`;
+  if (c.tuned) html += `<div class="row"><button class="danger" onclick="revert()">Revert to defaults</button></div>`;
+  $('config').innerHTML = html;
+}
+function renderProposal() {
+  const p = STATE.proposal; const box = $('proposal');
+  if (!p) { box.innerHTML = ''; return; }
+  const h = p.comparison.holdout, t = p.comparison.train;
+  let html = `<h3 style="margin-top:16px">Latest proposal (${esc(p.generated_at)}, ${esc(p.method)}${p.applied ? ', APPLIED' : ''})</h3>
+    <table><thead><tr><th></th><th>Current</th><th>Proposed</th><th>Change</th></tr></thead><tbody>
+    <tr><td>all cases · severity</td><td>${t.severity_score.from}</td><td>${t.severity_score.to}</td><td>${t.severity_score.delta}</td></tr>
+    <tr><td>held-out · severity</td><td>${h.severity_score.from}</td><td>${h.severity_score.to}</td><td>${h.severity_score.delta}</td></tr>
+    <tr><td>held-out · less cautious</td><td>${h.unsafe_disagreements.from}</td><td>${h.unsafe_disagreements.to}</td><td>${h.unsafe_disagreements.delta}</td></tr>
+    ${h.quality_score && h.quality_score.delta != null ? `<tr><td>held-out · reasoning quality</td><td>${h.quality_score.from}</td><td>${h.quality_score.to}</td><td>${h.quality_score.delta}</td></tr>` : ''}</tbody></table>`;
+  const diff = Object.entries(p.diff || {});
+  html += diff.length ? '<b style="font-size:11px">Changes</b><ul class="diff">' + diff.map(([k, v]) => `<li>${esc(k)}: ${esc(JSON.stringify(v.from))} → ${esc(JSON.stringify(v.to))}${p.stability && p.stability[k] ? ` <span class="badge grey">${p.stability[k].folds_adopting}/${p.stability[k].of} folds</span>` : ''}</li>`).join('') + '</ul>' : '<div class="note">No change proposed.</div>';
+  if (p.not_proposed && Object.keys(p.not_proposed).length) html += '<div class="note">Found on all cases but not carried (too few folds agreed): ' + Object.keys(p.not_proposed).map(esc).join(', ') + '</div>';
+  if (p.warnings && p.warnings.length) html += '<div class="note warn">' + p.warnings.map(esc).join('<br>') + '</div>';
+  if (diff.length && !p.applied) html += `<div class="row"><input id="apply_reason" placeholder="what you checked before applying" style="flex:1;min-width:220px"><button onclick="applyProposal()">Apply as ${esc($('operator').value || 'operator')}</button></div>`;
+  html += `<details><summary>Full proposal</summary><pre>${esc(p.markdown || '')}</pre></details>`;
+  box.innerHTML = html;
+}
+async function applyProposal() {
+  try { await api('/api/apply', { by: $('operator').value.trim(), reason: $('apply_reason').value.trim() }); toast('Applied'); await load(); } catch (e) { toast(e.message); }
+}
+async function revert() { if (!confirm('Delete the applied configuration and return to the defaults?')) return; try { await api('/api/revert', {}); toast('Reverted'); await load(); } catch (e) { toast(e.message); } }
+function renderHistory() {
+  $('history').innerHTML = (STATE.history || []).slice().reverse().map(h => `<div style="font-size:11px;padding:4px 0;border-bottom:1px solid #eef2f0">${esc(h.at)} · <b>${esc(h.kind)}</b> ${h.kind === 'evaluate' ? `agreement ${pct(h.agreement)}, severity ${h.severity}, unsafe ${h.unsafe}, ${h.cases} cases${h.live ? ', live' : ''}` : ''}${h.kind === 'tune' ? `round ${h.round}: holdout ${h.holdout ? h.holdout.delta : ''} ${h.applied ? '→ applied by ' + esc(h.applied_by) : '→ not applied'}` : ''}${h.kind === 'apply' ? esc(h.by) + ': ' + esc(h.reason) : ''}</div>`).join('') || '<p class="lead">Nothing yet.</p>';
+}
+load().catch(e => toast(e.message));
+</script>
+</body>
+</html>

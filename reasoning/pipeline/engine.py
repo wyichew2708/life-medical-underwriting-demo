@@ -380,7 +380,7 @@ class Pipeline:
 
     def _reason(self, payload, instructions, evidence, found, rule_outcome, figures=None):
         messages = prompts.build(payload, instructions, self.knowledge.summary(),
-                                 variant=self.config.prompt_variant)
+                                 variant=self.config.prompt_variant, guidance=self.config.guidance)
         errors = []
         for attempt in range(1, self.config.max_revisions + 2):
             try:

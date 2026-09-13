@@ -17,3 +17,7 @@ reasoning/cases/bank/*/extracted.json
 ml_training/artifacts/scoring_log.jsonl
 ml_training/artifacts/drift_report.*
 reasoning/cases/bank/FB-*/
+reasoning/studio_settings.json
+reasoning/artifacts/tuning/last_evaluation.json
+reasoning/artifacts/tuning/studio_history.json
+reasoning/cases/bank/S-*/

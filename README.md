@@ -7,7 +7,7 @@ differently and need reviewing differently.
 |---|---|
 | [`demo/`](demo/) | The cloned interactive underwriting studio: UI, local runner, Vision extraction, reasoning harness, governance rules and the research report. Unchanged apart from its location. |
 | [`ml_training/`](ml_training/) | Sweeps twelve model architectures, ranks them for a human to choose, and serves the promoted one behind the demo's `UW_ML_URL` adapter. Synthetic data, placeholder fields. |
-| [`reasoning/`](reasoning/) | The underwriting knowledge base and the LLM reasoning pipeline behind the demo's `UW_CONTEXT_URL` adapter — plus product-spec ingestion and tuning against recorded human decisions. |
+| [`reasoning/`](reasoning/) | The underwriting knowledge base and the LLM reasoning pipeline behind the demo's `UW_CONTEXT_URL` adapter — plus product-spec ingestion, tuning against recorded human decisions, and a studio page to train it case by case. |
 
 The demo previously said two things about itself that are no longer true here: that no ML
 training was included, and that no retrieval adapter was available. `ml_training/` and
@@ -72,6 +72,7 @@ python tune.py --report                                   # how it agrees with y
 python tune.py                                            # propose configuration changes
 python tune.py --apply --by "you" --reason "reviewed the diff"
 python feedback.py --assessment result.json --outcome terms --by "you"   # grow the bank from use
+python studio.py                                          # the training page on :8097
 
 cd ../ml_training
 python drift.py --window artifacts/scoring_log.jsonl      # has the scored population moved?

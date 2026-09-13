@@ -140,7 +140,10 @@ def evaluate(pipeline, cases, offline=True, on_error='record', judge=None):
                      'cohort': case.human.get('cohort'),
                      'rules_fired': [r['id'] for r in result['rules']['fired']],
                      'evidence_source': case.evidence_source,
-                     'quality': graded})
+                     'quality': graded,
+                     'output_excerpt': {k: (result.get('output') or {}).get(k)
+                                        for k in ('explanation', 'reasons', 'missing_information', 'citations')},
+                     'reconciliation_discrepancies': len((result.get('reconciliation') or {}).get('discrepancies', []))})
     return summarise(rows, errors)
 
 

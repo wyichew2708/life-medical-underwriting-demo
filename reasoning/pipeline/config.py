@@ -26,6 +26,21 @@ BOUNDS = {
     'max_revisions': (0, 1),
 }
 PROMPT_VARIANTS = ('standard', 'evidence-first', 'concise', 'teaching')
+# Tuned guidance lines are appended after the mandatory controls, like a presentation
+# variant. They may change emphasis and never permission: anything that reads like an
+# instruction to accept, to skip a control or to treat data as authority is refused.
+MAX_GUIDANCE_LINES = 8
+MAX_GUIDANCE_CHARS = 300
+GUIDANCE_BANNED = [
+    (r'\bapprov', 'approval language'), (r'\baccept', 'acceptance language'), (r'\bdeclin', 'decline language'),
+    (r'\bissue\b', 'issuing language'), (r'\bignore\b', 'instruction to ignore'), (r'\boverrid', 'override language'),
+    (r'\bdisregard\b', 'instruction to disregard'), (r'\bskip\b', 'instruction to skip'),
+    (r'\bdo not (refer|request|escalate|flag|cite)', 'control suppression'),
+    (r'\bnever (refer|request|escalate|cite)', 'control suppression'),
+    (r'\bstraight[- ]?through\b', 'straight-through language'), (r'\bwithout (a |any )?(citation|evidence|rule)', 'unsupported terms'),
+    (r'\bpre-?approved\b', 'false authority'), (r'\bsystem prompt\b', 'prompt reference'),
+    (r'\byou are (now )?(a |an )?(different|new)\b', 'role reassignment'),
+]
 
 
 class ConfigError(ValueError):
@@ -36,7 +51,7 @@ class PipelineConfig:
     def __init__(self, retrieval_source_limit=30, include_design_sources=True, design_source_limit=3,
                  precedent_limit=3, prompt_variant='standard', max_revisions=1,
                  require_internal_citation_for_terms=True, warnings_block_terms=True, rule_overrides=None,
-                 provenance=None):
+                 guidance=None, provenance=None):
         self.retrieval_source_limit = int(retrieval_source_limit)
         self.include_design_sources = bool(include_design_sources)
         self.design_source_limit = int(design_source_limit)
@@ -46,6 +61,7 @@ class PipelineConfig:
         self.require_internal_citation_for_terms = bool(require_internal_citation_for_terms)
         self.warnings_block_terms = bool(warnings_block_terms)
         self.rule_overrides = dict(rule_overrides or {})
+        self.guidance = [str(line) for line in (guidance or [])]
         self.provenance = provenance or {}
 
     def to_dict(self):
@@ -58,6 +74,7 @@ class PipelineConfig:
                 'require_internal_citation_for_terms': self.require_internal_citation_for_terms,
                 'warnings_block_terms': self.warnings_block_terms,
                 'rule_overrides': self.rule_overrides,
+                'guidance': list(self.guidance),
                 'provenance': self.provenance}
 
     def replace(self, **changes):
@@ -76,9 +93,27 @@ class PipelineConfig:
             raise ConfigError('Proposed terms always require a cited internal rule. This cannot be turned off.')
         if not self.warnings_block_terms:
             raise ConfigError('Evidence warnings always block proposed terms. This cannot be turned off.')
+        self._validate_guidance()
         if rules is not None:
             self._validate_overrides(rules)
         return self
+
+    def _validate_guidance(self):
+        import re
+        if len(self.guidance) > MAX_GUIDANCE_LINES:
+            raise ConfigError(f'At most {MAX_GUIDANCE_LINES} guidance lines; got {len(self.guidance)}.')
+        seen = set()
+        for line in self.guidance:
+            if not isinstance(line, str) or not 1 <= len(line.strip()) <= MAX_GUIDANCE_CHARS:
+                raise ConfigError(f'A guidance line must be 1-{MAX_GUIDANCE_CHARS} characters.')
+            if line.strip().lower() in seen:
+                raise ConfigError('Duplicate guidance line.')
+            seen.add(line.strip().lower())
+            lowered = line.lower()
+            for pattern, why in GUIDANCE_BANNED:
+                if re.search(pattern, lowered):
+                    raise ConfigError(f'Guidance line refused ({why}): {line[:80]!r}. Guidance changes emphasis, '
+                                      'never what the assistant may do.')
 
     def _validate_overrides(self, rules):
         index = {r['id']: r for r in rules}

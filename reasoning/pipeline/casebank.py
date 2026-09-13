@@ -55,6 +55,11 @@ SIGNATURES = [
 ]
 
 
+RULES_ONLY_EVIDENCE = {'complete': True, 'findings': [], 'warnings': [], 'values': [], 'rules_only': True,
+                       'note': 'Rules-only evaluation: the documents were not read and the evidence-completeness '
+                               'gate was not exercised.'}
+
+
 class CaseBankError(extraction.ExtractionError):
     pass
 
@@ -74,6 +79,7 @@ class Case:
         self.data = data
         self.directory = Path(directory)
         self.profile = data.get('profile') or {}
+        self.product_id = data.get('product_id') or None
         self.instructions = data.get('instructions', '')
         self.ml = data.get('ml')
         self.human = data.get('human') or {}
@@ -137,6 +143,18 @@ class Case:
             'documents': [{k: d[k] for k in ('id', 'name', 'sha256')} for d in self.documents],
             'extracted_at': datetime.now(timezone.utc).isoformat(timespec='seconds')}, indent=2) + '\n')
 
+    def use_rules_only_stub(self):
+        """Stand in for unread documents so the routing rules can be evaluated on their own.
+
+        Offline there is no model to read the documents. Rather than refuse to evaluate, the
+        case is routed on its declared profile with evidence marked complete and empty, and
+        every report that uses it says so: the evidence-completeness gate is not exercised.
+        """
+        if self.evidence is None:
+            self.evidence = RULES_ONLY_EVIDENCE.copy()
+            self.evidence_source = 'rules-only stub: documents not read'
+        return self
+
     # -- for the pipeline
     def to_pipeline_case(self):
         case = {'case_id': self.case_id, 'profile': self.profile, 'instructions': self.instructions,
@@ -160,7 +178,7 @@ class Case:
         return self
 
     def summary(self):
-        return {'case_id': self.case_id, 'product': self.profile.get('product'),
+        return {'case_id': self.case_id, 'product': self.profile.get('product'), 'product_id': self.product_id,
                 'outcome': self.human.get('outcome'), 'documents': len(self.documents),
                 'evidence': self.evidence_source, 'cohort': self.human.get('cohort')}
 

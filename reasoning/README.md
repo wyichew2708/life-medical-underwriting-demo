@@ -19,6 +19,49 @@ classifications it quotes are public guideline definitions, held separately from
 underwriting stances that refer to them, because a classification describes a measurement
 and does not by itself rate, postpone or decline anything.
 
+## The studio: train and tune it case by case
+
+```bash
+python studio.py                     # http://127.0.0.1:8097
+```
+
+One page, one journey: point it at a local OpenAI-compatible model (Ollama, LM Studio,
+vLLM), choose a product, describe the applicant, upload the documents, record what the
+underwriter decided, and repeat. Each case is read by the model, checked against the page
+text, reconciled with the declaration and assessed on the spot, so you see straight away
+whether the pipeline agreed with the underwriter and why.
+
+Then **Evaluate**, **Propose one round**, or **Auto-tune until no further gain**. A round
+runs the cross-validated search over the bounded surface — rule thresholds inside their
+declared bounds, retrieval, the prompt's presentation variant, and with a model configured,
+**guidance lines the model writes from its own misses** — and applies the result only when
+held-out cases confirm the gain and the count of less-cautious disagreements has not
+risen. Every applied round is recorded against your name with the measured deltas; every
+round is reversible from the same page.
+
+What the auto-tune can and cannot do, so the "very high accuracy" question has an honest
+answer:
+
+- It can move a rule threshold inside the bounds its definition declares, choose how much
+  guidance is retrieved and how many prior decisions are attached, choose the prompt's
+  presentation variant, and add or drop guidance lines. A guidance line is validated before
+  it is ever tried: anything that reads like permission — approve, accept, ignore, skip,
+  never refer — is refused, and the twelve mandatory controls sit above every line.
+- It cannot create an accept action, weaken a mandatory rule, loosen validation, or make a
+  change that increases less-cautious disagreements, however much agreement it would buy.
+- Its ceiling is the bank. Under fifty cases the interval on agreement is wide and the
+  support and fold-stability gates will refuse most changes, which is correct: a gain that
+  rests on two cases is two cases' opinion. Human underwriters also disagree with each
+  other, and the pipeline cannot agree with a decision more often than the underwriters
+  would agree among themselves. And a local model that reads scanned documents poorly
+  caps everything downstream, which is why every extracted value is checked against the
+  page text and unverified values may only make a case more cautious.
+
+Without a model the studio still stores cases and evaluates the routing rules on the
+declared profile alone; it says so on every verdict, and the evidence-completeness gate is
+not exercised in that mode. Cases added through the studio are your data: they are written
+under `cases/bank/S-*` and gitignored, as are the studio settings.
+
 ## Quick start
 
 ```bash
@@ -166,6 +209,7 @@ support a figure quoted to the percentage point.
 | Rule actions, in the tightening direction | Actions in the loosening direction |
 | Sources retrieved, research sources kept, revision budget | The validation controls — terms always need an internal citation, warnings always block terms |
 | Prompt presentation variant, prior decisions attached | The twelve mandatory controls, which every variant carries |
+| Guidance lines (live, proposed by the model from its misses, validated before trial) | Any line that grants permission or references a control: refused by `config.py` before it reaches a prompt |
 
 The search is coordinate descent over that space, in a fixed order, keeping a change only
 when it improves the severity score by more than a threshold — and **rejecting outright any
@@ -383,6 +427,7 @@ later be compared against the exact configuration that disagreed with it.
 | `pipeline/precedents.py` | Nearest prior decisions from the case bank as de-identified `rag` sources |
 | `pipeline/judge.py` | Model-graded rubric for explanations, with the recorded rationale as the reference |
 | `feedback.py` | Record an underwriter's decision on an assessed case into the bank, with the pipeline's snapshot |
+| `studio.py`, `studio/index.html` | The training and tuning page: add cases with documents and decisions, evaluate, propose, auto-tune, apply, revert |
 | `cases/` | Four worked cases, the sample intake generator, and the imported bank |
 | `specs/` | A fictional product specification sheet, in Markdown and PDF |
-| `tests/` | 154 tests over the base, rules, retrieval, validators, harness, products, config, bank, documents, extraction, reconciliation, precedents, quality, feedback and tuner |
+| `tests/` | 163 tests over the base, rules, retrieval, validators, harness, products, config, bank, documents, extraction, reconciliation, precedents, quality, feedback, guidance, the studio and the tuner |

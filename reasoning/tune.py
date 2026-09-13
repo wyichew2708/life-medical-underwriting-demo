@@ -30,7 +30,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
 from pipeline import Pipeline  # noqa: E402
-from pipeline import casebank, evaluation  # noqa: E402
+from pipeline import casebank, evaluation, product as product_module  # noqa: E402
 from pipeline.config import PROMPT_VARIANTS, ConfigError, PipelineConfig  # noqa: E402
 from pipeline.judge import Judge  # noqa: E402
 from pipeline.llm import Client  # noqa: E402
@@ -55,7 +55,7 @@ def threshold_candidates(rule):
     return sorted(rounded)
 
 
-def search_space(rules, offline, allow_disable=False):
+def search_space(rules, offline, allow_disable=False, guidance_candidates=None, current_guidance=None):
     """Knobs to try, in a fixed order. Offline, only the ones that can change the outcome."""
     knobs = []
     for rule in rules:
@@ -87,12 +87,26 @@ def search_space(rules, offline, allow_disable=False):
             {'kind': 'field', 'field': 'prompt_variant',
              'label': 'prompt presentation variant', 'values': list(PROMPT_VARIANTS)},
         ]
+        # Prompt search: guidance lines written by the model from the cases it got wrong,
+        # validated by the configuration's own rules, adopted one at a time only when
+        # they pay off. A line already in force can also be dropped.
+        for line in guidance_candidates or []:
+            knobs.append({'kind': 'guidance', 'label': f'guidance: {line[:70]}', 'values': [line]})
+        for line in current_guidance or []:
+            knobs.append({'kind': 'guidance_remove', 'label': f'drop guidance: {line[:60]}', 'values': [line]})
     return knobs
 
 
 def with_knob(config, knob, value):
     if knob['kind'] == 'field':
         return config.replace(**{knob['field']: value})
+    if knob['kind'] == 'guidance':
+        lines = list(config.guidance)
+        if value.strip().lower() not in {x.strip().lower() for x in lines}:
+            lines.append(value)
+        return config.replace(guidance=lines)
+    if knob['kind'] == 'guidance_remove':
+        return config.replace(guidance=[x for x in config.guidance if x != value])
     overrides = {k: dict(v) for k, v in config.rule_overrides.items()}
     entry = overrides.setdefault(knob['rule'], {})
     entry['value' if knob['kind'] == 'rule_value' else 'enabled'] = value
@@ -102,17 +116,73 @@ def with_knob(config, knob, value):
 def current_value(config, knob, rules):
     if knob['kind'] == 'field':
         return getattr(config, knob['field'])
+    if knob['kind'] in ('guidance', 'guidance_remove'):
+        return None
     override = config.rule_overrides.get(knob['rule'], {})
     rule = next(r for r in rules if r['id'] == knob['rule'])
     return override.get('value' if knob['kind'] == 'rule_value' else 'enabled',
                         rule['value'] if knob['kind'] == 'rule_value' else rule.get('enabled', True))
 
 
+GUIDANCE_SYSTEM = (
+    'You improve short operator guidance for an underwriting assistant that works under fixed controls it cannot '
+    'change: it never approves, accepts, declines or issues; it cites only supplied sources; incomplete evidence '
+    'means request_evidence; a fired rule is a restriction. You are shown cases where the assistant disagreed '
+    'with the human underwriter, with the recorded rationale. Write at most {limit} guidance lines, each under '
+    '{chars} characters, that would have led to the underwriter\'s decision by changing emphasis or attention — '
+    'what to look at, what to ask for, how to weigh a finding — never by granting permission or removing a '
+    'control. Do not mention specific case ids or people. Return only JSON: {{"guidance": ["...", "..."]}}.')
+
+
+def propose_guidance(summary, client, limit=6):
+    """Ask the model for guidance lines from the cases the pipeline got wrong.
+
+    Every line is validated by the configuration's own rules before it can be tried, so a
+    line that reads like permission is refused before it ever reaches a prompt.
+    """
+    if client is None or not getattr(client, 'configured', False):
+        return []
+    misses = [r for r in summary.get('rows', []) if r['verdict'] in ('conservative', 'unsafe')]
+    if not misses:
+        return []
+    from pipeline.config import MAX_GUIDANCE_CHARS
+    examples = [{'human_outcome': r['human_outcome'], 'assistant_recommendation': r['predicted'],
+                 'verdict': r['verdict'], 'rules_fired': r.get('rules_fired'),
+                 'assistant_explanation': (r.get('output_excerpt') or {}).get('explanation'),
+                 'assistant_missing_information': (r.get('output_excerpt') or {}).get('missing_information'),
+                 'underwriter_rationale': (r.get('human_rationale')), 'underwriter_requested': r.get('human_requested')}
+                for r in misses[:12]]
+    messages = [{'role': 'system', 'content': GUIDANCE_SYSTEM.format(limit=limit, chars=MAX_GUIDANCE_CHARS)},
+                {'role': 'user', 'content': json.dumps({'disagreements': examples}, ensure_ascii=False, default=str)}]
+    try:
+        output = client.complete(messages)
+    except Exception:
+        return []
+    lines = output.get('guidance') if isinstance(output, dict) else None
+    accepted = []
+    for line in lines if isinstance(lines, list) else []:
+        if not isinstance(line, str):
+            continue
+        try:
+            PipelineConfig(guidance=[line.strip()]).validate()
+        except ConfigError:
+            continue
+        if line.strip() and line.strip() not in accepted:
+            accepted.append(line.strip())
+    return accepted[:limit]
+
+
 def search(pipeline, train, baseline_config, offline, min_delta, passes=1, verbose=True,
-           min_support=MIN_SUPPORT, allow_disable=False, objective='severity', judge=None):
+           min_support=MIN_SUPPORT, allow_disable=False, objective='severity', judge=None, prompt_search=False):
     rules = pipeline.knowledge.rules
     best_config = baseline_config
     best = evaluation.evaluate(pipeline.using(best_config), train, offline=offline, judge=judge)
+    guidance_candidates = []
+    if prompt_search and not offline:
+        annotate_rows(best['rows'], train)
+        guidance_candidates = propose_guidance(best, pipeline.client)
+        if verbose and guidance_candidates:
+            print(f'  {len(guidance_candidates)} guidance line(s) proposed by the model for trial')
     baseline_unsafe = best['unsafe_disagreements']
     score_of = lambda summary: evaluation.objective(summary, objective)
     trials, accepted = [], []
@@ -123,7 +193,7 @@ def search(pipeline, train, baseline_config, offline, min_delta, passes=1, verbo
 
     for pass_number in range(1, passes + 1):
         improved_this_pass = False
-        for knob in search_space(rules, offline, allow_disable):
+        for knob in search_space(rules, offline, allow_disable, guidance_candidates, best_config.guidance):
             now = current_value(best_config, knob, rules)
             for value in knob['values']:
                 if value == now:
@@ -168,15 +238,26 @@ def search(pipeline, train, baseline_config, offline, min_delta, passes=1, verbo
     return best_config, best, trials, accepted
 
 
+def annotate_rows(rows, cases):
+    """Attach the underwriter's recorded detail to evaluation rows, for the guidance prompt."""
+    by_id = {c.case_id: c for c in cases}
+    for row in rows:
+        case = by_id.get(row['case_id'])
+        if case is not None:
+            row['human_rationale'] = case.human.get('rationale') or case.human.get('notes')
+            row['human_requested'] = case.human.get('evidence_requested')
+    return rows
+
+
 def cross_validate(pipeline, cases, baseline_config, offline, min_delta, min_support, passes, k, seed,
-                   allow_disable=False, verbose=True, objective='severity', judge=None):
+                   allow_disable=False, verbose=True, objective='severity', judge=None, prompt_search=False):
     """Run the whole search once per fold and measure each result on the fold it never saw."""
     rules = pipeline.knowledge.rules
     records = []
     for number, (train, holdout) in enumerate(casebank.folds(cases, k, seed), 1):
         tuned, _, _, accepted = search(pipeline, train, baseline_config, offline, min_delta, passes,
                                        verbose=False, min_support=min_support, allow_disable=allow_disable,
-                                       objective=objective, judge=judge)
+                                       objective=objective, judge=judge, prompt_search=prompt_search)
         tuned = tuned.prune().validate(rules)
         base = evaluation.evaluate(pipeline.using(baseline_config), holdout, offline=offline, judge=judge)
         after = evaluation.evaluate(pipeline.using(tuned), holdout, offline=offline, judge=judge)
@@ -321,8 +402,20 @@ def proposal_markdown(proposal):
     return '\n'.join(lines)
 
 
-def run_tuning(args):
+def cases_for_product(cases, product_id):
+    """The cases a product-specific run may use: tagged with the product, or untagged on its line."""
+    if not product_id:
+        return cases
+    spec = product_module.load(product_id)
+    line = spec.fields.get('product_type')
+    return [c for c in cases if c.product_id == product_id
+            or (c.product_id is None and (line not in ('Life', 'Medical') or c.profile.get('product') == line))]
+
+
+def load_for_tuning(args):
+    """Everything a tuning or evaluation run needs, loaded the same way every time."""
     cases, problems = casebank.load_bank(args.bank, strict=False)
+    cases = cases_for_product(cases, getattr(args, 'product', None))
     client = Client() if args.live else None
     offline = not args.live
     if args.live and not client.configured:
@@ -332,32 +425,60 @@ def run_tuning(args):
         cases, skipped = casebank.ensure_evidence(cases, client)
         for entry in skipped:
             print(f"  skipped {entry['case_id']}: {entry['reason']}")
+    if offline:
+        unread = [c for c in cases if c.evidence is None]
+        if unread:
+            print(f'Offline: {len(unread)} case(s) have unread documents and are routed on the declared profile '
+                  'only (rules-only stub). The evidence-completeness gate is not exercised for them.')
+            for case in unread:
+                case.use_rules_only_stub()
     usable = [c for c in cases if c.evidence is not None]
     if not usable:
         raise SystemExit('No case in the bank has evidence. Supply it in the manifest or run with --live '
                          'and a configured vision model.')
-
-    pipeline = Pipeline(client=client, product=args.product)
+    pipeline = Pipeline(client=client, product=getattr(args, 'product', None))
     rules = pipeline.knowledge.rules
-    baseline_config = PipelineConfig.load(args.config, rules) if args.config else PipelineConfig()
-    judge = Judge(client) if (args.live and args.judge) else None
-    objective = args.objective
+    config_path = getattr(args, 'config', None)
+    baseline_config = PipelineConfig.load(config_path, rules) if config_path else PipelineConfig()
+    judge = Judge(client) if (args.live and getattr(args, 'judge', False)) else None
+    objective = getattr(args, 'objective', 'severity')
     if objective == 'combined' and offline:
         print('Offline, the deterministic output does not vary in quality; objective falls back to severity.')
         objective = 'severity'
+    prompt_search = bool(getattr(args, 'prompt_search', False)) and not offline
+    if getattr(args, 'prompt_search', False) and offline:
+        print('Offline, no model can write or be steered by guidance; prompt search is skipped.')
+    return {'cases': cases, 'problems': problems, 'usable': usable, 'client': client, 'offline': offline,
+            'pipeline': pipeline, 'rules': rules, 'baseline_config': baseline_config, 'judge': judge,
+            'objective': objective, 'prompt_search': prompt_search}
 
+
+def run_report(args):
+    loaded = load_for_tuning(args)
+    pipeline, usable, problems = loaded['pipeline'], loaded['usable'], loaded['problems']
+    summary = evaluation.evaluate(pipeline.using(loaded['baseline_config']), usable, offline=loaded['offline'],
+                                  judge=loaded['judge'])
+    print(evaluation.render(summary, f'Current configuration over {len(usable)} case(s)'))
+    evidence = evaluation.rule_evidence(summary['rows'])
+    if evidence:
+        print('\nrules fired, with what the humans decided on those cases:')
+        for rule_id, entry in evidence.items():
+            outcomes = ', '.join(f'{k} {v}' for k, v in sorted(entry['human_outcomes'].items()))
+            print(f"  {rule_id:<26} {entry['fired']:>3}   {outcomes}")
+    if problems:
+        print(f'\n{len(problems)} case(s) in the bank are unusable: ' + '; '.join(problems[:3]))
+    summary['config'] = loaded['baseline_config'].to_dict()
+    summary['config_hash'] = loaded['baseline_config'].fingerprint()
+    return summary
+
+
+def run_tuning(args):
     if args.report:
-        summary = evaluation.evaluate(pipeline.using(baseline_config), usable, offline=offline, judge=judge)
-        print(evaluation.render(summary, f'Current configuration over {len(usable)} case(s)'))
-        evidence = evaluation.rule_evidence(summary['rows'])
-        if evidence:
-            print('\nrules fired, with what the humans decided on those cases:')
-            for rule_id, entry in evidence.items():
-                outcomes = ', '.join(f'{k} {v}' for k, v in sorted(entry['human_outcomes'].items()))
-                print(f"  {rule_id:<26} {entry['fired']:>3}   {outcomes}")
-        if problems:
-            print(f'\n{len(problems)} case(s) in the bank are unusable: ' + '; '.join(problems[:3]))
-        return
+        return run_report(args)
+    loaded = load_for_tuning(args)
+    usable, problems, client, offline = loaded['usable'], loaded['problems'], loaded['client'], loaded['offline']
+    pipeline, rules, baseline_config = loaded['pipeline'], loaded['rules'], loaded['baseline_config']
+    judge, objective, prompt_search = loaded['judge'], loaded['objective'], loaded['prompt_search']
 
     k = max(int(args.folds), 1)
     if k >= 2 and len(usable) < 2 * k:
@@ -372,11 +493,13 @@ def run_tuning(args):
     if k >= 2:
         print(f'{len(usable)} case(s); {k}-fold cross-validation of the search, then a final search on all.\n')
         records = cross_validate(pipeline, usable, baseline_config, offline, args.min_delta, args.min_support,
-                                 args.passes, k, args.seed, args.allow_disable, objective=objective, judge=judge)
+                                 args.passes, k, args.seed, args.allow_disable, objective=objective, judge=judge,
+                                 prompt_search=prompt_search)
         print('\nfinal search on all cases:')
         tuned_all, _, trials, accepted = search(pipeline, usable, baseline_config, offline, args.min_delta,
                                                 passes=args.passes, min_support=args.min_support,
-                                                allow_disable=args.allow_disable, objective=objective, judge=judge)
+                                                allow_disable=args.allow_disable, objective=objective, judge=judge,
+                                                prompt_search=prompt_search)
         tuned_all = tuned_all.prune().validate(rules)
         stab = stability(records, baseline_config.diff(tuned_all))
         stable_keys = [key for key, entry in stab.items() if entry['stable']]
@@ -403,7 +526,8 @@ def run_tuning(args):
         print(f'{len(train)} training case(s), {len(holdout)} holdout case(s); single split.\n')
         tuned_config, train_best, trials, accepted = search(
             pipeline, train, baseline_config, offline, args.min_delta, passes=args.passes,
-            min_support=args.min_support, allow_disable=args.allow_disable, objective=objective, judge=judge)
+            min_support=args.min_support, allow_disable=args.allow_disable, objective=objective, judge=judge,
+            prompt_search=prompt_search)
         tuned_config = tuned_config.prune().validate(rules)
         train_base = evaluation.evaluate(pipeline.using(baseline_config), train, offline=offline)
         hold_base = evaluation.evaluate(pipeline.using(baseline_config), holdout, offline=offline)
@@ -443,7 +567,7 @@ def run_tuning(args):
 
     proposal = {'generated_at': datetime.now(timezone.utc).isoformat(timespec='seconds'),
                 'bank': bank, 'method': f'{k}-fold cross-validation' if k >= 2 else 'single split',
-                'objective': objective, 'judge': bool(judge),
+                'objective': objective, 'judge': bool(judge), 'prompt_search': prompt_search,
                 'offline': offline, 'min_delta': args.min_delta, 'min_support': args.min_support,
                 'allow_disable': args.allow_disable, 'seed': args.seed, 'product': args.product,
                 'baseline_config': baseline_config.to_dict(), 'proposed_config': tuned_config.to_dict(),
@@ -481,6 +605,7 @@ def run_tuning(args):
         print('  - ' + warning)
     print(f"\nWritten: {args.artifacts / 'proposal.md'}")
     print('Apply with: python tune.py --apply --by "your name" --reason "what you checked"')
+    return proposal
 
 
 def apply_proposal(args):
@@ -515,6 +640,7 @@ def apply_proposal(args):
     print(f'Applied to {target}. The pipeline will load this configuration from now on.')
     print('Recorded: ' + json.dumps(config.provenance['applied_by']) + f' — {args.reason}')
     print('Revert by deleting that file; the defaults in pipeline/config.py take over again.')
+    return config
 
 
 def main():
@@ -540,6 +666,8 @@ def main():
                     help='what the search maximises: routing severity alone, or severity plus reasoning quality')
     ap.add_argument('--judge', action='store_true',
                     help='with --live, also grade explanations against the recorded rationale with the model')
+    ap.add_argument('--prompt-search', action='store_true',
+                    help='with --live, let the model propose guidance lines from its misses and trial them')
     ap.add_argument('--by', help='who is applying the proposal')
     ap.add_argument('--reason', help='why')
     ap.add_argument('--accept-risk', help='reason for applying a proposal the holdout did not confirm')

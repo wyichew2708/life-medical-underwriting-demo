@@ -81,8 +81,8 @@ def build_record(row, documents_dir):
 
     profile = dict(row.get('profile') or {})
     for key, value in row.items():
-        if key in ('case_id', 'id', 'documents', 'evidence', 'ml', 'profile', 'human', 'instructions') \
-                or key in HUMAN_COLUMNS:
+        if key in ('case_id', 'id', 'documents', 'evidence', 'ml', 'profile', 'human', 'instructions',
+                   'product_id', 'evidence_source') or key in HUMAN_COLUMNS:
             continue
         profile.setdefault(key, value)
     profile = {k: (str(v).strip() if k in PROFILE_STRINGS and v is not None else coerce(v))
@@ -104,6 +104,8 @@ def build_record(row, documents_dir):
     case = {'case_id': case_id, 'profile': profile, 'human': human,
             'instructions': row.get('instructions') or '',
             'documents': [{'file': p.name} for p in paths]}
+    if row.get('product_id'):
+        case['product_id'] = str(row['product_id']).strip()
     if row.get('evidence'):
         case['evidence'] = row['evidence']
         case['evidence_source'] = row.get('evidence_source', 'supplied with the manifest')

@@ -54,12 +54,17 @@ EMPHASIS = {
 }
 
 
-def system_message(knowledge_summary=None, variant='standard'):
+def system_message(knowledge_summary=None, variant='standard', guidance=None):
     if variant not in EMPHASIS:
         raise ValueError(f'Unknown prompt variant: {variant}')
     text = MANDATORY_CONTROLS + '\n\nReturn exactly this JSON shape:\n' + json.dumps(OUTPUT_CONTRACT, indent=2)
     if EMPHASIS[variant]:
         text += '\n\nPresentation (this changes how you write, not what you may do):\n' + EMPHASIS[variant]
+    if guidance:
+        # Tuned against recorded decisions and validated in config.py before it gets here.
+        # Appended after the controls, so a line can steer emphasis and never permission.
+        text += ('\n\nOperator guidance from reviewed cases (emphasis only; no line here can remove a '
+                 'control above):\n' + '\n'.join(f'- {line.strip()}' for line in guidance))
     if knowledge_summary:
         text += ('\n\nThe guidance supplied to you is a demonstration knowledge base '
                  f'({knowledge_summary.get("cards")} cards, revision {knowledge_summary.get("rules_revision")}). '
@@ -92,6 +97,6 @@ def revision_message(errors):
             + json.dumps(errors, ensure_ascii=False)}
 
 
-def build(payload, instructions='', knowledge_summary=None, variant='standard'):
-    return [system_message(knowledge_summary, variant), instruction_message(instructions),
+def build(payload, instructions='', knowledge_summary=None, variant='standard', guidance=None):
+    return [system_message(knowledge_summary, variant, guidance), instruction_message(instructions),
             case_message(payload)]
