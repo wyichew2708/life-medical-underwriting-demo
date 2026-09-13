@@ -288,7 +288,20 @@ export UW_LLM_BASE_URL=http://127.0.0.1:8000/v1 UW_LLM_MODEL=Qwen/Qwen2.5-VL-7B-
 | `UW_DOC_PAGES_PER_CALL` | 1 | page images per request; raise only with `--limit-mm-per-prompt image=N` and the context to match |
 | `UW_DOC_TEXT` | auto | what a quote is checked against: the PDF text layer where a page has one, the model's transcription otherwise; `vision` ignores the layer, `layer` never transcribes |
 | `UW_DOC_RENDER_EDGE` | 1600 | long edge of the rendered page in pixels |
+| `UW_HANDWRITING_MODEL` | unset | a second, handwriting-strong vision model for pages the first read flags |
+| `UW_HANDWRITING_BASE_URL` | primary's | its endpoint, when served elsewhere |
 | `UW_LLM_TIMEOUT` | 180 | seconds per model call |
+
+**Handwriting.** The first read reports, for every page, whether any part of it is
+handwritten and how legible it is. With a second model named in `UW_HANDWRITING_MODEL`
+(same endpoint as the primary unless `UW_HANDWRITING_BASE_URL` says otherwise), each
+flagged page is read again in full by that model: its findings and typed values are merged
+with the primary's, tagged `read_by`, and its transcription is what the page's quotes are
+checked against. Where the two reads disagree on a value, reconciliation routes on the
+worse one and records both. Without a second model, handwriting becomes an evidence
+warning, and a page the first read calls only partly legible marks the evidence
+incomplete. A cached extraction is reused only while the documents and the readers match:
+name a handwriting model and the affected cases are read again.
 
 Vision transcription is a second read of the same page under a transcribe-only prompt; a
 value's quote has to appear in a read that was not asked to find it. It is not independent
@@ -457,4 +470,4 @@ later be compared against the exact configuration that disagreed with it.
 | `studio.py`, `studio/index.html` | The training and tuning page: add cases with documents and decisions, evaluate, propose, auto-tune, apply, revert |
 | `cases/` | Four worked cases, the sample intake generator, and the imported bank |
 | `specs/` | A fictional product specification sheet, in Markdown and PDF |
-| `tests/` | 169 tests over the base, rules, retrieval, validators, harness, products, config, bank, documents, extraction, document reading, reconciliation, precedents, quality, feedback, guidance, the studio and the tuner |
+| `tests/` | 172 tests over the base, rules, retrieval, validators, harness, products, config, bank, documents, extraction, document reading, reconciliation, precedents, quality, feedback, guidance, the studio and the tuner |

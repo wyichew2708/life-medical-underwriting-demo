@@ -31,6 +31,34 @@ TRANSCRIPTION_SYSTEM = (
     'printed on the page. If nothing is legible return {"text": ""}.')
 
 
+LEGIBILITY = ('good', 'partial', 'poor')
+
+
+def specialist_client():
+    """The handwriting model, when one is configured.
+
+    UW_HANDWRITING_MODEL names it; UW_HANDWRITING_BASE_URL and UW_HANDWRITING_API_KEY default to
+    the primary model's endpoint and key, so a second model served by the same vLLM instance
+    needs only its name. It is used for pages the primary read flagged as handwritten.
+    """
+    model = os.environ.get('UW_HANDWRITING_MODEL', '').strip()
+    if not model:
+        return None
+    from .llm import Client
+    return Client(base_url=os.environ.get('UW_HANDWRITING_BASE_URL') or os.environ.get('UW_LLM_BASE_URL', ''),
+                  model=model,
+                  api_key=os.environ.get('UW_HANDWRITING_API_KEY') or os.environ.get('UW_LLM_API_KEY', ''))
+
+
+def reader_label(client, specialist=None):
+    """Names the models that produce an extraction, so a cache knows what read it."""
+    label = getattr(client, 'model', 'unknown model') or 'unknown model'
+    specialist = specialist if specialist is not None else specialist_client()
+    if specialist is not None and getattr(specialist, 'configured', False):
+        label += f' + handwriting {specialist.model}'
+    return label
+
+
 def pages_per_call():
     """How many page images go into one model request. One is what a vLLM server allows by default."""
     try:
@@ -157,13 +185,15 @@ def transcribe_page(page, client):
     return text if isinstance(text, str) else ''
 
 
-def page_texts(documents, client=None, mode=None, pages=None):
-    """Text to check quotes against, per document and page, with where it came from.
+def page_texts(documents, client=None, mode=None, pages=None, extra_reads=None):
+    """Texts to check quotes against, per document and page: a list of reads, each with its origin.
 
     mode 'layer': the PDF text layer only; scans and images cannot be checked.
     mode 'vision': the model's transcription of every rendered page; the layer is ignored.
     mode 'auto' (default): the layer where a page has one, the transcription otherwise.
-    Without a client, transcription is unavailable and those pages stay uncheckable.
+    `extra_reads` adds reads produced elsewhere — the handwriting model's transcription of a
+    page — keyed by (document id, page). A page with a layer or a specialist read is not
+    transcribed again by the primary model. Without a client, transcription is unavailable.
     """
     mode = mode or text_mode()
     layers = layer_texts(documents) if mode != 'vision' else {d['id']: {} for d in documents}
@@ -171,19 +201,23 @@ def page_texts(documents, client=None, mode=None, pages=None):
     for doc_id, per_page in layers.items():
         for number, text in per_page.items():
             if text and text.strip():
-                texts[doc_id][number] = {'text': text, 'by': 'text layer'}
+                texts[doc_id].setdefault(number, []).append({'text': text, 'by': 'text layer'})
+    for (doc_id, number), reads in (extra_reads or {}).items():
+        for read in reads:
+            if read.get('text', '').strip():
+                texts.setdefault(doc_id, {}).setdefault(number, []).append(dict(read))
     can_transcribe = client is not None and getattr(client, 'configured', False) and mode != 'layer'
     if can_transcribe:
         pages = pages if pages is not None else render_pages(documents)
         for page in pages:
-            if page['page'] in texts.get(page['doc_id'], {}):
+            if texts.get(page['doc_id'], {}).get(page['page']):
                 continue
             try:
                 text = transcribe_page(page, client)
             except Exception:
                 text = ''
             if text.strip():
-                texts[page['doc_id']][page['page']] = {'text': text, 'by': 'vision transcription'}
+                texts[page['doc_id']].setdefault(page['page'], []).append({'text': text, 'by': 'vision transcription'})
     return texts
 
 
@@ -191,24 +225,26 @@ def _normalise(text):
     return re.sub(r'\s+', ' ', re.sub(r'[^\w.%/-]+', ' ', (text or '').lower())).strip()
 
 
-def verify_quotes(output, documents, client=None, mode=None, pages=None):
+def verify_quotes(output, documents, client=None, mode=None, pages=None, extra_reads=None):
     """Mark each finding and value verified, unverified, or unverifiable against the page text.
 
-    True: the quote occurs in the page's text (layer or transcription). False: the page has
-    text and the quote is not in it. None: nothing to check against — a scan with no text
-    layer and no model to transcribe it — which the reconciliation step treats exactly like
-    False. `verified_by` says which text was used.
+    True: the quote occurs in one of the page's reads (text layer, a specialist's
+    transcription, or the primary model's transcription). False: the page has text and the
+    quote is in none of it. None: nothing to check against — a scan with no text layer and
+    no model to transcribe it — which the reconciliation step treats exactly like False.
+    `verified_by` names the read that contained the quote.
     """
-    texts = page_texts(documents, client, mode, pages)
+    texts = page_texts(documents, client, mode, pages, extra_reads)
     for item in list(output.get('findings') or []) + list(output.get('values') or []):
-        entry = texts.get(item.get('id'), {}).get(item.get('page'))
+        reads = [r for r in texts.get(item.get('id'), {}).get(item.get('page'), []) if r.get('text', '').strip()]
         quote = _normalise(item.get('quote'))
-        if not entry or not entry['text'].strip():
+        if not reads:
             item['verified'] = None
             item['verified_by'] = None
         else:
-            item['verified'] = bool(quote) and quote in _normalise(entry['text'])
-            item['verified_by'] = entry['by']
+            match = next((r for r in reads if quote and quote in _normalise(r['text'])), None)
+            item['verified'] = match is not None
+            item['verified_by'] = match['by'] if match else None
     unverified = [f"{i.get('id')} p.{i.get('page')}" for i in output.get('values') or [] if i.get('verified') is False]
     if unverified:
         output.setdefault('warnings', []).append(
@@ -254,6 +290,16 @@ def check_findings(output, document_ids, page_counts, fields=None, allowed_pages
             raise ExtractionError('A finding has no valid page citation.')
         if not isinstance(finding.get('quote'), str) or not 1 <= len(finding['quote']) <= 1000:
             raise ExtractionError('A finding has no source excerpt to check it against.')
+
+    reported = output.get('pages')
+    pages_out = []
+    for entry in reported if isinstance(reported, list) else []:
+        if not isinstance(entry, dict) or not _page_ok(entry.get('id'), entry.get('page')):
+            continue
+        legibility = entry.get('legibility') if entry.get('legibility') in LEGIBILITY else 'good'
+        pages_out.append({'id': entry['id'], 'page': entry['page'], 'handwriting': bool(entry.get('handwriting')),
+                          'legibility': legibility, 'note': str(entry.get('note') or '')[:200]})
+    output['pages'] = pages_out
 
     values = output.get('values')
     if values is None:
@@ -302,6 +348,10 @@ def _request(pages, profile, fields, position):
             + ', '.join(f'{name} ({spec["type"]})' for name, spec in fields.items()) + '. '
             'Quote the exact text the value came from and cite only the page ids you are shown. '
             'Return an empty findings list for a page with nothing relevant. '
+            'For every page you are shown, add {"id":"DOC-1","page":1,"handwriting":boolean,'
+            '"legibility":"good|partial|poor","note":"where the handwriting is"} to a "pages" list; '
+            'handwriting is true when any part of the page is handwritten (annotations, forms filled by hand, '
+            'signatures excluded). '
             'Set complete false for missing, unreadable, contradictory or insufficient evidence. '
             f'{position} Profile: ' + json.dumps(profile))
     content = [{'type': 'text', 'text': text}]
@@ -334,7 +384,8 @@ def extract(documents, profile, client):
     batch = pages_per_call()
     batches = [pages[i:i + batch] for i in range(0, len(pages), batch)]
 
-    merged = {'complete': True, 'findings': [], 'values': [], 'warnings': []}
+    merged = {'complete': True, 'findings': [], 'values': [], 'warnings': [], 'pages': []}
+    seen_pages = set()
     for number, group in enumerate(batches, 1):
         position = (f'This is request {number} of {len(batches)}; other pages of the case are sent separately.'
                     if len(batches) > 1 else 'These are all the pages of the case.')
@@ -342,9 +393,57 @@ def extract(documents, profile, client):
         allowed = {(page['doc_id'], page['page']) for page in group}
         check_findings(output, ids, page_counts, fields, allowed_pages=allowed)
         merged['complete'] = merged['complete'] and bool(output['complete'])
+        for item in output['findings'] + output['values']:
+            item['read_by'] = 'primary'
         merged['findings'] += output['findings']
         merged['values'] += output['values']
         merged['warnings'] += [w for w in output.get('warnings', []) if w not in merged['warnings']]
+        for entry in output['pages']:
+            if (entry['id'], entry['page']) not in seen_pages:
+                merged['pages'].append(entry)
+                seen_pages.add((entry['id'], entry['page']))
+    for page in pages:       # a page the model said nothing about is recorded as not flagged
+        if (page['doc_id'], page['page']) not in seen_pages:
+            merged['pages'].append({'id': page['doc_id'], 'page': page['page'], 'handwriting': False,
+                                    'legibility': 'good', 'note': 'not reported by the model'})
+    merged['pages'].sort(key=lambda e: (e['id'], e['page']))
+
+    # Handwritten pages go to the handwriting model for a second, full read. Its findings and
+    # values are merged with the primary's — reconciliation routes on the worse value where
+    # two reads disagree — and its transcription is what those pages' quotes are checked against.
+    specialist = specialist_client()
+    extra_reads = {}
+    handwritten = [e for e in merged['pages'] if e['handwriting']]
+    by_key = {(p['doc_id'], p['page']): p for p in pages}
+    if handwritten and specialist is not None and specialist.configured:
+        for entry in handwritten:
+            page = by_key[(entry['id'], entry['page'])]
+            note = f" The primary read noted: {entry['note']}." if entry.get('note') else ''
+            second = specialist.complete(_request([page], profile, fields,
+                                                  'This page contains handwriting; read it carefully, character by '
+                                                  f'character where needed.{note}'))
+            check_findings(second, ids, page_counts, fields, allowed_pages={(entry['id'], entry['page'])})
+            for item in second['findings'] + second['values']:
+                item['read_by'] = 'handwriting specialist'
+            merged['findings'] += second['findings']
+            merged['values'] += second['values']
+            merged['warnings'] += [w for w in second.get('warnings', []) if w not in merged['warnings']]
+            merged['complete'] = merged['complete'] and bool(second['complete'])
+            try:
+                text = transcribe_page(page, specialist)
+            except Exception:
+                text = ''
+            if text.strip():
+                extra_reads[(entry['id'], entry['page'])] = [{'text': text, 'by': 'handwriting specialist'}]
+            entry['read_by'] = specialist.model
+            entry['specialist_findings'] = len(second['findings'])
+            entry['specialist_values'] = len(second['values'])
+    elif handwritten:
+        where = ', '.join(f"{e['id']} p.{e['page']}" for e in handwritten)
+        merged['warnings'].append(f'Handwriting detected on {where} and no handwriting model is configured '
+                                  '(UW_HANDWRITING_MODEL); those pages were read by the primary model only.')
+        if any(e['legibility'] != 'good' for e in handwritten):
+            merged['complete'] = False
     if not merged['findings']:
         raise ExtractionError('Extraction returned no usable findings on any page.')
     if len(merged['findings']) > 60:
@@ -358,8 +457,11 @@ def extract(documents, profile, client):
         merged['warnings'].append('Some documents produced no findings; evidence coverage is incomplete.')
     for finding in merged['findings']:
         finding['source'] = names[finding['id']]
-    verify_quotes(merged, documents, client, pages=pages)
+    verify_quotes(merged, documents, client, pages=pages, extra_reads=extra_reads)
     merged['pages_processed'] = len(pages)
-    merged['model_calls'] = len(batches)
+    merged['model_calls'] = len(batches) + 2 * len(extra_reads)
+    merged['handwritten_pages'] = [f"{e['id']} p.{e['page']}" for e in handwritten]
+    merged['readers'] = {'primary': getattr(client, 'model', None),
+                         'handwriting': specialist.model if specialist is not None and specialist.configured else None}
     merged['reading'] = {'pages_per_call': batch, 'text_mode': text_mode(), 'render_edge': render_edge()}
     return merged

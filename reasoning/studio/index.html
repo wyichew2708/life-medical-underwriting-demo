@@ -57,6 +57,10 @@ pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#f5f8f4;border:1px so
           <label>Check quotes against<select id="doc_text_mode"><option value="auto">text layer, else vision transcription</option><option value="vision">vision transcription only</option><option value="layer">text layer only</option></select></label>
           <label>Render long edge (px)<input id="doc_render_edge" type="number" min="600" max="3000" value="1600"></label>
         </div>
+        <div class="grid2">
+          <label>Handwriting model (optional; used for pages the first read flags as handwritten)<input id="handwriting_model" placeholder="e.g. a stronger VL model served by the same vLLM"></label>
+          <label>Handwriting model endpoint (blank: same as the primary)<input id="handwriting_base_url" placeholder="http://127.0.0.1:8001/v1"></label>
+        </div>
         <div class="note">Every page is rasterised and sent as an image, scanned or not. One page per call is what a vLLM server accepts without <code>--limit-mm-per-prompt</code>; raise it only if you started vLLM with a higher image limit and enough context. Vision transcription is a second read of the same page under a transcribe-only prompt, used to check every quoted value.</div>
       </details>
       <div class="row"><button class="secondary" onclick="saveSettings(true)">Save and test the model</button><button class="secondary" onclick="saveSettings(false)">Save</button><span id="llm-test" style="font-size:11px;color:var(--muted)"></span></div>
@@ -152,7 +156,7 @@ async function load() {
 }
 function renderStatus() {
   const llm = STATE.llm, cfg = STATE.config;
-  $('status').innerHTML = `<span><i class="dot ${llm.configured ? 'on' : 'off'}"></i>model: <b>${llm.configured ? esc(llm.model) : 'not configured'}</b></span>
+  $('status').innerHTML = `<span><i class="dot ${llm.configured ? 'on' : 'off'}"></i>model: <b>${llm.configured ? esc(llm.model) : 'not configured'}</b>${STATE.reading.handwriting_model ? ' + handwriting <b>' + esc(STATE.reading.handwriting_model) + '</b>' : ''}</span>
     <span>bank: <b>${STATE.bank.count}</b> case(s)</span>
     <span>configuration: <b>${cfg.tuned ? 'tuned ' + esc(cfg.hash) : 'defaults'}</b></span>`;
 }
@@ -160,6 +164,7 @@ function renderSettings() {
   $('llm_base_url').value = STATE.settings.llm_base_url || ''; $('llm_model').value = STATE.settings.llm_model || (STATE.llm.model || '');
   $('operator').value = STATE.settings.operator || '';
   $('doc_pages_per_call').value = STATE.reading.pages_per_call; $('doc_text_mode').value = STATE.reading.text_mode; $('doc_render_edge').value = STATE.reading.render_edge;
+  $('handwriting_model').value = STATE.settings.handwriting_model || STATE.reading.handwriting_model || ''; $('handwriting_base_url').value = STATE.settings.handwriting_base_url || '';
   const sel = $('product_id'); const current = sel.value;
   sel.innerHTML = '<option value="">Base rules only (Life or Medical from the profile)</option>' + STATE.products.map(p => `<option value="${esc(p.product_id)}">${esc(p.name || p.product_id)} — ${esc(p.type || '')} [${esc(p.status)}]</option>`).join('');
   sel.value = current || '';
@@ -171,7 +176,7 @@ function productNote() {
 }
 async function saveSettings(test) {
   try {
-    const r = await api('/api/settings', { llm_base_url: $('llm_base_url').value, llm_model: $('llm_model').value, operator: $('operator').value, doc_pages_per_call: $('doc_pages_per_call').value, doc_text_mode: $('doc_text_mode').value, doc_render_edge: $('doc_render_edge').value, test });
+    const r = await api('/api/settings', { llm_base_url: $('llm_base_url').value, llm_model: $('llm_model').value, operator: $('operator').value, doc_pages_per_call: $('doc_pages_per_call').value, doc_text_mode: $('doc_text_mode').value, doc_render_edge: $('doc_render_edge').value, handwriting_model: $('handwriting_model').value, handwriting_base_url: $('handwriting_base_url').value, test });
     if (test) $('llm-test').textContent = r.test.ok ? `model answered (${r.test.model})` : `model call failed: ${r.test.error}`;
     toast('Settings saved'); await load();
   } catch (e) { toast(e.message); }
@@ -225,7 +230,7 @@ function renderCaseResult(r) {
   if (r.extraction) {
     if (r.extraction.error) html += ` Extraction failed: ${esc(r.extraction.error)}.`;
     else if (r.extraction.skipped) html += ` ${esc(r.extraction.skipped)}`;
-    else html += ` Read ${r.extraction.pages} page(s): ${r.extraction.findings} finding(s), ${r.extraction.values.length} typed value(s)${r.extraction.complete ? '' : ', evidence incomplete'}.`;
+    else html += ` Read ${r.extraction.pages} page(s): ${r.extraction.findings} finding(s), ${r.extraction.values.length} typed value(s)${r.extraction.complete ? '' : ', evidence incomplete'}.${r.extraction.handwritten_pages && r.extraction.handwritten_pages.length ? ' Handwriting on ' + esc(r.extraction.handwritten_pages.join(', ')) + (r.extraction.readers && r.extraction.readers.handwriting ? ', read again by ' + esc(r.extraction.readers.handwriting) + '.' : ', no handwriting model configured.') : ''}`;
     if (r.extraction.warnings && r.extraction.warnings.length) html += ` Warnings: ${esc(r.extraction.warnings.join(' | '))}`;
   }
   html += '</div>';

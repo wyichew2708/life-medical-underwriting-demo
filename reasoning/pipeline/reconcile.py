@@ -69,7 +69,8 @@ def would_fire(field, value, rules):
 
 
 def _cite(value):
-    return f"{value.get('id')} p.{value.get('page')} \"{value.get('quote')}\""
+    reader = f" [{value['read_by']}]" if value.get('read_by') and value['read_by'] != 'primary' else ''
+    return f"{value.get('id')} p.{value.get('page')} \"{value.get('quote')}\"{reader}"
 
 
 def reconcile(profile, evidence, core, extra, rules=None):

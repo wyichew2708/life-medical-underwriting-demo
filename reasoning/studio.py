@@ -58,6 +58,7 @@ class Studio:
         return {}
 
     ENV_KEYS = (('llm_base_url', 'UW_LLM_BASE_URL'), ('llm_model', 'UW_LLM_MODEL'),
+                ('handwriting_base_url', 'UW_HANDWRITING_BASE_URL'), ('handwriting_model', 'UW_HANDWRITING_MODEL'),
                 ('doc_pages_per_call', 'UW_DOC_PAGES_PER_CALL'), ('doc_text_mode', 'UW_DOC_TEXT'),
                 ('doc_render_edge', 'UW_DOC_RENDER_EDGE'))
 
@@ -68,7 +69,8 @@ class Studio:
                 os.environ[env] = str(self.settings[key])
 
     def save_settings(self, body):
-        for key in ('llm_base_url', 'llm_model', 'operator', 'doc_pages_per_call', 'doc_text_mode', 'doc_render_edge'):
+        for key in ('llm_base_url', 'llm_model', 'handwriting_base_url', 'handwriting_model', 'operator',
+                    'doc_pages_per_call', 'doc_text_mode', 'doc_render_edge'):
             if key in body:
                 value = str(body[key] or '').strip()
                 if key == 'doc_text_mode' and value not in extraction.TEXT_MODES:
@@ -167,7 +169,8 @@ class Studio:
         client = Client()
         return {'llm': client.describe(), 'settings': {k: v for k, v in self.settings.items()},
                 'reading': {'pages_per_call': extraction.pages_per_call(), 'text_mode': extraction.text_mode(),
-                            'render_edge': extraction.render_edge()},
+                            'render_edge': extraction.render_edge(),
+                            'handwriting_model': getattr(extraction.specialist_client(), 'model', None)},
                 'bank': self.bank_summary(), 'products': product_module.available(),
                 'catalogue': {'core': core, 'extra': extra},
                 'outcomes': {k: v['description'] for k, v in HUMAN_OUTCOMES.items()},
@@ -234,10 +237,12 @@ class Studio:
         if body.get('extract', True) and case.documents and client.configured:
             try:
                 evidence = casebank.extract_evidence(case, client)
-                case.store_evidence(evidence, client.model)
+                case.store_evidence(evidence, extraction.reader_label(client))
                 result['extraction'] = {'findings': len(evidence['findings']), 'values': evidence.get('values', []),
                                         'warnings': evidence.get('warnings', []), 'complete': evidence['complete'],
-                                        'pages': evidence.get('pages_processed')}
+                                        'pages': evidence.get('pages_processed'),
+                                        'handwritten_pages': evidence.get('handwritten_pages', []),
+                                        'readers': evidence.get('readers'), 'model_calls': evidence.get('model_calls')}
             except CaseBankError as error:
                 result['extraction'] = {'error': str(error)}
         elif case.documents and not client.configured:

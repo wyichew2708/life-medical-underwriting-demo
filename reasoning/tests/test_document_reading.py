@@ -154,3 +154,90 @@ class PureImageReading(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+
+class HandwritingSpecialist(unittest.TestCase):
+    """A second model reads the pages the first one flagged as handwritten."""
+    @classmethod
+    def setUpClass(cls):
+        try:
+            extraction._pymupdf()
+        except extraction.ExtractionError as error:
+            raise unittest.SkipTest(str(error))
+
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.saved = {k: os.environ.get(k) for k in ('UW_HANDWRITING_MODEL', 'UW_HANDWRITING_BASE_URL',
+                                                     'UW_DOC_PAGES_PER_CALL', 'UW_DOC_TEXT')}
+        for key in self.saved:
+            os.environ.pop(key, None)
+        # The primary flags page 2 as handwritten and reads a value from it that the specialist corrects.
+        self.primary = responses()
+        self.primary[1]['pages'] = [{'id': 'DOC-1', 'page': 1, 'handwriting': False, 'legibility': 'good'}]
+        self.primary[2]['pages'] = [{'id': 'DOC-1', 'page': 2, 'handwriting': True, 'legibility': 'partial',
+                                     'note': 'clinician annotation under the table'}]
+        self.primary[2]['values'][0]['value'] = 65
+        self.primary[2]['values'][0]['quote'] = 'eGFR: 65 mL/min'
+        self.specialist_read = {'complete': True, 'warnings': [],
+                                'findings': [{'id': 'DOC-1', 'page': 2, 'quote': 'eGFR: 55 mL/min',
+                                              'text': 'Handwritten note records eGFR 55.'}],
+                                'values': [{'field': 'egfr', 'value': 55, 'id': 'DOC-1', 'page': 2,
+                                            'quote': 'eGFR: 55 mL/min'}],
+                                'pages': [{'id': 'DOC-1', 'page': 2, 'handwriting': True, 'legibility': 'good'}]}
+
+    def tearDown(self):
+        for key, value in self.saved.items():
+            if value is None:
+                os.environ.pop(key, None)
+            else:
+                os.environ[key] = value
+        self.tmp.cleanup()
+
+    def test_without_a_specialist_handwriting_is_a_warning_and_partial_legibility_makes_evidence_incomplete(self):
+        documents = two_page_pdf(self.tmp.name, scanned=True)
+        client = ScriptedVision(self.primary, {1: 'HbA1c: 7.1%', 2: 'eGFR: 65 mL/min'})
+        out = extraction.extract(documents, PROFILE, client)
+        self.assertEqual(out['handwritten_pages'], ['DOC-1 p.2'])
+        self.assertTrue(any('no handwriting model' in w for w in out['warnings']))
+        self.assertFalse(out['complete'])
+        self.assertIsNone(out['readers']['handwriting'])
+        self.assertEqual([e['handwriting'] for e in out['pages']], [False, True])
+
+    def test_flagged_pages_are_read_again_by_the_specialist_and_both_reads_are_merged(self):
+        os.environ['UW_HANDWRITING_MODEL'] = 'stub-handwriting'
+        os.environ['UW_LLM_BASE_URL'] = os.environ.get('UW_LLM_BASE_URL') or 'http://127.0.0.1:1/v1'
+        documents = two_page_pdf(self.tmp.name, scanned=True)
+        primary = ScriptedVision(self.primary, {1: 'HbA1c: 7.1%', 2: 'eGFR: 65 mL/min'})
+        specialist = ScriptedVision({2: self.specialist_read}, {2: 'clinician note: eGFR: 55 mL/min repeat in 3 months'})
+        specialist.model = 'stub-handwriting'
+        from unittest import mock
+        with mock.patch.object(extraction, 'specialist_client', lambda: specialist):
+            out = extraction.extract(documents, PROFILE, primary)
+        # Only the handwritten page went to the specialist: one extraction and one transcription.
+        self.assertEqual([c['kind'] for c in specialist.calls], ['extract', 'transcribe'])
+        self.assertEqual(specialist.calls[0]['labels'], ['DOC-1 · scan.pdf · page 2'])
+        self.assertEqual(out['readers'], {'primary': 'stub-vision', 'handwriting': 'stub-handwriting'})
+        self.assertEqual(out['pages'][1]['read_by'], 'stub-handwriting')
+        readers = {(v['field'], v['read_by']): v for v in out['values']}
+        self.assertIn(('egfr', 'primary'), readers)
+        self.assertIn(('egfr', 'handwriting specialist'), readers)
+        # The specialist's transcription is the check for that page: its own value verifies, the primary's does not.
+        self.assertTrue(readers[('egfr', 'handwriting specialist')]['verified'])
+        self.assertEqual(readers[('egfr', 'handwriting specialist')]['verified_by'], 'handwriting specialist')
+        self.assertFalse(readers[('egfr', 'primary')]['verified'])
+        self.assertFalse(any('no handwriting model' in w for w in out['warnings']))
+        # Reconciliation sees two reads of the same field and routes on the worse one.
+        routed = reconcile.reconcile({**PROFILE, 'egfr': 80}, out, CORE, EXTRA, RULES)
+        self.assertEqual(routed['profile']['egfr'], 55)
+        self.assertTrue(any('[handwriting specialist]' in r['source'] for r in routed['records']))
+
+    def test_the_reader_label_names_both_models_so_a_cache_knows_what_read_it(self):
+        primary = ScriptedVision({}, {})
+        self.assertEqual(extraction.reader_label(primary, specialist=None), 'stub-vision')
+        specialist = ScriptedVision({}, {})
+        specialist.model = 'stub-handwriting'
+        self.assertEqual(extraction.reader_label(primary, specialist=specialist), 'stub-vision + handwriting stub-handwriting')
+        self.assertIsNone(extraction.specialist_client())
+        os.environ['UW_HANDWRITING_MODEL'] = 'some-model'
+        os.environ['UW_LLM_BASE_URL'] = os.environ.get('UW_LLM_BASE_URL') or 'http://127.0.0.1:1/v1'
+        self.assertEqual(extraction.specialist_client().model, 'some-model')

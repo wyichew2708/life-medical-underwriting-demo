@@ -374,14 +374,19 @@ def extract_evidence(case, client):
         raise CaseBankError(str(error)) from None
 
 def ensure_evidence(cases, client, force=False, verbose=True):
-    """Extract for any case that needs it. Returns (ready, skipped)."""
+    """Extract for any case that needs it. Returns (ready, skipped).
+
+    A cached extraction is reused only while the documents and the readers match: change
+    the model, or add a handwriting model, and the case is read again.
+    """
     ready, skipped = [], []
+    label = extraction.reader_label(client)
     for case in cases:
-        if force or case.needs_extraction():
+        other_reader = case.evidence_source.startswith('cache (') and case.evidence_source != f'cache ({label})'
+        if force or case.needs_extraction() or other_reader:
             try:
                 evidence = extract_evidence(case, client)
-                model = getattr(client, 'model', 'unknown model')
-                case.store_evidence(evidence, model)
+                case.store_evidence(evidence, label)
                 if verbose:
                     print(f"  {case.case_id}: extracted {len(evidence['findings'])} finding(s)")
             except CaseBankError as error:
